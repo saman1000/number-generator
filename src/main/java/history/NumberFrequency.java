@@ -12,7 +12,7 @@ public class NumberFrequency implements Serializable {
 
     private ArrayList<OneFrequency> m_frequency;
 
-    ArrayList<Integer> fullList;
+    private ArrayList<Integer> fullList;
 
     public NumberFrequency() {
         initialize();

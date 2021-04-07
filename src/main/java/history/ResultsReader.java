@@ -16,7 +16,7 @@ public class ResultsReader {
 
     private ResultCollector collector;
 
-    private String m_filePath = "E:\\development\\lottery\\storedresults";
+    private String m_filePath = "~/development/lottery/storedresults";
 
     ResultsReader() {
         try {
@@ -29,7 +29,11 @@ public class ResultsReader {
 
     }
 
+    private void addOneResult(String[] oneResultPart) {
+    }
+
     public static List<String[]> readUsingScanner(Readable readable, String patternString) {
+        ResultsReader resultsReader = new ResultsReader();
         List<String[]> result = Collections.<String[]>emptyList();
 
         try (Scanner scanner = new Scanner(readable);) {
