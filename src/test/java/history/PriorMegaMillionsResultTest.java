@@ -3,9 +3,7 @@ package history;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,7 +59,10 @@ public class PriorMegaMillionsResultTest {
     private static Stream<Arguments> wrongNumberArrays() {
         return Stream.of(
                 Arguments.of("2010, 12, 29", new Integer[] {1, 2, 3, 4, 5, 6, 7}),
-                Arguments.of("2010, 12, 29", new Integer[] {1, 2, 3, 4, 5})
+                Arguments.of("2010, 12, 29", new Integer[] {1, 2, 3, 4, 5}),
+                Arguments.of("2010, 12, 29", new Integer[] {1, 3, 3, 4, 5, 6}),
+                Arguments.of("2010, 12, 29", new Integer[0]),
+                Arguments.of("2010, 12, 29", null)
         );
     }
 
