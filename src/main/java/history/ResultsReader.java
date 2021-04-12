@@ -16,9 +16,12 @@ public class ResultsReader {
 
     private ResultCollector collector;
 
+    private MegaExtractor extractor;
+
     private String m_filePath = "~/development/lottery/storedresults";
 
     ResultsReader() {
+        extractor =  new MegaExtractor();
         try {
             if (!readFromFile(m_filePath)) {
                 collector = new ResultCollector();
@@ -30,9 +33,10 @@ public class ResultsReader {
     }
 
     private void addOneResult(String[] oneResultPart) {
+        extractor.extractResult(oneResultPart);
     }
 
-    public static List<String[]> readUsingScanner(Readable readable, String patternString) {
+    public static List<String[]> readLinesUsingScanner(Readable readable, String patternString) {
         ResultsReader resultsReader = new ResultsReader();
         List<String[]> result = Collections.<String[]>emptyList();
 

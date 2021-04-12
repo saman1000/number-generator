@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -35,42 +36,46 @@ public class PriorMegaMillionsResultTest {
     }
 
     @Test
-    public void testTwoNonEqualResults1() {
-        PriorMegaMillionsResult result1 = new PriorMegaMillionsResult("2010, 12, 29", new Integer[]{1, 2, 3, 4, 5, 6});
-        PriorMegaMillionsResult result2 = new PriorMegaMillionsResult("2010, 12, 22", new Integer[]{1, 2, 3, 4, 5, 6});
-        Assertions.assertTrue(!result1.equals(result2));
+    public void testTwoEqualResults() {
+        PriorMegaMillionsResult result1 =
+                new PriorMegaMillionsResult("2010, 12, 29", Stream.of(1, 2, 3, 4, 5), 6);
+        PriorMegaMillionsResult result2 =
+                new PriorMegaMillionsResult("2010, 12, 29", Stream.of(1, 2, 3, 4, 5), 6);
+        Assertions.assertEquals(result1, result2);
     }
 
     @Test
-    public final void testTwoEqualResults2() {
-        PriorMegaMillionsResult result1 = new PriorMegaMillionsResult("2010, 12, 29", new Integer[]{1, 2, 3, 4, 5, 6});
-        PriorMegaMillionsResult result2 = new PriorMegaMillionsResult("2010, 12, 29", new Integer[]{1, 2, 3, 4, 5, 6});
-        Assertions.assertTrue(result1.equals(result2));
+    public void testTwoNonEqualResults() {
+        PriorMegaMillionsResult result1 =
+                new PriorMegaMillionsResult("2010, 12, 29", Stream.of(1, 2, 3, 4, 5), 6);
+        PriorMegaMillionsResult result2 =
+                new PriorMegaMillionsResult("2010, 12, 22", Stream.of(1, 2, 3, 4, 5), 6);
+        Assertions.assertNotEquals(result1, result2);
     }
 
     @ParameterizedTest
     @MethodSource("wrongNumberArrays")
-    public void testWrongValues(String date, Integer[] integerArray) {
+    public void testWrongValues(String date, Stream<Integer> numberStream, Integer oneInteger) {
         Assertions.assertThrows(IllegalStateException.class, () -> {
-            new PriorMegaMillionsResult("2010, 12, 29", integerArray);
+            new PriorMegaMillionsResult("2010, 12, 29", numberStream, oneInteger);
         });
     }
 
     private static Stream<Arguments> wrongNumberArrays() {
         return Stream.of(
-                Arguments.of("2010, 12, 29", new Integer[] {1, 2, 3, 4, 5, 6, 7}),
-                Arguments.of("2010, 12, 29", new Integer[] {1, 2, 3, 4, 5}),
-                Arguments.of("2010, 12, 29", new Integer[] {1, 3, 3, 4, 5, 6}),
-                Arguments.of("2010, 12, 29", new Integer[0]),
-                Arguments.of("2010, 12, 29", null)
+                Arguments.of("2010, 12, 29", Stream.of(1, 2, 3, 4, 5, 6), 7),
+                Arguments.of("2010, 12, 29", Stream.of(1, 2, 3, 4), 7),
+                Arguments.of("2010, 12, 29", Stream.of(), 7)
         );
     }
 
     @Test
     public void testAddingTwoResults() {
         ArrayList<Integer> allNumbers = new ArrayList<Integer>(14);
-        PriorMegaMillionsResult result1 = new PriorMegaMillionsResult("2010, 12, 29", new Integer[]{1, 2, 3, 4, 5, 6});
-        PriorMegaMillionsResult result2 = new PriorMegaMillionsResult("2010, 12, 22", new Integer[]{1, 2, 3, 4, 5, 6});
+        PriorMegaMillionsResult result1 =
+                new PriorMegaMillionsResult("2010, 12, 29", Stream.of(1, 2, 3, 4, 5), 6);
+        PriorMegaMillionsResult result2 =
+                new PriorMegaMillionsResult("2010, 12, 22", Stream.of(1, 2, 3, 4, 5), 6);
 
         result1.addResults(allNumbers);
         result2.addResults(allNumbers);
@@ -82,8 +87,10 @@ public class PriorMegaMillionsResultTest {
 
     @Test
     public void testDifferentValuesOnSameDate() {
-        PriorMegaMillionsResult result1 = new PriorMegaMillionsResult("2010, 12, 29", new Integer[]{1, 2, 3, 4, 5, 6});
-        PriorMegaMillionsResult result2 = new PriorMegaMillionsResult("2010, 12, 29", new Integer[]{1, 2, 3, 4, 5, 7});
+        PriorMegaMillionsResult result1 =
+                new PriorMegaMillionsResult("2010, 12, 29", Stream.of(1, 2, 3, 4, 5), 6);
+        PriorMegaMillionsResult result2 =
+                new PriorMegaMillionsResult("2010, 12, 29", Stream.of(1, 2, 3, 4, 5), 7);
 
         Assertions.assertThrows(IllegalStateException.class, () -> {
             result1.equals(result2);
