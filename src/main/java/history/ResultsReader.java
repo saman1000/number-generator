@@ -1,8 +1,6 @@
 package history;
 
 import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -21,7 +19,7 @@ public class ResultsReader {
     private String m_filePath = "~/development/lottery/storedresults";
 
     ResultsReader() {
-        extractor =  new MegaExtractor();
+        extractor = new MegaExtractor();
         try {
             if (!readFromFile(m_filePath)) {
                 collector = new ResultCollector();
@@ -30,10 +28,6 @@ public class ResultsReader {
             ex.printStackTrace();
         }
 
-    }
-
-    private void addOneResult(String[] oneResultPart) {
-        extractor.extractResult(oneResultPart);
     }
 
     public static List<String[]> readLinesUsingScanner(Readable readable, String patternString) {
@@ -55,6 +49,24 @@ public class ResultsReader {
         }
 
         return result;
+    }
+
+    public static void readLinesUsingScanner2(Readable readable, String patternString) {
+        ResultsReader resultsReader = new ResultsReader();
+
+//        try (Scanner scanner = new Scanner(readable);) {
+//            scanner
+//                    .findAll(patternString)
+//                    .forEach(matchResult -> {
+//                        matchResult.group()
+//                    });
+//            ;
+//        }
+
+    }
+
+    private PriorMegaMillionsResult addOneResult(String[] oneResultPart) {
+        return extractor.extractResult(oneResultPart);
     }
 
     public void loadDatasource() throws Exception {

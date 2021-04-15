@@ -1,18 +1,38 @@
 package history;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class MegaExtractor {
-    private Pattern numberPattern = Pattern.compile(",");
-    private Pattern ballNumberPattern = Pattern.compile("\\d+");
+    private Pattern numberPattern = Pattern.compile("(\\d+)");
 
-    public void extractResult(String[] oneResultStr) {
-//        3/19/2021; 9,14,40,58,69; Mega Ball: 8
-        Stream<Integer> numbers = numberPattern.splitAsStream(oneResultStr[1])
-                .map(Integer::parseInt);
-        Integer ballNumber = Integer.parseUnsignedInt(ballNumberPattern.matcher(oneResultStr[2]).group());
-//        PriorMegaMillionsResult = new PriorMegaMillionsResult(oneResultStr[0], )
+    public PriorMegaMillionsResult extractResult(String[] oneResultStr) {
+        List<Integer> numbers = numberPattern.matcher(oneResultStr[1])
+                .results()
+                .map(MatchResult::group)
+                .map(Integer::parseUnsignedInt)
+                .sorted()
+                .distinct()
+                .collect(Collectors.toList())
+                ;
+        Optional<Integer> ballNumber = numberPattern.matcher(oneResultStr[2])
+                .results()
+                .map(MatchResult::group)
+                .map(Integer::parseUnsignedInt)
+                .findFirst()
+                ;
+
+        return new PriorMegaMillionsResult(
+                oneResultStr[0],
+                numbers,
+                ballNumber.orElseThrow(IllegalStateException::new)
+        );
     }
 
 }
