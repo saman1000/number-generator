@@ -8,18 +8,30 @@ import java.sql.Statement;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.MatchResult;
 import java.util.stream.Collectors;
 
+/**
+ * Read all the valid lines
+ * create frequency for each play number
+ * create frequency for each ball number
+ */
 public class ResultsReader {
 
     private ResultCollector collector;
 
     private MegaExtractor extractor;
 
+    private MegaFrequency megaFrequency;
+
+    private MegaFrequencyContainer megaFrequencyContainer;
+
     private String m_filePath = "~/development/lottery/storedresults";
 
     ResultsReader() {
         extractor = new MegaExtractor();
+        megaFrequency = new MegaFrequency(70);
+        megaFrequencyContainer = new MegaFrequencyContainer();
         try {
             if (!readFromFile(m_filePath)) {
                 collector = new ResultCollector();
@@ -54,19 +66,51 @@ public class ResultsReader {
     public static void readLinesUsingScanner2(Readable readable, String patternString) {
         ResultsReader resultsReader = new ResultsReader();
 
-//        try (Scanner scanner = new Scanner(readable);) {
-//            scanner
-//                    .findAll(patternString)
-//                    .forEach(matchResult -> {
-//                        matchResult.group()
-//                    });
-//            ;
-//        }
+        try (Scanner scanner = new Scanner(readable);) {
+            scanner
+                    .findAll(patternString)
+                    .forEach(matchResult -> {
+                        resultsReader.addOneResult(matchResult);
+                    })
+            ;
+        }
 
     }
 
-    private PriorMegaMillionsResult addOneResult(String[] oneResultPart) {
-        return extractor.extractResult(oneResultPart);
+    public static void readLinesUsingScanner3(Readable readable, String patternString) {
+        ResultsReader resultsReader =  new ResultsReader();
+        try (Scanner scanner = new Scanner(readable);) {
+            scanner
+                    .findAll(patternString)
+                    .forEach(matchResult -> {
+                        resultsReader.updateFrequency(matchResult);
+                    })
+            ;
+        }
+
+    }
+
+    private void updateFrequency(MatchResult matchResult) {
+        String[] groups = new String[matchResult.groupCount()];
+        for (int counter = groups.length - 1; counter >= 0; counter--) {
+            groups[counter] = matchResult.group(counter + 1).trim();
+        }
+
+        megaFrequencyContainer.mainNumbersConsumer().accept(MegaExtractor.getMainNumbers(groups[1]));
+        megaFrequencyContainer.ballNumberConsumer().accept(
+                MegaExtractor.getBallNumber(groups[2])
+                        .orElseThrow(
+                                () -> new IllegalStateException(String.format("No valid ball number: %s", groups[2])))
+        );
+    }
+
+    private PriorMegaMillionsResult addOneResult(MatchResult matchResult) {
+        String[] groups = new String[matchResult.groupCount()];
+        for (int counter = groups.length - 1; counter >= 0; counter--) {
+            groups[counter] = matchResult.group(counter + 1).trim();
+        }
+
+        return extractor.extractResult(groups);
     }
 
     public void loadDatasource() throws Exception {
