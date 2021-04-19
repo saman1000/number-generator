@@ -20,22 +20,6 @@ import java.util.stream.Stream;
  */
 public class PriorMegaMillionsResultTest {
 
-    @BeforeAll
-    public static void setUpBeforeClass() throws Exception {
-    }
-
-    @AfterAll
-    public static void tearDownAfterClass() throws Exception {
-    }
-
-    @BeforeEach
-    public void setUp() throws Exception {
-    }
-
-    @AfterEach
-    public void tearDown() throws Exception {
-    }
-
     @Test
     public void testTwoEqualResults() {
         PriorMegaMillionsResult result1 =

@@ -39,9 +39,9 @@ class MegaExtractorTest {
 
     private static Stream<Arguments> invalidExpectedResults() {
         return Stream.of(
-                Arguments.of(new String[] {"3/19/2021", "9,14,40,40,69", "Mega Ball: 8"}, "3/19/2021"),
-                Arguments.of(new String[] {"3/19/2021", "", "Mega Ball: 8"}, ""),
-                Arguments.of(new String[] {"3/19/2021", "1,2,3,4,5", ""}, "")
+                Arguments.arguments((Object) new String[]{"3/19/2021", "9,14,40,40,69", "Mega Ball: 8"}),
+                Arguments.of((Object) new String[] {"3/19/2021", "", "Mega Ball: 8"}),
+                Arguments.of((Object) new String[] {"3/19/2021", "1,2,3,4,5", ""})
         );
     }
 

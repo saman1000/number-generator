@@ -31,7 +31,9 @@ public class MegaExtractor {
         return new PriorMegaMillionsResult(
                 oneResultStr[0],
                 numbers,
-                ballNumber.orElseThrow(IllegalStateException::new)
+                ballNumber.orElseThrow(
+                        () -> new IllegalStateException(String.format("No valid ball number: %s", oneResultStr[2]))
+                )
         );
     }
 
