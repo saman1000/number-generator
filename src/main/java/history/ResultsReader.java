@@ -31,7 +31,7 @@ public class ResultsReader {
     ResultsReader() {
         extractor = new MegaExtractor();
         megaFrequency = new MegaFrequency(70);
-        megaFrequencyContainer = new MegaFrequencyContainer();
+        megaFrequencyContainer = new MegaFrequencyContainer(70, 25);
         try {
             if (!readFromFile(m_filePath)) {
                 collector = new ResultCollector();
@@ -42,7 +42,7 @@ public class ResultsReader {
 
     }
 
-    public static List<String[]> readLinesUsingScanner(Readable readable, String patternString) {
+    public static List<String[]> readLinesUsingScanner1(Readable readable, String patternString) {
         ResultsReader resultsReader = new ResultsReader();
         List<String[]> result = Collections.<String[]>emptyList();
 
@@ -77,7 +77,7 @@ public class ResultsReader {
 
     }
 
-    public static void readLinesUsingScanner3(Readable readable, String patternString) {
+    public static MegaFrequencyContainer readLinesUsingScanner(Readable readable, String patternString) {
         ResultsReader resultsReader =  new ResultsReader();
         try (Scanner scanner = new Scanner(readable);) {
             scanner
@@ -87,7 +87,7 @@ public class ResultsReader {
                     })
             ;
         }
-
+        return resultsReader.megaFrequencyContainer;
     }
 
     private void updateFrequency(MatchResult matchResult) {

@@ -1,5 +1,6 @@
 package history;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -35,7 +36,29 @@ class ResultsReaderTest {
     @ParameterizedTest
     @MethodSource("resultLines")
     public void testReadUsingScanner(Readable lines, int expectedSize) {
-        List<String[]> actualMatchedGroups = ResultsReader.readLinesUsingScanner(lines, "(.*);(.*);(.*)");
+        List<String[]> actualMatchedGroups = ResultsReader.readLinesUsingScanner1(lines, "(.*);(.*);(.*)");
         assertEquals(expectedSize, actualMatchedGroups.size());
+    }
+
+    @Test
+    public void testFrequencies() {
+        Readable lines = new StringReader("Results for Mega Millions\n" +
+                "3/26/2021; 4,25,37,46,67; Mega Ball: 15\n" +
+                "12/11/2020; 19,31,37,55,67; Mega Ball: 25\n" +
+                "3/26/2021; 4,25,37,46,67; Mega Ball: 15\n"+
+                "All information is entered manually, and is subject to human error. \n" +
+                "Therefore, we can not guarantee the accuracy of this information.");
+        MegaFrequencyContainer megaFrequencyContainer = ResultsReader.readLinesUsingScanner(lines, "(.*);(.*);(.*)");
+        megaFrequencyContainer.prepare();
+        assertEquals(3, megaFrequencyContainer.getBallNumberFrequency(15));
+        assertEquals(2, megaFrequencyContainer.getBallNumberFrequency(25));
+        assertEquals(3, megaFrequencyContainer.getMainNumberFrequency(4));
+        assertEquals(2, megaFrequencyContainer.getMainNumberFrequency(19));
+        assertEquals(3, megaFrequencyContainer.getMainNumberFrequency(25));
+        assertEquals(2, megaFrequencyContainer.getMainNumberFrequency(31));
+        assertEquals(4, megaFrequencyContainer.getMainNumberFrequency(37));
+        assertEquals(3, megaFrequencyContainer.getMainNumberFrequency(46));
+        assertEquals(2, megaFrequencyContainer.getMainNumberFrequency(55));
+        assertEquals(4, megaFrequencyContainer.getMainNumberFrequency(67));
     }
 }

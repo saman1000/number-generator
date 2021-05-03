@@ -1,5 +1,6 @@
 package history;
 
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -9,9 +10,9 @@ public class MegaFrequencyContainer {
 
     private MegaFrequency frequencyOfBallNumbers;
 
-    public MegaFrequencyContainer() {
-        frequencyOfMainNumbers = new MegaFrequency(70);
-        frequencyOfBallNumbers =  new MegaFrequency(25);
+    public MegaFrequencyContainer(int maxMainNumberValue, int maxBallNumberValue) {
+        frequencyOfMainNumbers = new MegaFrequency(maxMainNumberValue);
+        frequencyOfBallNumbers =  new MegaFrequency(maxBallNumberValue);
     }
 
     public Consumer<Stream<Integer>> mainNumbersConsumer() {
@@ -28,6 +29,11 @@ public class MegaFrequencyContainer {
 
     public Integer getMainNumberFrequency(Integer mainNumber) {
         return frequencyOfMainNumbers.getFrequencyOfNumber(mainNumber);
+    }
+
+    public void prepare() {
+        List<Integer> mainNumberChanceList = frequencyOfMainNumbers.getChanceList();
+        List<Integer> ballNumberChanceList = frequencyOfBallNumbers.getChanceList();
     }
 
 }
