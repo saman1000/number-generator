@@ -34,9 +34,10 @@ class MegaFrequencyContainerTest {
     void getMainNumberFrequency() {
         MegaFrequencyContainer megaFrequencyContainer = new MegaFrequencyContainer(70, 25);
 
-        int[] randomFrequencies = new Random().ints(70 / 5, 1, 50).toArray();
+        int[] randomFrequencies = new Random().ints(70 / 5, 1, 5000).toArray();
 
         IntStream.range(1, 70 / 5 + 1)
+                .parallel()
                 .forEach(x -> {
                     IntStream.range(0, randomFrequencies[x - 1])
                             .forEach(y -> megaFrequencyContainer
