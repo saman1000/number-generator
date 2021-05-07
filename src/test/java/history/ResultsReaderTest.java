@@ -33,13 +33,6 @@ class ResultsReaderTest {
         );
     }
 
-    @ParameterizedTest
-    @MethodSource("resultLines")
-    public void testReadUsingScanner(Readable lines, int expectedSize) {
-        List<String[]> actualMatchedGroups = ResultsReader.readLinesUsingScanner1(lines, "(.*);(.*);(.*)");
-        assertEquals(expectedSize, actualMatchedGroups.size());
-    }
-
     @Test
     public void testFrequencies() {
         Readable lines = new StringReader("Results for Mega Millions\n" +

@@ -42,41 +42,6 @@ public class ResultsReader {
 
     }
 
-    public static List<String[]> readLinesUsingScanner1(Readable readable, String patternString) {
-        ResultsReader resultsReader = new ResultsReader();
-        List<String[]> result = Collections.<String[]>emptyList();
-
-        try (Scanner scanner = new Scanner(readable);) {
-            result = scanner
-                    .findAll(patternString)
-                    .map(matchResult -> {
-                        String[] groups = new String[matchResult.groupCount()];
-                        for (int counter = groups.length - 1; counter >= 0; counter--) {
-                            groups[counter] = matchResult.group(counter + 1).trim();
-                        }
-                        return groups;
-                    })
-                    .collect(Collectors.toList())
-            ;
-        }
-
-        return result;
-    }
-
-    public static void readLinesUsingScanner2(Readable readable, String patternString) {
-        ResultsReader resultsReader = new ResultsReader();
-
-        try (Scanner scanner = new Scanner(readable);) {
-            scanner
-                    .findAll(patternString)
-                    .forEach(matchResult -> {
-                        resultsReader.addOneResult(matchResult);
-                    })
-            ;
-        }
-
-    }
-
     public static MegaFrequencyContainer readLinesUsingScanner(Readable readable, String patternString) {
         ResultsReader resultsReader =  new ResultsReader();
         try (Scanner scanner = new Scanner(readable);) {
