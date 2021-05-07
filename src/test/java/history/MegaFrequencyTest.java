@@ -3,6 +3,7 @@ package history;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.NavigableMap;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;

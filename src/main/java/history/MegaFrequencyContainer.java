@@ -1,6 +1,7 @@
 package history;
 
 import java.util.List;
+import java.util.NavigableMap;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -31,9 +32,8 @@ public class MegaFrequencyContainer {
         return frequencyOfMainNumbers.getFrequencyOfNumber(mainNumber);
     }
 
-    public void prepare() {
-        List<Integer> mainNumberChanceList = frequencyOfMainNumbers.getChanceList();
-        List<Integer> ballNumberChanceList = frequencyOfBallNumbers.getChanceList();
+    public NavigableMap<Integer, Integer> getBallNumberChanceList() {
+        return frequencyOfBallNumbers.getChanceMap();
     }
 
 }

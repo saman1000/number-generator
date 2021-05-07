@@ -1,8 +1,6 @@
 package history;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -24,10 +22,13 @@ public class MegaFrequency {
         return frequencies[number - 1];
     }
 
-    public List<Integer> getChanceList() {
-        return Stream.of(frequencies)
-                .sorted()
-                .collect(Collectors.toUnmodifiableList())
-                ;
+    public NavigableMap<Integer, Integer> getChanceMap() {
+        NavigableMap<Integer, Integer> chanceMap = new TreeMap<>();
+
+        for (int counter=0; counter < frequencies.length;) {
+            chanceMap.put(frequencies[counter], ++counter);
+        }
+
+        return chanceMap;
     }
 }
