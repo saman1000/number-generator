@@ -1,15 +1,12 @@
 package history;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.StringReader;
-import java.util.List;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ResultsReaderTest {
 
@@ -42,7 +39,7 @@ class ResultsReaderTest {
                 "All information is entered manually, and is subject to human error. \n" +
                 "Therefore, we can not guarantee the accuracy of this information.");
         MegaFrequencyContainer megaFrequencyContainer = ResultsReader.readLinesUsingScanner(lines, "(.*);(.*);(.*)");
-        megaFrequencyContainer.prepare();
+
         assertEquals(3, megaFrequencyContainer.getBallNumberFrequency(15));
         assertEquals(2, megaFrequencyContainer.getBallNumberFrequency(25));
         assertEquals(3, megaFrequencyContainer.getMainNumberFrequency(4));

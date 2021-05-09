@@ -1,10 +1,7 @@
 package history;
 
 import java.io.Serializable;
-import java.io.StringReader;
 import java.util.*;
-import java.util.regex.MatchResult;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ResultCollector implements Serializable {

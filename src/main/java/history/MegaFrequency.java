@@ -1,8 +1,8 @@
 package history;
 
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Arrays;
+import java.util.NavigableMap;
+import java.util.TreeMap;
 
 public class MegaFrequency {
 
@@ -25,8 +25,9 @@ public class MegaFrequency {
     public NavigableMap<Integer, Integer> getChanceMap() {
         NavigableMap<Integer, Integer> chanceMap = new TreeMap<>();
 
-        for (int counter=0; counter < frequencies.length;) {
-            chanceMap.put(frequencies[counter], ++counter);
+        for (int counter=0, sum=0; counter < frequencies.length;) {
+            sum += frequencies[counter];
+            chanceMap.put(sum, ++counter);
         }
 
         return chanceMap;
