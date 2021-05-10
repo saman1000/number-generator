@@ -2,18 +2,18 @@ package history;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class MegaChanceRecordGeneratorTest {
 
     @Test
-    void generateBallNumber() {
+    void shouldGenerateOneBallNumber() {
         MegaFrequencyContainer megaFrequencyContainer = new MegaFrequencyContainer(70, 25);
 
         int[] randomFrequencies = new Random().ints(25, 1, 500).toArray();
@@ -33,27 +33,88 @@ class MegaChanceRecordGeneratorTest {
     }
 
     @Test
-    void generateMainNumbers() {
+    void shouldGenerateDifferentBallNumbers() {
         MegaFrequencyContainer megaFrequencyContainer = new MegaFrequencyContainer(70, 25);
 
-        int[] randomFrequencies = new Random().ints(70 / 5, 1, 5000).toArray();
-
-        IntStream.range(1, 70 / 5 + 1)
+        int[] randomFrequencies = new Random().ints(25, 1, 500).toArray();
+        IntStream.range(1, 26)
                 .parallel()
                 .forEach(x -> {
-                    IntStream.range(0, randomFrequencies[x - 1])
-                            .forEach(y -> megaFrequencyContainer
-                                    .mainNumbersConsumer()
-                                    .accept(
-                                            Stream.iterate(
-                                                    x * 5, counter -> counter > x * 5 - 5, counter -> counter - 1)
-                                    ));
+                    IntStream.iterate(0, counter -> counter < randomFrequencies[x - 1], counter -> counter + 1)
+                            .forEach(y -> megaFrequencyContainer.ballNumberConsumer().accept(x))
+                    ;
                 })
         ;
 
         MegaChanceRecordGenerator megaChanceRecordGenerator = new MegaChanceRecordGenerator(megaFrequencyContainer);
 
+        ArrayList<Integer> generatedBallNumbers =  new ArrayList<>(500);
+        for (int counter = Arrays.stream(randomFrequencies).sum(); counter > 0; counter--) {
+            int chanceBallNumber = megaChanceRecordGenerator.generateBallNumber();
+            assertTrue(chanceBallNumber > 0 && chanceBallNumber < 26);
+            generatedBallNumbers.add(chanceBallNumber);
+        }
+
+        Map<Integer, Long> chanceFrequencyMap = generatedBallNumbers.parallelStream()
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+
+        chanceFrequencyMap.forEach((key, value) -> {
+            assertTrue(Math.abs(randomFrequencies[key-1] - value) < 100,
+                    String.format("random frequency is %s while value is %s", randomFrequencies[key-1], value));
+        });
+    }
+
+    @Test
+    void shouldGenerateOneMainNumbersSet() {
+        MegaFrequencyContainer megaFrequencyContainer = new MegaFrequencyContainer(70, 25);
+
+        int[] randomFrequencies = new Random().ints(70, 1, 5000).toArray();
+
+        for (int counter=0; counter < 70; counter++) {
+            int finalCounter = counter;
+            IntStream.range(0, randomFrequencies[counter])
+                    .forEach( x -> megaFrequencyContainer.mainNumbersConsumer().accept(Stream.of(finalCounter +1)))
+            ;
+        }
+
+        MegaChanceRecordGenerator megaChanceRecordGenerator = new MegaChanceRecordGenerator(megaFrequencyContainer);
+
         List<Integer> chanceNumbers = megaChanceRecordGenerator.generateMainNumbers();
         assertEquals(5, chanceNumbers.size());
+    }
+
+    @Test
+    void shouldGenerateDifferentNumbersSets() {
+        MegaFrequencyContainer megaFrequencyContainer = new MegaFrequencyContainer(70, 25);
+
+        int[] randomFrequencies = new Random().ints(70, 1, 5000).toArray();
+
+        for (int counter=0; counter < 70; counter++) {
+            int finalCounter = counter;
+            IntStream.range(0, randomFrequencies[counter])
+                    .forEach( x -> megaFrequencyContainer.mainNumbersConsumer().accept(Stream.of(finalCounter +1)))
+            ;
+        }
+
+        MegaChanceRecordGenerator megaChanceRecordGenerator = new MegaChanceRecordGenerator(megaFrequencyContainer);
+
+        Map<Integer, Long> generatedMainNumbersFrequency = Collections.synchronizedMap(new HashMap<>());
+        IntStream.range(0, Arrays.stream(randomFrequencies).sum())
+                .parallel()
+                .forEach(x -> {
+                    List<Integer> chanceNumbers = megaChanceRecordGenerator.generateMainNumbers();
+                    assertEquals(5, chanceNumbers.size());
+                    chanceNumbers.stream().forEach(mainNumber -> {
+                        generatedMainNumbersFrequency.merge(mainNumber, 1L, Long::sum);
+                    });
+                });
+
+        generatedMainNumbersFrequency.forEach((key, value) -> {
+            int randomFrequency = Math.abs(randomFrequencies[key-1]);
+            long actualFrequency = value*5;
+            assertTrue(randomFrequency - actualFrequency < 1000,
+                    String.format("%s != %s", randomFrequency, actualFrequency)
+            );
+        });
     }
 }
