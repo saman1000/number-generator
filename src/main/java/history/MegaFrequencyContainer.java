@@ -1,16 +1,23 @@
 package history;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import java.util.NavigableMap;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
+@Component
 public class MegaFrequencyContainer {
 
     private MegaFrequency frequencyOfMainNumbers;
 
     private MegaFrequency frequencyOfBallNumbers;
 
-    public MegaFrequencyContainer(int maxMainNumberValue, int maxBallNumberValue) {
+    public MegaFrequencyContainer(
+            @Value("${maxMainNumberValue}") int maxMainNumberValue,
+            @Value("${maxBallNumberValue}") int maxBallNumberValue
+    ) {
         frequencyOfMainNumbers = new MegaFrequency(maxMainNumberValue);
         frequencyOfBallNumbers = new MegaFrequency(maxBallNumberValue);
     }

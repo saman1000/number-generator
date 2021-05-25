@@ -1,5 +1,7 @@
 package history;
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.MatchResult;
@@ -7,6 +9,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Component
 public class MegaExtractor {
     private static Pattern numberPattern = Pattern.compile("(\\d+)");
 
