@@ -25,10 +25,8 @@ class MegaExtractorTest {
     @ParameterizedTest
     @MethodSource("validExpectedResults")
     void shouldExtractOneResult(String[] parameters, String date, List<Integer> numbers, Integer ballNumber) {
-        MegaExtractor megaExtractor = new MegaExtractor();
-
         PriorMegaMillionsResult priorMegaMillionsResult =
-                megaExtractor.extractResult(parameters);
+                MegaExtractor.extractResult(parameters);
         assertNotNull(priorMegaMillionsResult);
 
         assertEquals(date, priorMegaMillionsResult.getDrawnDate());
@@ -47,10 +45,8 @@ class MegaExtractorTest {
     @ParameterizedTest
     @MethodSource("invalidExpectedResults")
     void shouldFailToExtractOneResult(String[] parameters) {
-        MegaExtractor megaExtractor = new MegaExtractor();
-
         Assertions.assertThrows(IllegalStateException.class, () -> {
-            megaExtractor.extractResult(parameters);
+            MegaExtractor.extractResult(parameters);
         });
     }
 }

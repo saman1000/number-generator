@@ -22,11 +22,11 @@ public class MegaFrequencyContainer {
         frequencyOfBallNumbers = new MegaFrequency(maxBallNumberValue);
     }
 
-    public Consumer<Stream<Integer>> mainNumbersConsumer() {
+    public Consumer<Stream<Integer>> mainNumbersDrawn() {
         return stream -> stream.forEach(mainNumber -> frequencyOfMainNumbers.numberOccurrenceObserved(mainNumber));
     }
 
-    public Consumer<Integer> ballNumberConsumer() {
+    public Consumer<Integer> ballNumberDrawn() {
         return ballNumber -> frequencyOfBallNumbers.numberOccurrenceObserved(ballNumber);
     }
 

@@ -40,8 +40,8 @@ public class ResultsReader {
             groups[counter] = matchResult.group(counter + 1).trim();
         }
 
-        megaFrequencyContainer.mainNumbersConsumer().accept(MegaExtractor.getMainNumbers(groups[1]));
-        megaFrequencyContainer.ballNumberConsumer().accept(
+        megaFrequencyContainer.mainNumbersDrawn().accept(MegaExtractor.getMainNumbers(groups[1]));
+        megaFrequencyContainer.ballNumberDrawn().accept(
                 MegaExtractor.getBallNumber(groups[2])
                         .orElseThrow(
                                 () -> new IllegalStateException(String.format("No valid ball number: %s", groups[2])))

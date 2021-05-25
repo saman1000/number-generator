@@ -18,7 +18,7 @@ class MegaFrequencyContainerTest {
                 .parallel()
                 .forEach(x -> {
                     IntStream.iterate(0, counter -> counter < randomFrequencies[x - 1], counter -> counter + 1)
-                            .forEach(y -> megaFrequencyContainer.ballNumberConsumer().accept(x))
+                            .forEach(y -> megaFrequencyContainer.ballNumberDrawn().accept(x))
                     ;
                 })
         ;
@@ -41,7 +41,7 @@ class MegaFrequencyContainerTest {
                 .forEach(x -> {
                     IntStream.range(0, randomFrequencies[x - 1])
                             .forEach(y -> megaFrequencyContainer
-                                    .mainNumbersConsumer()
+                                    .mainNumbersDrawn()
                                     .accept(
                                             Stream.iterate(
                                                     x * 5, counter -> counter > x * 5 - 5, counter -> counter - 1)

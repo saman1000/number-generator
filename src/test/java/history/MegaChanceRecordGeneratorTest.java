@@ -22,7 +22,7 @@ class MegaChanceRecordGeneratorTest {
                 .parallel()
                 .forEach(x -> {
                     IntStream.iterate(0, counter -> counter < randomFrequencies[x - 1], counter -> counter + 1)
-                            .forEach(y -> megaFrequencyContainer.ballNumberConsumer().accept(x))
+                            .forEach(y -> megaFrequencyContainer.ballNumberDrawn().accept(x))
                     ;
                 })
         ;
@@ -42,7 +42,7 @@ class MegaChanceRecordGeneratorTest {
                 .parallel()
                 .forEach(x -> {
                     IntStream.iterate(0, counter -> counter < randomFrequencies[x - 1], counter -> counter + 1)
-                            .forEach(y -> megaFrequencyContainer.ballNumberConsumer().accept(x))
+                            .forEach(y -> megaFrequencyContainer.ballNumberDrawn().accept(x))
                     ;
                 })
         ;
@@ -74,7 +74,7 @@ class MegaChanceRecordGeneratorTest {
         for (int counter=0; counter < 70; counter++) {
             int finalCounter = counter;
             IntStream.range(0, randomFrequencies[counter])
-                    .forEach( x -> megaFrequencyContainer.mainNumbersConsumer().accept(Stream.of(finalCounter +1)))
+                    .forEach( x -> megaFrequencyContainer.mainNumbersDrawn().accept(Stream.of(finalCounter +1)))
             ;
         }
 
@@ -93,7 +93,7 @@ class MegaChanceRecordGeneratorTest {
         for (int counter=0; counter < 70; counter++) {
             int finalCounter = counter;
             IntStream.range(0, randomFrequencies[counter])
-                    .forEach( x -> megaFrequencyContainer.mainNumbersConsumer().accept(Stream.of(finalCounter +1)))
+                    .forEach( x -> megaFrequencyContainer.mainNumbersDrawn().accept(Stream.of(finalCounter +1)))
             ;
         }
 
