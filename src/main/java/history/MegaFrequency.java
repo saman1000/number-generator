@@ -16,8 +16,9 @@ public class MegaFrequency {
     }
 
     public void numberOccurrenceObserved(Integer number) throws InvalidMegaNumberException {
-        Optional<Integer> filteredNumber = Optional.of(number).filter(n -> n <= frequencies.length);
-        filteredNumber.orElseThrow(() -> new InvalidMegaNumberException(number));
+        Optional<Integer> filteredNumber = Optional.ofNullable(Optional.of(number)
+                .filter(n -> n <= frequencies.length)
+                .orElseThrow(() -> new InvalidMegaNumberException(number)));
         frequencies[filteredNumber.get() - 1]++;
     }
 
