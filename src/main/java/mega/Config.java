@@ -6,9 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.Random;
 
 @Configuration
 @ConfigurationProperties(prefix = "mega")
@@ -20,9 +18,9 @@ public class Config {
 
     private String resultsPattern;
 
-    @Bean(name = "historyScanner")
-    public Path getHistoryScanner() throws IOException {
-        return Paths.get(filePath);
+    @Bean
+    public Random megaRandomNumberGenerator() {
+        return new Random();
     }
 
 }

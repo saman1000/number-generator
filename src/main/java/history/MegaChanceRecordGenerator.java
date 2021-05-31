@@ -14,11 +14,11 @@ import java.util.Random;
 public class MegaChanceRecordGenerator {
 
     private MegaFrequencyContainer megaFrequencyContainer;
-    Random chanceGenerator;
+    private Random chanceGenerator;
 
-    public MegaChanceRecordGenerator(MegaFrequencyContainer megaFrequencyContainer) {
+    public MegaChanceRecordGenerator(MegaFrequencyContainer megaFrequencyContainer, Random megaRandomNumberGenerator) {
         this.megaFrequencyContainer = megaFrequencyContainer;
-        chanceGenerator = new Random();
+        this.chanceGenerator = megaRandomNumberGenerator;
     }
 
     public Integer generateBallNumber() {

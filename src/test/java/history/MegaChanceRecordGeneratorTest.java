@@ -27,7 +27,8 @@ class MegaChanceRecordGeneratorTest {
                 })
         ;
 
-        MegaChanceRecordGenerator megaChanceRecordGenerator = new MegaChanceRecordGenerator(megaFrequencyContainer);
+        MegaChanceRecordGenerator megaChanceRecordGenerator =
+                new MegaChanceRecordGenerator(megaFrequencyContainer, new Random());
 
         int chanceBallNumber = megaChanceRecordGenerator.generateBallNumber();
         assertTrue(chanceBallNumber > 0 && chanceBallNumber < 26);
@@ -47,7 +48,8 @@ class MegaChanceRecordGeneratorTest {
                 })
         ;
 
-        MegaChanceRecordGenerator megaChanceRecordGenerator = new MegaChanceRecordGenerator(megaFrequencyContainer);
+        MegaChanceRecordGenerator megaChanceRecordGenerator =
+                new MegaChanceRecordGenerator(megaFrequencyContainer, new Random());
 
         ArrayList<Integer> generatedBallNumbers =  new ArrayList<>(500);
         for (int counter = Arrays.stream(randomFrequencies).sum(); counter > 0; counter--) {
@@ -78,7 +80,8 @@ class MegaChanceRecordGeneratorTest {
             ;
         }
 
-        MegaChanceRecordGenerator megaChanceRecordGenerator = new MegaChanceRecordGenerator(megaFrequencyContainer);
+        MegaChanceRecordGenerator megaChanceRecordGenerator =
+                new MegaChanceRecordGenerator(megaFrequencyContainer, new Random());
 
         List<Integer> chanceNumbers = megaChanceRecordGenerator.generateMainNumbers();
         assertEquals(5, chanceNumbers.size());
@@ -97,7 +100,8 @@ class MegaChanceRecordGeneratorTest {
             ;
         }
 
-        MegaChanceRecordGenerator megaChanceRecordGenerator = new MegaChanceRecordGenerator(megaFrequencyContainer);
+        MegaChanceRecordGenerator megaChanceRecordGenerator =
+                new MegaChanceRecordGenerator(megaFrequencyContainer, new Random());
 
         Map<Integer, Long> generatedMainNumbersFrequency = Collections.synchronizedMap(new HashMap<>());
         IntStream.range(0, Arrays.stream(randomFrequencies).sum())

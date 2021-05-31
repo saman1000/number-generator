@@ -5,11 +5,12 @@ import org.junit.jupiter.api.Test;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class MegaFrequencyTest {
 
     @Test
-    void getFrequencyOfNumber() {
+    void testFrequencyOfNumber() {
         MegaFrequency megaFrequency = new MegaFrequency(10);
         Integer[] testNumbers = new Integer[10];
         IntStream.range(1, 11)
@@ -25,4 +26,12 @@ class MegaFrequencyTest {
             assertEquals(testNumbers[counter]+1, megaFrequency.getFrequencyOfNumber(counter+1));
         }
     }
+
+    @Test
+    void testInvalidNumberShouldThrowInvalidMegaNumberException() {
+        MegaFrequency megaFrequency = new MegaFrequency(10);
+
+        assertThrows(InvalidMegaNumberException.class, () -> megaFrequency.numberOccurrenceObserved(11));
+    }
+
 }

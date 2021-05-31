@@ -2,6 +2,7 @@ package history;
 
 import java.util.Arrays;
 import java.util.NavigableMap;
+import java.util.Optional;
 import java.util.TreeMap;
 
 public class MegaFrequency {
@@ -14,8 +15,10 @@ public class MegaFrequency {
         Arrays.fill(frequencies, 1);
     }
 
-    public void numberOccurrenceObserved(Integer number) {
-        frequencies[number - 1]++;
+    public void numberOccurrenceObserved(Integer number) throws InvalidMegaNumberException {
+        Optional<Integer> filteredNumber = Optional.of(number).filter(n -> n <= frequencies.length);
+        filteredNumber.orElseThrow(() -> new InvalidMegaNumberException(number));
+        frequencies[filteredNumber.get() - 1]++;
     }
 
     public Integer getFrequencyOfNumber(Integer number) {
