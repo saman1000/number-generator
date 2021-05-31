@@ -13,12 +13,9 @@ import java.util.regex.MatchResult;
 @Component("megaResultsReader")
 public class ResultsReader {
 
-    private MegaExtractor extractor;
-
     private MegaFrequencyContainer megaFrequencyContainer;
 
-    ResultsReader(MegaFrequencyContainer megaFrequencyContainer, MegaExtractor megaExtractor) {
-        this.extractor = extractor;
+    ResultsReader(MegaFrequencyContainer megaFrequencyContainer) {
         this.megaFrequencyContainer = megaFrequencyContainer;
     }
 
@@ -54,7 +51,7 @@ public class ResultsReader {
             groups[counter] = matchResult.group(counter + 1).trim();
         }
 
-        return extractor.extractResult(groups);
+        return MegaExtractor.extractResult(groups);
     }
 
 }
