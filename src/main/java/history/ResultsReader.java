@@ -47,7 +47,7 @@ public class ResultsReader {
                                     () -> new IllegalStateException(String.format("No valid ball number: %s", groups[2])))
             );
         } catch (InvalidMegaNumberException ex) {
-            logger.warn(String.format("failed to parse %s", groups));
+            logger.warn(String.format("failed to parse %s, %s because %s", groups[1], groups[2], ex.getMessage()));
         }
     }
 
