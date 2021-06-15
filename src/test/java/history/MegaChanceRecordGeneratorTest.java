@@ -1,6 +1,12 @@
 package history;
 
+import mega.Config;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
 import java.util.function.Function;
@@ -11,11 +17,21 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@ExtendWith(MockitoExtension.class)
 class MegaChanceRecordGeneratorTest {
+
+    @Mock
+    private Config megaConfig;
+
+    @BeforeEach
+    public void initConfig() {
+        Mockito.when(megaConfig.getMaxBallNumberValue()).thenReturn(25);
+        Mockito.when(megaConfig.getMaxMainNumberValue()).thenReturn(70);
+    }
 
     @Test
     void shouldGenerateOneBallNumber() {
-        MegaFrequencyContainer megaFrequencyContainer = new MegaFrequencyContainer(70, 25);
+        MegaFrequencyContainer megaFrequencyContainer = new MegaFrequencyContainer(megaConfig);
 
         int[] randomFrequencies = new Random().ints(25, 1, 500).toArray();
         IntStream.range(1, 26)
@@ -36,7 +52,7 @@ class MegaChanceRecordGeneratorTest {
 
     @Test
     void shouldGenerateDifferentBallNumbers() {
-        MegaFrequencyContainer megaFrequencyContainer = new MegaFrequencyContainer(70, 25);
+        MegaFrequencyContainer megaFrequencyContainer = new MegaFrequencyContainer(megaConfig);
 
         int[] randomFrequencies = new Random().ints(25, 1, 500).toArray();
         IntStream.range(1, 26)
@@ -69,7 +85,7 @@ class MegaChanceRecordGeneratorTest {
 
     @Test
     void shouldGenerateOneMainNumbersSet() {
-        MegaFrequencyContainer megaFrequencyContainer = new MegaFrequencyContainer(70, 25);
+        MegaFrequencyContainer megaFrequencyContainer = new MegaFrequencyContainer(megaConfig);
 
         int[] randomFrequencies = new Random().ints(70, 1, 5000).toArray();
 
@@ -89,7 +105,7 @@ class MegaChanceRecordGeneratorTest {
 
     @Test
     void shouldGenerateDifferentNumbersSets() {
-        MegaFrequencyContainer megaFrequencyContainer = new MegaFrequencyContainer(70, 25);
+        MegaFrequencyContainer megaFrequencyContainer = new MegaFrequencyContainer(megaConfig);
 
         int[] randomFrequencies = new Random().ints(70, 1, 5000).toArray();
 

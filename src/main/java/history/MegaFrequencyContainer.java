@@ -1,6 +1,6 @@
 package history;
 
-import org.springframework.beans.factory.annotation.Value;
+import mega.Config;
 import org.springframework.stereotype.Component;
 
 import java.util.NavigableMap;
@@ -14,12 +14,9 @@ public class MegaFrequencyContainer {
 
     private MegaFrequency frequencyOfBallNumbers;
 
-    public MegaFrequencyContainer(
-            @Value("${maxMainNumberValue}") int maxMainNumberValue,
-            @Value("${maxBallNumberValue}") int maxBallNumberValue
-    ) {
-        frequencyOfMainNumbers = new MegaFrequency(maxMainNumberValue);
-        frequencyOfBallNumbers = new MegaFrequency(maxBallNumberValue);
+    public MegaFrequencyContainer(Config megaConfig) {
+        frequencyOfMainNumbers = new MegaFrequency(megaConfig.getMaxMainNumberValue());
+        frequencyOfBallNumbers = new MegaFrequency(megaConfig.getMaxBallNumberValue());
     }
 
     public Consumer<Stream<Integer>> mainNumbersDrawn() {

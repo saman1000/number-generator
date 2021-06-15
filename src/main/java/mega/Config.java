@@ -18,6 +18,11 @@ public class Config {
 
     private String resultsPattern;
 
+    private int maxMainNumberValue=70;
+
+    private int maxBallNumberValue=25;
+
+
     @Bean
     public Random megaRandomNumberGenerator() {
         return new Random();

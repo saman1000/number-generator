@@ -1,17 +1,34 @@
 package history;
 
+import mega.Config;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Random;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+@ExtendWith(MockitoExtension.class)
 class MegaFrequencyContainerTest {
+
+
+    @Mock
+    private Config megaConfig;
+
+    @BeforeEach
+    public void initConfig() {
+        Mockito.when(megaConfig.getMaxBallNumberValue()).thenReturn(25);
+        Mockito.when(megaConfig.getMaxMainNumberValue()).thenReturn(70);
+    }
 
     @Test
     void getBallNumberFrequency() {
-        MegaFrequencyContainer megaFrequencyContainer = new MegaFrequencyContainer(70, 25);
+        MegaFrequencyContainer megaFrequencyContainer = new MegaFrequencyContainer(megaConfig);
 
         int[] randomFrequencies = new Random().ints(25, 1, 500).toArray();
         IntStream.range(1, 26)
@@ -32,7 +49,7 @@ class MegaFrequencyContainerTest {
 
     @Test
     void getMainNumberFrequency() {
-        MegaFrequencyContainer megaFrequencyContainer = new MegaFrequencyContainer(70, 25);
+        MegaFrequencyContainer megaFrequencyContainer = new MegaFrequencyContainer(megaConfig);
 
         int[] randomFrequencies = new Random().ints(70 / 5, 1, 5000).toArray();
 

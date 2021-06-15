@@ -1,5 +1,6 @@
 package history;
 
+import mega.Config;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,12 +11,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(
         value="integration test",
-        classes = {ResultsReader.class, MegaFrequencyContainer.class, MegaExtractor.class}
+        classes = {ResultsReader.class, MegaFrequencyContainer.class, MegaExtractor.class, Config.class}
         )
 class ResultsReaderTest {
 
     @Test
-    public void testFrequencies(@Qualifier("megaResultsReader") ResultsReader megaResultsReader, @Qualifier("megaFrequencyContainer") MegaFrequencyContainer megaFrequencyContainer) {
+    void testFrequencies(@Qualifier("megaResultsReader") ResultsReader megaResultsReader, @Qualifier("megaFrequencyContainer") MegaFrequencyContainer megaFrequencyContainer) {
         Readable lines = new StringReader("Results for Mega Millions\n" +
                 "3/26/2021; 4,25,37,46,67; Mega Ball: 15\n" +
                 "12/11/2020; 19,31,37,55,67; Mega Ball: 25\n" +
