@@ -7,16 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 import restmodels.SetsOfNumbers;
 
 @RestController
-public class NumberGeneratorController {
-
-    private MegaChanceRecordGenerator megaNumberGeneratorService;
-
-    public NumberGeneratorController(MegaChanceRecordGenerator megaNumberGeneratorService) {
-        this.megaNumberGeneratorService = megaNumberGeneratorService;
-    }
+public record NumberGeneratorController(MegaChanceRecordGenerator megaNumberGeneratorService) {
 
     @GetMapping("/generate")
-    public SetsOfNumbers[] generateNumbers(@RequestParam(required = true) int numberOfSets) {
+    public SetsOfNumbers[] generateNumbers(@RequestParam int numberOfSets) {
         SetsOfNumbers[] generatedNumberSets = new SetsOfNumbers[numberOfSets];
         for (int counter=numberOfSets; counter > 0; counter--) {
             generatedNumberSets[counter-1] =

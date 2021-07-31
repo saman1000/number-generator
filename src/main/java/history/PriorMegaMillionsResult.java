@@ -12,16 +12,16 @@ public class PriorMegaMillionsResult implements Serializable {
     /**
      * minimum value of a number is 1 and maximum value is 49
      */
-    private Collection<Integer> numbers;
+    private final Collection<Integer> numbers;
 
     /**
      * date the numbers were drawn
      */
-    private String drawnDate;
+    private final String drawnDate;
 
-    private Integer megaBallNumber;
+    private final Integer megaBallNumber;
 
-    private static Integer expectedNumbers = 5;
+    private static final Integer expectedNumbers = 5;
 
     public PriorMegaMillionsResult(String drwanDate, List<Integer> drawnNumbers, Integer ballNumber) {
         this.drawnDate = drwanDate;
@@ -54,8 +54,7 @@ public class PriorMegaMillionsResult implements Serializable {
     }
 
     public boolean equals(Object obj) {
-        if (obj != null && obj instanceof PriorMegaMillionsResult) {
-            PriorMegaMillionsResult anotherResult = (PriorMegaMillionsResult) obj;
+        if (obj instanceof PriorMegaMillionsResult anotherResult) {
             return equals(anotherResult);
         }
 

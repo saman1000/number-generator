@@ -13,8 +13,8 @@ import java.util.Random;
 @Service("megaNumberGeneratorService")
 public class MegaChanceRecordGenerator {
 
-    private MegaFrequencyContainer megaFrequencyContainer;
-    private Random chanceGenerator;
+    private final MegaFrequencyContainer megaFrequencyContainer;
+    private final Random chanceGenerator;
 
     public MegaChanceRecordGenerator(MegaFrequencyContainer megaFrequencyContainer, Random megaRandomNumberGenerator) {
         this.megaFrequencyContainer = megaFrequencyContainer;
@@ -33,7 +33,7 @@ public class MegaChanceRecordGenerator {
         int total = chanceMap.lastKey();
         List<Integer> generatedNumbers = new ArrayList<>();
         for (int counter = 0; counter < 5; counter++) {
-            Integer oneNumber = null;
+            Integer oneNumber;
             do {
                 oneNumber = chanceMap.ceilingEntry(chanceGenerator.nextInt(total)).getValue();
             } while (generatedNumbers.contains(oneNumber));

@@ -10,9 +10,9 @@ import java.util.stream.Stream;
 @Component
 public class MegaFrequencyContainer {
 
-    private MegaFrequency frequencyOfMainNumbers;
+    private final MegaFrequency frequencyOfMainNumbers;
 
-    private MegaFrequency frequencyOfBallNumbers;
+    private final MegaFrequency frequencyOfBallNumbers;
 
     public MegaFrequencyContainer(Config megaConfig) {
         frequencyOfMainNumbers = new MegaFrequency(megaConfig.getMaxMainNumberValue());
@@ -20,11 +20,11 @@ public class MegaFrequencyContainer {
     }
 
     public Consumer<Stream<Integer>> mainNumbersDrawn() {
-        return stream -> stream.forEach(mainNumber -> frequencyOfMainNumbers.numberOccurrenceObserved(mainNumber));
+        return stream -> stream.forEach(frequencyOfMainNumbers::numberOccurrenceObserved);
     }
 
     public Consumer<Integer> ballNumberDrawn() {
-        return ballNumber -> frequencyOfBallNumbers.numberOccurrenceObserved(ballNumber);
+        return frequencyOfBallNumbers::numberOccurrenceObserved;
     }
 
     public Integer getBallNumberFrequency(Integer ballNumber) {

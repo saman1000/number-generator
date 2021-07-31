@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class MegaExtractor {
-    private static Pattern numberPattern = Pattern.compile("(\\d+)");
+    private static final Pattern numberPattern = Pattern.compile("(\\d+)");
 
     public static PriorMegaMillionsResult extractResult(String[] oneResultStr) {
         List<Integer> numbers = getMainNumbers(oneResultStr[1]).collect(Collectors.toList());

@@ -12,11 +12,11 @@ import java.nio.file.Paths;
 @Component
 public class PrioriResultsConstructor {
 
-    private ResultsReader resultsReader;
+    private final ResultsReader resultsReader;
 
-    private String filePath;
+    private final String filePath;
 
-    private String resultsPattern;
+    private final String resultsPattern;
 
     public PrioriResultsConstructor(ResultsReader megResultsReader, Config megaConfig) {
         this.resultsReader = megResultsReader;

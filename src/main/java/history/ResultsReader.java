@@ -13,23 +13,15 @@ import java.util.regex.MatchResult;
  * create frequency for each ball number
  */
 @Component("megaResultsReader")
-public class ResultsReader {
+public record ResultsReader(MegaFrequencyContainer megaFrequencyContainer) {
 
-    private static Logger logger = LoggerFactory.getLogger(ResultsReader.class);
-
-    private MegaFrequencyContainer megaFrequencyContainer;
-
-    ResultsReader(MegaFrequencyContainer megaFrequencyContainer) {
-        this.megaFrequencyContainer = megaFrequencyContainer;
-    }
+    private static final Logger logger = LoggerFactory.getLogger(ResultsReader.class);
 
     public void readLinesUsingScanner(Readable readable, String patternString) {
-        try (Scanner scanner = new Scanner(readable);) {
+        try (Scanner scanner = new Scanner(readable)) {
             scanner
                     .findAll(patternString)
-                    .forEach(matchResult -> {
-                        updateFrequency(matchResult);
-                    })
+                    .forEach(this::updateFrequency)
             ;
         }
     }
