@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Random;
 
+@SuppressWarnings("unused")
 @Configuration
 @ConfigurationProperties(prefix = "mega")
 @Getter

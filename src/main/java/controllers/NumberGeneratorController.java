@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import restmodels.SetsOfNumbers;
 
+@SuppressWarnings("unused")
 @RestController
 public record NumberGeneratorController(MegaChanceRecordGenerator megaNumberGeneratorService) {
 

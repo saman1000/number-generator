@@ -23,8 +23,8 @@ public class PriorMegaMillionsResult implements Serializable {
 
     private static final Integer expectedNumbers = 5;
 
-    public PriorMegaMillionsResult(String drwanDate, List<Integer> drawnNumbers, Integer ballNumber) {
-        this.drawnDate = drwanDate;
+    public PriorMegaMillionsResult(String drawnDate, List<Integer> drawnNumbers, Integer ballNumber) {
+        this.drawnDate = drawnDate;
 
         //there is no need to check whether a number is duplicated or not as the
         //sorted set will not add the duplicate numbers
