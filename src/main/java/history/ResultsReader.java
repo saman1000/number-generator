@@ -43,14 +43,5 @@ public record ResultsReader(MegaFrequencyContainer megaFrequencyContainer) {
         }
     }
 
-    private PriorMegaMillionsResult addOneResult(MatchResult matchResult) {
-        String[] groups = new String[matchResult.groupCount()];
-        for (int counter = groups.length - 1; counter >= 0; counter--) {
-            groups[counter] = matchResult.group(counter + 1).trim();
-        }
-
-        return MegaExtractor.extractResult(groups);
-    }
-
 }
 
