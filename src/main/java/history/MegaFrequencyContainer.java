@@ -36,11 +36,11 @@ public class MegaFrequencyContainer {
     }
 
     public NavigableMap<Integer, Integer> getBallNumberChanceMap() {
-        return frequencyOfBallNumbers.getChanceMap();
+        return frequencyOfBallNumbers.getSwappedChanceMap();
     }
 
     public NavigableMap<Integer, Integer> getMainNumbersChanceMap() {
-        return frequencyOfMainNumbers.getChanceMap();
+        return frequencyOfMainNumbers.getSwappedChanceMap();
     }
 
 }

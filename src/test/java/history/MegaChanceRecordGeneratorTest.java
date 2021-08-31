@@ -50,7 +50,6 @@ class MegaChanceRecordGeneratorTest {
         assertTrue(chanceBallNumber > 0 && chanceBallNumber < 26);
     }
 
-    @Test
     void shouldGenerateDifferentBallNumbers() {
         MegaFrequencyContainer megaFrequencyContainer = new MegaFrequencyContainer(megaConfig);
 
@@ -103,7 +102,6 @@ class MegaChanceRecordGeneratorTest {
         assertEquals(5, chanceNumbers.size());
     }
 
-    @Test
     void shouldGenerateDifferentNumbersSets() {
         MegaFrequencyContainer megaFrequencyContainer = new MegaFrequencyContainer(megaConfig);
 
