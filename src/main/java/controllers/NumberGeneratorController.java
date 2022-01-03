@@ -8,13 +8,14 @@ import restmodels.SetsOfNumbers;
 
 @SuppressWarnings("unused")
 @RestController
-public record NumberGeneratorController(MegaChanceRecordGenerator megaNumberGeneratorService) {
+public record NumberGeneratorController(
+        MegaChanceRecordGenerator megaNumberGeneratorService) {
 
     @GetMapping("/generate")
-    public SetsOfNumbers[] generateNumbers(@RequestParam int numberOfSets) {
+    public SetsOfNumbers[] generateNumbers(final @RequestParam int numberOfSets) {
         SetsOfNumbers[] generatedNumberSets = new SetsOfNumbers[numberOfSets];
-        for (int counter=numberOfSets; counter > 0; counter--) {
-            generatedNumberSets[counter-1] =
+        for (int counter = numberOfSets; counter > 0; counter--) {
+            generatedNumberSets[counter - 1] =
                     new SetsOfNumbers(
                             megaNumberGeneratorService.generateMainNumbers(),
                             megaNumberGeneratorService.generateBallNumber()
