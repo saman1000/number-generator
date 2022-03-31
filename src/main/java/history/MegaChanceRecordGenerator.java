@@ -35,7 +35,7 @@ public class MegaChanceRecordGenerator {
         for (int counter = 0; counter < 5; counter++) {
             Integer oneNumber;
             do {
-                oneNumber = chanceMap.ceilingEntry(chanceGenerator.nextInt(total)).getValue();
+                oneNumber = chanceMap.ceilingEntry(chanceGenerator.nextInt(total)).getKey();
             } while (generatedNumbers.contains(oneNumber));
             generatedNumbers.add(oneNumber);
         }

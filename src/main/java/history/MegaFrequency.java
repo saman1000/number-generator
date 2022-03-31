@@ -1,8 +1,13 @@
 package history;
 
-import org.springframework.util.LinkedMultiValueMap;
-
-import java.util.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.NavigableMap;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 public class MegaFrequency {
 
@@ -40,42 +45,32 @@ public class MegaFrequency {
     public NavigableMap<Integer, Integer> getSwappedChanceMap() {
         NavigableMap<Integer, Integer> chanceMap = new TreeMap<>();
 
-        LinkedMultiValueMap<Integer, Integer> multiValueMap = new LinkedMultiValueMap<>();
-
-        for (int counter = 0; counter < frequencies.length; ) {
-            multiValueMap.add(frequencies[counter], ++counter);
+        Map<Integer, Integer> frequencyMap = new HashMap<>();
+        for (int counter = 0; counter < frequencies.length; counter++) {
+            frequencyMap.put(counter + 1, frequencies[counter]);
+        }
+        Comparator<Map.Entry<Integer, Integer>> entryComparator = Map.Entry.comparingByValue(Comparator.naturalOrder());
+        List<Map.Entry<Integer, Integer>> list = frequencyMap.entrySet().stream()
+                .sorted(entryComparator)
+                .collect(Collectors.toList());
+        HashMap<Integer, Integer> swappedMap = new HashMap<>();
+        while (list.size() >= 2) {
+            Map.Entry<Integer, Integer> lowest = list.remove(0);
+            Map.Entry<Integer, Integer> highest = list.remove(list.size() - 1);
+            swappedMap.put(lowest.getKey(), highest.getValue());
+            swappedMap.put(highest.getKey(), lowest.getValue());
+        }
+        if (!list.isEmpty()) {
+            Map.Entry<Integer, Integer> last = list.remove(0);
+            swappedMap.put(last.getKey(), last.getValue());
         }
 
-        TreeMap<Integer, Collection<Integer>> treeMap = new TreeMap<>(multiValueMap);
-
-        LinkedList<AbstractMap.SimpleEntry<Integer, Collection<Integer>>> listOfEntries =  new LinkedList<>();
-        while (!treeMap.isEmpty()) {
-            swapAndAddEntries(
-                    listOfEntries,
-                    treeMap.pollFirstEntry(),
-                    treeMap.pollLastEntry());
+        int sum = 0;
+        for (Map.Entry<Integer, Integer> oneEntry: swappedMap.entrySet()) {
+            sum += oneEntry.getValue();
+            chanceMap.put(oneEntry.getKey(), sum);
         }
-
-        listOfEntries.forEach(entry ->
-            entry.getValue().forEach(
-                    number ->
-                            chanceMap.put(entry.getKey() + (chanceMap.isEmpty() ? 0 : chanceMap.lastKey()), number))
-        );
 
         return chanceMap;
-    }
-
-    private void swapAndAddEntries(LinkedList<AbstractMap.SimpleEntry<Integer, Collection<Integer>>> listOfEntries,
-                            Map.Entry<Integer, Collection<Integer>> left,
-                            Map.Entry<Integer, Collection<Integer>> right) {
-        if (left == null)
-            return;
-
-        if (right == null) {
-            listOfEntries.add(new AbstractMap.SimpleEntry<>(left.getKey(), left.getValue()));
-        } else {
-            listOfEntries.add(new AbstractMap.SimpleEntry<>(left.getKey(), right.getValue()));
-            listOfEntries.add(new AbstractMap.SimpleEntry<>(right.getKey(), left.getValue()));
-        }
     }
 }

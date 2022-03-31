@@ -12,6 +12,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -50,7 +51,8 @@ class MegaChanceRecordGeneratorTest {
         assertTrue(chanceBallNumber > 0 && chanceBallNumber < 26);
     }
 
-    void shouldGenerateDifferentBallNumbers() {
+    @Test
+    void shouldGenerateExpectedVarianceForBallNumbers() {
         MegaFrequencyContainer megaFrequencyContainer = new MegaFrequencyContainer(megaConfig);
 
         int[] randomFrequencies = new Random().ints(25, 1, 500).toArray();
@@ -102,37 +104,59 @@ class MegaChanceRecordGeneratorTest {
         assertEquals(5, chanceNumbers.size());
     }
 
+    @Test
     void shouldGenerateDifferentNumbersSets() {
         MegaFrequencyContainer megaFrequencyContainer = new MegaFrequencyContainer(megaConfig);
 
-        int[] randomFrequencies = new Random().ints(70, 1, 5000).toArray();
+        long[] randomFrequencies = new Random().longs(70, 1, 5000).toArray();
 
+        Map<Integer, Long> map = new HashMap<>();
         for (int counter=0; counter < 70; counter++) {
-            int finalCounter = counter;
-            IntStream.range(0, randomFrequencies[counter])
-                    .forEach( x -> megaFrequencyContainer.mainNumbersDrawn().accept(Stream.of(finalCounter +1)))
+            int finalCounter = counter + 1;
+            LongStream.range(0, randomFrequencies[counter])
+                    .forEach( x -> megaFrequencyContainer.mainNumbersDrawn().accept(Stream.of(finalCounter)))
             ;
+            map.put(finalCounter, randomFrequencies[counter]);
+        }
+
+        Comparator<Map.Entry<Integer, Long>> entryComparator = Map.Entry.comparingByValue(Comparator.naturalOrder());
+        List<Map.Entry<Integer, Long>> list = map.entrySet().stream()
+                .sorted(entryComparator)
+                .collect(Collectors.toList());
+        HashMap<Integer, Long> swappedMap = new HashMap<>();
+        while (list.size() >= 2) {
+            Map.Entry<Integer, Long> lowest = list.remove(0);
+            Map.Entry<Integer, Long> highest = list.remove(list.size() - 1);
+            swappedMap.put(lowest.getKey(), highest.getValue());
+            swappedMap.put(highest.getKey(), lowest.getValue());
+        }
+        if (!list.isEmpty()) {
+            Map.Entry<Integer, Long> last = list.remove(0);
+            swappedMap.put(last.getKey(), last.getValue());
         }
 
         MegaChanceRecordGenerator megaChanceRecordGenerator =
                 new MegaChanceRecordGenerator(megaFrequencyContainer, new Random());
 
         Map<Integer, Long> generatedMainNumbersFrequency = Collections.synchronizedMap(new HashMap<>());
-        IntStream.range(0, Arrays.stream(randomFrequencies).sum())
+        IntStream.range(0, 10000)
                 .parallel()
                 .forEach(x -> {
                     List<Integer> chanceNumbers = megaChanceRecordGenerator.generateMainNumbers();
                     assertEquals(5, chanceNumbers.size());
-                    chanceNumbers.stream().forEach(mainNumber -> {
+                    chanceNumbers.forEach(mainNumber -> {
                         generatedMainNumbersFrequency.merge(mainNumber, 1L, Long::sum);
                     });
                 });
 
-        generatedMainNumbersFrequency.forEach((key, value) -> {
-            int randomFrequency = Math.abs(randomFrequencies[key-1]);
-            long actualFrequency = value*5;
-            assertTrue(randomFrequency - actualFrequency < 1000,
-                    String.format("%s != %s", randomFrequency, actualFrequency)
+        generatedMainNumbersFrequency.forEach((key, actualFrequency) -> {
+            if (!swappedMap.containsKey(key)) {
+                System.out.println();
+            }
+            long randomFrequency = swappedMap.get(key);
+            System.out.println(String.format("%s for %s", actualFrequency - randomFrequency, key));
+            assertTrue(actualFrequency - randomFrequency < 1000,
+                    String.format("%s != %s for %s", randomFrequency, actualFrequency, key)
             );
         });
     }
