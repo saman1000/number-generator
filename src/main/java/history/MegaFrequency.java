@@ -59,6 +59,12 @@ public class MegaFrequency {
             Map.Entry<Integer, Integer> highest = list.remove(list.size() - 1);
             swappedMap.put(lowest.getKey(), highest.getValue());
             swappedMap.put(highest.getKey(), lowest.getValue());
+            while (!list.isEmpty() && list.get(0).getValue().equals(lowest.getValue())) {
+                swappedMap.put(list.remove(0).getKey(), highest.getValue());
+            }
+            while (!list.isEmpty() && list.get(list.size() - 1).getValue().equals(highest.getValue())) {
+                swappedMap.put(list.remove(list.size() - 1).getKey(), lowest.getValue());
+            }
         }
         if (!list.isEmpty()) {
             Map.Entry<Integer, Integer> last = list.remove(0);

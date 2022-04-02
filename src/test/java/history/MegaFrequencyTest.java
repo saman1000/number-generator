@@ -103,12 +103,12 @@ class MegaFrequencyTest {
         assertNotNull(chanceMap);
         HashMap<Integer, Integer> map = new HashMap<>();
 
-        chanceMap.forEach((chance, value) -> {
-            Integer number = chanceMap.get(chance);
-            map.put(
-                    number - 1,
-                    chanceMap.firstKey().equals(chance) ? chance - 1 : chance - chanceMap.lowerKey(chance) - 1);
-        });
+        chanceMap.forEach((mainNumber, chance) -> map.put(
+                mainNumber - 1,
+                chanceMap.firstKey().equals(mainNumber)
+                        ? chance - 1
+                        : chance - chanceMap.lowerEntry(mainNumber).getValue() - 1)
+        );
 
         map.forEach((key, value) -> assertEquals(value, expectedChance[key]));
     }
