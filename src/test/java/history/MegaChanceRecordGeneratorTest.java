@@ -37,11 +37,11 @@ class MegaChanceRecordGeneratorTest {
         int[] randomFrequencies = new Random().ints(25, 1, 500).toArray();
         IntStream.range(1, 26)
                 .parallel()
-                .forEach(x -> {
-                    IntStream.iterate(0, counter -> counter < randomFrequencies[x - 1], counter -> counter + 1)
-                            .forEach(y -> megaFrequencyContainer.ballNumberDrawn().accept(x))
-                    ;
-                })
+                .forEach(
+                        x -> IntStream.iterate(
+                                0, counter -> counter < randomFrequencies[x - 1], counter -> counter + 1)
+                                .forEach(y -> megaFrequencyContainer.ballNumberDrawn().accept(x))
+                )
         ;
 
         MegaChanceRecordGenerator megaChanceRecordGenerator =
@@ -58,11 +58,10 @@ class MegaChanceRecordGeneratorTest {
         int[] randomFrequencies = new Random().ints(25, 1, 500).toArray();
         IntStream.range(1, 26)
                 .parallel()
-                .forEach(x -> {
+                .forEach(x ->
                     IntStream.iterate(0, counter -> counter < randomFrequencies[x - 1], counter -> counter + 1)
                             .forEach(y -> megaFrequencyContainer.ballNumberDrawn().accept(x))
-                    ;
-                })
+                )
         ;
 
         MegaChanceRecordGenerator megaChanceRecordGenerator =
@@ -78,10 +77,10 @@ class MegaChanceRecordGeneratorTest {
         Map<Integer, Long> chanceFrequencyMap = generatedBallNumbers.parallelStream()
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
-        chanceFrequencyMap.forEach((key, value) -> {
+        chanceFrequencyMap.forEach((key, value) ->
             assertTrue(Math.abs(randomFrequencies[key-1] - value) < 100,
-                    String.format("random frequency is %s while value is %s", randomFrequencies[key-1], value));
-        });
+                    String.format("random frequency is %s while value is %s", randomFrequencies[key-1], value))
+        );
     }
 
     @Test
@@ -144,9 +143,9 @@ class MegaChanceRecordGeneratorTest {
                 .forEach(x -> {
                     List<Integer> chanceNumbers = megaChanceRecordGenerator.generateMainNumbers();
                     assertEquals(5, chanceNumbers.size());
-                    chanceNumbers.forEach(mainNumber -> {
-                        generatedMainNumbersFrequency.merge(mainNumber, 1L, Long::sum);
-                    });
+                    chanceNumbers.forEach(mainNumber ->
+                        generatedMainNumbersFrequency.merge(mainNumber, 1L, Long::sum)
+                    );
                 });
 
         generatedMainNumbersFrequency.forEach((key, actualFrequency) -> {
@@ -154,7 +153,6 @@ class MegaChanceRecordGeneratorTest {
                 System.out.println();
             }
             long randomFrequency = swappedMap.get(key);
-            System.out.println(String.format("%s for %s", actualFrequency - randomFrequency, key));
             assertTrue(actualFrequency - randomFrequency < 1000,
                     String.format("%s != %s for %s", randomFrequency, actualFrequency, key)
             );

@@ -1,17 +1,14 @@
 package history;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.NavigableMap;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class MegaFrequency {
 
     private final Integer[] frequencies;
+
+    private NavigableMap<Integer, Integer> cachedChanceMap;
+    private NavigableMap<Integer, Integer> cachedSwappedChanceMap;
 
     public MegaFrequency(int highest) {
         frequencies = new Integer[highest];
@@ -31,19 +28,27 @@ public class MegaFrequency {
         return frequencies[number - 1];
     }
 
-    public NavigableMap<Integer, Integer> getChanceMap() {
-        NavigableMap<Integer, Integer> chanceMap = new TreeMap<>();
+    public synchronized NavigableMap<Integer, Integer> getChanceMap() {
+        return Optional.ofNullable(cachedChanceMap).orElseGet(this::getCachedChanceMap);
+    }
+
+    private NavigableMap<Integer, Integer> getCachedChanceMap() {
+        cachedChanceMap = new TreeMap<>();
 
         for (int counter = 0, sum = 0; counter < frequencies.length; ) {
             sum += frequencies[counter];
-            chanceMap.put(sum, ++counter);
+            cachedChanceMap.put(sum, ++counter);
         }
 
-        return chanceMap;
+        return cachedChanceMap;
     }
 
     public NavigableMap<Integer, Integer> getSwappedChanceMap() {
-        NavigableMap<Integer, Integer> chanceMap = new TreeMap<>();
+        return Optional.ofNullable(cachedSwappedChanceMap).orElseGet(this::getCachedSwappedChanceMap);
+    }
+
+    private NavigableMap<Integer, Integer> getCachedSwappedChanceMap() {
+        this.cachedSwappedChanceMap = new TreeMap<>();
 
         Map<Integer, Integer> frequencyMap = new HashMap<>();
         for (int counter = 0; counter < frequencies.length; counter++) {
@@ -74,9 +79,9 @@ public class MegaFrequency {
         int sum = 0;
         for (Map.Entry<Integer, Integer> oneEntry: swappedMap.entrySet()) {
             sum += oneEntry.getValue();
-            chanceMap.put(oneEntry.getKey(), sum);
+            this.cachedSwappedChanceMap.put(oneEntry.getKey(), sum);
         }
 
-        return chanceMap;
+        return this.cachedSwappedChanceMap;
     }
 }
