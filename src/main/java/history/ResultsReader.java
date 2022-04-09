@@ -24,6 +24,7 @@ public record ResultsReader(MegaFrequencyContainer megaFrequencyContainer) {
                     .forEach(this::updateFrequency)
             ;
         }
+        logger.info(String.format("read %s records", megaFrequencyContainer.getNumberOfAcceptedRecords()));
     }
 
     private void updateFrequency(MatchResult matchResult) {
@@ -38,6 +39,7 @@ public record ResultsReader(MegaFrequencyContainer megaFrequencyContainer) {
                             .orElseThrow(
                                     () -> new IllegalStateException(String.format("No valid ball number: %s", groups[2])))
             );
+            megaFrequencyContainer.acceptedOneRecord();
         } catch (InvalidMegaNumberException ex) {
             logger.warn(String.format("failed to parse %s, %s because %s", groups[1], groups[2], ex.getMessage()));
         }

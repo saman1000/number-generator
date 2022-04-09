@@ -10,6 +10,8 @@ import java.util.stream.Stream;
 @Component
 public class MegaFrequencyContainer {
 
+    private long numberOfAcceptedRecords;
+
     private final MegaFrequency frequencyOfMainNumbers;
 
     private final MegaFrequency frequencyOfBallNumbers;
@@ -17,6 +19,7 @@ public class MegaFrequencyContainer {
     public MegaFrequencyContainer(Config megaConfig) {
         frequencyOfMainNumbers = new MegaFrequency(megaConfig.getMaxMainNumberValue());
         frequencyOfBallNumbers = new MegaFrequency(megaConfig.getMaxBallNumberValue());
+        numberOfAcceptedRecords = 0;
     }
 
     public Consumer<Stream<Integer>> mainNumbersDrawn() {
@@ -41,6 +44,14 @@ public class MegaFrequencyContainer {
 
     public NavigableMap<Integer, Integer> getMainNumbersChanceMap() {
         return frequencyOfMainNumbers.getSwappedChanceMap();
+    }
+
+    public void acceptedOneRecord() {
+        numberOfAcceptedRecords++;
+    }
+
+    public long getNumberOfAcceptedRecords() {
+        return numberOfAcceptedRecords;
     }
 
 }
