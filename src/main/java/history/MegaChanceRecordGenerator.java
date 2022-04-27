@@ -21,14 +21,14 @@ public class MegaChanceRecordGenerator {
         this.chanceGenerator = megaRandomNumberGenerator;
     }
 
-    public Integer generateBallNumber() {
+    public synchronized Integer generateBallNumber() {
         NavigableMap<Integer, Integer> chanceMap = megaFrequencyContainer.getBallNumberChanceMap();
         int total = chanceMap.lastKey();
         int chance = chanceGenerator.nextInt(total);
         return chanceMap.ceilingEntry(chance).getValue();
     }
 
-    public List<Integer> generateMainNumbers() {
+    public synchronized List<Integer> generateMainNumbers() {
         NavigableMap<Integer, Integer> chanceMap = megaFrequencyContainer.getMainNumbersChanceMap();
         int total = chanceMap.lastKey();
         List<Integer> generatedNumbers = new ArrayList<>();
