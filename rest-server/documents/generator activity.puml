@@ -1,0 +1,21 @@
+@startuml
+
+|PastFrequencies|
+start
+:parse past results;
+skinparam ConditionEndStyle hline
+if (any errors) then (yes)
+    #red:report errors;
+else (no)
+endif
+#green:calculate frequency of numbers;
+
+|ChanceGenerator|
+#green:generate chance cache;
+#skyblue:use chance cache and random number;
+#skyblue:return generated chance numbers;
+
+|PastFrequencies|
+stop
+
+@enduml

@@ -45,8 +45,8 @@ class MegaExtractorTest {
     @ParameterizedTest
     @MethodSource("invalidExpectedResults")
     void shouldFailToExtractOneResult(String[] parameters) {
-        Assertions.assertThrows(IllegalStateException.class, () -> {
-            MegaExtractor.extractResult(parameters);
-        });
+        Assertions.assertThrows(IllegalStateException.class, () ->
+            MegaExtractor.extractResult(parameters)
+        );
     }
 }

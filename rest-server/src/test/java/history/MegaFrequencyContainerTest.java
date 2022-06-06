@@ -33,11 +33,10 @@ class MegaFrequencyContainerTest {
         int[] randomFrequencies = new Random().ints(25, 1, 500).toArray();
         IntStream.range(1, 26)
                 .parallel()
-                .forEach(x -> {
+                .forEach(x ->
                     IntStream.iterate(0, counter -> counter < randomFrequencies[x - 1], counter -> counter + 1)
                             .forEach(y -> megaFrequencyContainer.ballNumberDrawn().accept(x))
-                    ;
-                })
+                )
         ;
 
         for (int counter = 0; counter < randomFrequencies.length; counter++) {
@@ -55,15 +54,15 @@ class MegaFrequencyContainerTest {
 
         IntStream.range(1, 70 / 5 + 1)
                 .parallel()
-                .forEach(x -> {
+                .forEach(x ->
                     IntStream.range(0, randomFrequencies[x - 1])
                             .forEach(y -> megaFrequencyContainer
                                     .mainNumbersDrawn()
                                     .accept(
                                             Stream.iterate(
                                                     x * 5, counter -> counter > x * 5 - 5, counter -> counter - 1)
-                                    ));
-                })
+                                    ))
+                )
         ;
 
         for (int counter = 0; counter < randomFrequencies.length; counter++) {

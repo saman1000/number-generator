@@ -17,12 +17,14 @@ class ResultsReaderTest {
 
     @Test
     void testFrequencies(@Qualifier("megaResultsReader") ResultsReader megaResultsReader, @Qualifier("megaFrequencyContainer") MegaFrequencyContainer megaFrequencyContainer) {
-        Readable lines = new StringReader("Results for Mega Millions\n" +
-                "3/26/2021; 4,25,37,46,67; Mega Ball: 15\n" +
-                "12/11/2020; 19,31,37,55,67; Mega Ball: 25\n" +
-                "3/26/2021; 4,25,37,46,67; Mega Ball: 15\n"+
-                "All information is entered manually, and is subject to human error. \n" +
-                "Therefore, we can not guarantee the accuracy of this information.");
+        Readable lines = new StringReader("""
+                Results for Mega Millions
+                3/26/2021; 4,25,37,46,67; Mega Ball: 15
+                12/11/2020; 19,31,37,55,67; Mega Ball: 25
+                3/26/2021; 4,25,37,46,67; Mega Ball: 15
+                All information is entered manually, and is subject to human error.
+                Therefore, we can not guarantee the accuracy of this information.
+                """);
         megaResultsReader.readLinesUsingScanner(lines, "(.*);(.*);(.*)");
 
         assertEquals(3, megaFrequencyContainer.getBallNumberFrequency(15));
