@@ -20,9 +20,9 @@
             </roles>
         </developer>
     </developers>
-
     <modules>
         <module>rest-server</module>
+        <module>number-common</module>
     </modules>
 
     <scm>
