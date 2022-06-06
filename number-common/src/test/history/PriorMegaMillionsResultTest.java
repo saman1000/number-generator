@@ -6,10 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 
 /**
@@ -41,22 +38,22 @@ public class PriorMegaMillionsResultTest {
     @ParameterizedTest
     @MethodSource("wrongNumberArrays")
     public void testWrongValues(String date, List<Integer> numberStream, Integer oneInteger) {
-        Assertions.assertThrows(IllegalStateException.class, () -> {
-            new PriorMegaMillionsResult("2010, 12, 29", numberStream, oneInteger);
-        });
+        Assertions.assertThrows(IllegalStateException.class, () ->
+            new PriorMegaMillionsResult("2010, 12, 29", numberStream, oneInteger)
+        );
     }
 
     private static Stream<Arguments> wrongNumberArrays() {
         return Stream.of(
                 Arguments.of("2010, 12, 29", Arrays.asList(1, 2, 3, 4, 5, 6), 7),
                 Arguments.of("2010, 12, 29", Arrays.asList(1, 2, 3, 4), 7),
-                Arguments.of("2010, 12, 29", Arrays.asList(), 7)
+                Arguments.of("2010, 12, 29", Collections.emptyList(), 7)
         );
     }
 
     @Test
     public void testAddingTwoResults() {
-        ArrayList<Integer> allNumbers = new ArrayList<Integer>(14);
+        ArrayList<Integer> allNumbers = new ArrayList<>(14);
         PriorMegaMillionsResult result1 =
                 new PriorMegaMillionsResult("2010, 12, 29", Arrays.asList(1, 2, 3, 4, 5), 6);
         PriorMegaMillionsResult result2 =
@@ -65,7 +62,7 @@ public class PriorMegaMillionsResultTest {
         result1.addResults(allNumbers);
         result2.addResults(allNumbers);
 
-        Integer expectedNumberArray[] = {1, 2, 3, 4, 5, 1, 2, 3, 4, 5};
+        Integer[] expectedNumberArray = {1, 2, 3, 4, 5, 1, 2, 3, 4, 5};
         Collection<Integer> expectedNumbers = Arrays.asList(expectedNumberArray);
         Assertions.assertEquals(expectedNumbers, allNumbers);
     }
@@ -77,8 +74,8 @@ public class PriorMegaMillionsResultTest {
         PriorMegaMillionsResult result2 =
                 new PriorMegaMillionsResult("2010, 12, 29", Arrays.asList(1, 2, 3, 4, 5), 7);
 
-        Assertions.assertThrows(IllegalStateException.class, () -> {
-            result1.equals(result2);
-        });
+        Assertions.assertThrows(IllegalStateException.class, () ->
+            result1.equals(result2)
+        );
     }
 }
