@@ -1,0 +1,15 @@
+spring:
+  config:
+    activate:
+      on-profile: rest
+
+logging:
+  level:
+    org:
+      springframework: WARN
+
+mega:
+  filepath: files/MegaMillions.txt
+
+server:
+  port: 10001
