@@ -1,6 +1,6 @@
 package history;
 
-import mega.Config;
+import mega.MegaConfig;
 import org.springframework.stereotype.Component;
 
 import java.util.NavigableMap;
@@ -16,7 +16,7 @@ public class MegaFrequencyContainer {
 
     private final MegaFrequency frequencyOfBallNumbers;
 
-    public MegaFrequencyContainer(Config megaConfig) {
+    public MegaFrequencyContainer(MegaConfig megaConfig) {
         frequencyOfMainNumbers = new MegaFrequency(megaConfig.getMaxMainNumberValue());
         frequencyOfBallNumbers = new MegaFrequency(megaConfig.getMaxBallNumberValue());
         numberOfAcceptedRecords = 0;

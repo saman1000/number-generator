@@ -18,6 +18,7 @@
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>
         <maven.compiler.release>16</maven.compiler.release>
+        <build.plugins.plugin.version>3.10.1</build.plugins.plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -67,6 +68,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.7.0</version>
                 <configuration>
                     <addResources>true</addResources>
                 </configuration>

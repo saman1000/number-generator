@@ -1,7 +1,7 @@
 package results;
 
 import history.ResultsReader;
-import mega.Config;
+import mega.MegaConfig;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -19,7 +19,7 @@ public class PrioriResultsConstructor {
 
     private final String resultsPattern;
 
-    public PrioriResultsConstructor(ResultsReader megResultsReader, Config megaConfig) {
+    public PrioriResultsConstructor(ResultsReader megResultsReader, MegaConfig megaConfig) {
         this.resultsReader = megResultsReader;
         this.filePath = megaConfig.getFilePath();
         this.resultsPattern = megaConfig.getResultsPattern();
