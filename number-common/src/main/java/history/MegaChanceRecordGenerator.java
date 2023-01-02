@@ -2,10 +2,7 @@ package history;
 
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NavigableMap;
-import java.util.Random;
+import java.util.*;
 
 /**
  * instances of this class generate main and ball numbers based on the frequency of former draws
@@ -40,6 +37,7 @@ public class MegaChanceRecordGenerator {
             generatedNumbers.add(oneNumber);
         }
 
+        Collections.sort(generatedNumbers);
         return generatedNumbers;
     }
 
