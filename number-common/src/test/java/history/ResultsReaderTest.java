@@ -1,6 +1,6 @@
 package history;
 
-import mega.Config;
+import mega.MegaConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(
         value="integration test",
-        classes = {ResultsReader.class, MegaFrequencyContainer.class, MegaExtractor.class, Config.class}
+        classes = {ResultsReader.class, MegaFrequencyContainer.class, MegaExtractor.class, MegaConfig.class}
         )
 class ResultsReaderTest {
 

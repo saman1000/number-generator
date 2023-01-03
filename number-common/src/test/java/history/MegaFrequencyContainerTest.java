@@ -1,6 +1,6 @@
 package history;
 
-import mega.Config;
+import mega.MegaConfig;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ class MegaFrequencyContainerTest {
 
 
     @Mock
-    private Config megaConfig;
+    private MegaConfig megaConfig;
 
     @BeforeEach
     public void initConfig() {

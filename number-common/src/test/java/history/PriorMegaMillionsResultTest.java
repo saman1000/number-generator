@@ -39,7 +39,7 @@ public class PriorMegaMillionsResultTest {
     @MethodSource("wrongNumberArrays")
     public void testWrongValues(String date, List<Integer> numberStream, Integer oneInteger) {
         Assertions.assertThrows(IllegalStateException.class, () ->
-            new PriorMegaMillionsResult("2010, 12, 29", numberStream, oneInteger)
+            new PriorMegaMillionsResult(date, numberStream, oneInteger)
         );
     }
 
