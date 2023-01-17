@@ -1,5 +1,6 @@
 package controllers;
 
+import history.ChanceMethod;
 import history.MegaChanceRecordGenerator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,7 +19,7 @@ public record NumberGeneratorController(
             generatedNumberSets[counter - 1] =
                     new SetsOfNumbers(
                             megaNumberGeneratorService.generateMainNumbers(),
-                            megaNumberGeneratorService.generateBallNumber()
+                            megaNumberGeneratorService.generateBallNumber(ChanceMethod.STRAIGHT)
                     );
         }
 

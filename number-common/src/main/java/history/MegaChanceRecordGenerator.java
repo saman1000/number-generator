@@ -18,15 +18,15 @@ public class MegaChanceRecordGenerator {
         this.chanceGenerator = megaRandomNumberGenerator;
     }
 
-    public synchronized Integer generateBallNumber() {
-        NavigableMap<Integer, Integer> chanceMap = megaFrequencyContainer.getBallNumberChanceMap();
+    public synchronized Integer generateBallNumber(ChanceMethod chanceMethod) {
+        NavigableMap<Integer, Integer> chanceMap = megaFrequencyContainer.getBallNumberChanceMap(chanceMethod);
         int total = chanceMap.lastKey();
         int chance = chanceGenerator.nextInt(total);
         return chanceMap.ceilingEntry(chance).getValue();
     }
 
     public synchronized List<Integer> generateMainNumbers() {
-        NavigableMap<Integer, Integer> chanceMap = megaFrequencyContainer.getMainNumbersChanceMap();
+        NavigableMap<Integer, Integer> chanceMap = megaFrequencyContainer.getMainNumbersChanceMap(ChanceMethod.SWAPPED);
         int total = chanceMap.lastKey();
         List<Integer> generatedNumbers = new ArrayList<>();
         for (int counter = 0; counter < 5; counter++) {

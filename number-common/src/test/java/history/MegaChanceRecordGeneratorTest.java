@@ -47,7 +47,7 @@ class MegaChanceRecordGeneratorTest {
         MegaChanceRecordGenerator megaChanceRecordGenerator =
                 new MegaChanceRecordGenerator(megaFrequencyContainer, new Random());
 
-        int chanceBallNumber = megaChanceRecordGenerator.generateBallNumber();
+        int chanceBallNumber = megaChanceRecordGenerator.generateBallNumber(ChanceMethod.STRAIGHT);
         assertTrue(chanceBallNumber > 0 && chanceBallNumber < 26);
     }
 
@@ -69,7 +69,7 @@ class MegaChanceRecordGeneratorTest {
 
         ArrayList<Integer> generatedBallNumbers =  new ArrayList<>(500);
         for (int counter = Arrays.stream(randomFrequencies).sum(); counter > 0; counter--) {
-            int chanceBallNumber = megaChanceRecordGenerator.generateBallNumber();
+            int chanceBallNumber = megaChanceRecordGenerator.generateBallNumber(ChanceMethod.STRAIGHT);
             assertTrue(chanceBallNumber > 0 && chanceBallNumber < 26);
             generatedBallNumbers.add(chanceBallNumber);
         }

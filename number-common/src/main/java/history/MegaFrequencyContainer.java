@@ -38,12 +38,36 @@ public class MegaFrequencyContainer {
         return frequencyOfMainNumbers.getFrequencyOfNumber(mainNumber);
     }
 
-    public NavigableMap<Integer, Integer> getBallNumberChanceMap() {
-        return frequencyOfBallNumbers.getChanceMap();
+    public NavigableMap<Integer, Integer> getBallNumberChanceMap(ChanceMethod chanceMethod) {
+        switch (chanceMethod) {
+            case STRAIGHT -> {
+                return frequencyOfBallNumbers.getChanceMap();
+            }
+
+            case SWAPPED -> {
+                return frequencyOfBallNumbers.getSwappedChanceMap();
+            }
+
+            case MIXTURE -> throw new UnsupportedOperationException();
+
+            default -> throw new RuntimeException(chanceMethod.toString());
+        }
     }
 
-    public NavigableMap<Integer, Integer> getMainNumbersChanceMap() {
-        return frequencyOfMainNumbers.getSwappedChanceMap();
+    public NavigableMap<Integer, Integer> getMainNumbersChanceMap(ChanceMethod chanceMethod) {
+        switch (chanceMethod) {
+            case STRAIGHT -> {
+                return frequencyOfMainNumbers.getChanceMap();
+            }
+
+            case SWAPPED -> {
+                return frequencyOfMainNumbers.getSwappedChanceMap();
+            }
+
+            case MIXTURE -> throw new UnsupportedOperationException();
+
+            default -> throw new RuntimeException(chanceMethod.toString());
+        }
     }
 
     public void acceptedOneRecord() {
