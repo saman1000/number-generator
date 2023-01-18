@@ -18,8 +18,8 @@ public record NumberGeneratorController(
         for (int counter = numberOfSets; counter > 0; counter--) {
             generatedNumberSets[counter - 1] =
                     new SetsOfNumbers(
-                            megaNumberGeneratorService.generateMainNumbers(ChanceMethod.SWAPPED),
-                            megaNumberGeneratorService.generateBallNumber(ChanceMethod.STRAIGHT)
+                            megaNumberGeneratorService.generateMainNumbers(ChanceMethod.STRAIGHT),
+                            megaNumberGeneratorService.generateBallNumber(ChanceMethod.SWAPPED)
                     );
         }
 
