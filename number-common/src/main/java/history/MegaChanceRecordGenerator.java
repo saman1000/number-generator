@@ -25,8 +25,8 @@ public class MegaChanceRecordGenerator {
         return chanceMap.ceilingEntry(chance).getValue();
     }
 
-    public synchronized List<Integer> generateMainNumbers() {
-        NavigableMap<Integer, Integer> chanceMap = megaFrequencyContainer.getMainNumbersChanceMap(ChanceMethod.SWAPPED);
+    public synchronized List<Integer> generateMainNumbers(ChanceMethod chanceMethod) {
+        NavigableMap<Integer, Integer> chanceMap = megaFrequencyContainer.getMainNumbersChanceMap(chanceMethod);
         int total = chanceMap.lastKey();
         List<Integer> generatedNumbers = new ArrayList<>();
         for (int counter = 0; counter < 5; counter++) {

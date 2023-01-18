@@ -99,7 +99,7 @@ class MegaChanceRecordGeneratorTest {
         MegaChanceRecordGenerator megaChanceRecordGenerator =
                 new MegaChanceRecordGenerator(megaFrequencyContainer, new Random());
 
-        List<Integer> chanceNumbers = megaChanceRecordGenerator.generateMainNumbers();
+        List<Integer> chanceNumbers = megaChanceRecordGenerator.generateMainNumbers(ChanceMethod.SWAPPED);
         assertEquals(5, chanceNumbers.size());
     }
 
@@ -141,7 +141,7 @@ class MegaChanceRecordGeneratorTest {
         IntStream.range(0, 10000)
                 .parallel()
                 .forEach(x -> {
-                    List<Integer> chanceNumbers = megaChanceRecordGenerator.generateMainNumbers();
+                    List<Integer> chanceNumbers = megaChanceRecordGenerator.generateMainNumbers(ChanceMethod.SWAPPED);
                     assertEquals(5, chanceNumbers.size());
                     chanceNumbers.forEach(mainNumber ->
                         generatedMainNumbersFrequency.merge(mainNumber, 1L, Long::sum)
