@@ -22,9 +22,7 @@ public class MegaChanceRecordGenerator {
         NavigableMap<Integer, Integer> chanceMap = megaFrequencyContainer.getBallNumberChanceMap(chanceMethod);
         int total = chanceMap.lastKey();
         int chance = chanceGenerator.nextInt(total);
-        return ChanceMethod.STRAIGHT.equals(chanceMethod)
-                ? chanceMap.ceilingEntry(chance).getValue()
-                : chanceMap.ceilingEntry(chance).getKey();
+        return chanceMap.ceilingEntry(chance).getValue();
     }
 
     public synchronized List<Integer> generateMainNumbers(ChanceMethod chanceMethod) {
@@ -35,9 +33,7 @@ public class MegaChanceRecordGenerator {
             Integer oneNumber;
             do {
                 int chance = chanceGenerator.nextInt(total);
-                oneNumber = ChanceMethod.STRAIGHT.equals(chanceMethod)
-                        ? chanceMap.ceilingEntry(chance).getValue()
-                        : chanceMap.ceilingEntry(chance).getKey();
+                oneNumber = chanceMap.ceilingEntry(chance).getValue();
             } while (generatedNumbers.contains(oneNumber));
             generatedNumbers.add(oneNumber);
         }

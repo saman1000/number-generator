@@ -79,7 +79,7 @@ public class MegaFrequency {
         int sum = 0;
         for (Map.Entry<Integer, Integer> oneEntry: swappedMap.entrySet()) {
             sum += oneEntry.getValue();
-            this.cachedSwappedChanceMap.put(oneEntry.getKey(), sum);
+            this.cachedSwappedChanceMap.put(sum, oneEntry.getKey());
         }
 
         return this.cachedSwappedChanceMap;

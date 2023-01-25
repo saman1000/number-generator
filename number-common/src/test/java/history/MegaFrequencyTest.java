@@ -5,7 +5,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.HashMap;
 import java.util.NavigableMap;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -74,16 +73,16 @@ class MegaFrequencyTest {
 
     private static Stream<Arguments> chanceMapInputOutput2() {
         return Stream.of(
-                Arguments.of(3, new Integer[] {1, 1, 1}, new Integer[] {1, 1, 1}),
-                Arguments.of(3, new Integer[] {1, 0, 1}, new Integer[] {0, 1, 0}),
-                Arguments.of(3, new Integer[] {1, 2, 1}, new Integer[] {2, 1, 2}),
-                Arguments.of(3, new Integer[] {9, 14, 39}, new Integer[] {39, 14, 9}),
+                Arguments.of(3, new Integer[] {1, 1, 1}, new Integer[] {2, 4, 6}),
+                Arguments.of(3, new Integer[] {1, 0, 1}, new Integer[] {1, 3, 4}),
+                Arguments.of(3, new Integer[] {1, 2, 1}, new Integer[] {3, 5, 8}),
+                Arguments.of(3, new Integer[] {9, 14, 39}, new Integer[] {40, 55, 65}),
 
-                Arguments.of(3, new Integer[] {14, 9, 39}, new Integer[] {14, 39, 9}),
-                Arguments.of(5, new Integer[] {9, 14, 40, 58, 69}, new Integer[] {69, 58, 40, 14, 9}),
+                Arguments.of(3, new Integer[] {14, 9, 39}, new Integer[] {15, 55, 65}),
+                Arguments.of(5, new Integer[] {9, 14, 40, 58, 69}, new Integer[] {70, 129, 170, 185, 195}),
                 Arguments.of(10,
                         new Integer[] {1, 2, 3, 1, 2, 3, 2, 1, 30, 10},
-                        new Integer[] {30, 10, 3, 30, 10, 3, 10, 30, 1, 2})
+                        new Integer[] {31, 42, 46, 77, 88, 92, 103, 134, 136, 139})
         );
     }
 
@@ -101,15 +100,9 @@ class MegaFrequencyTest {
                 });
         NavigableMap<Integer, Integer> chanceMap = megaFrequency.getSwappedChanceMap();
         assertNotNull(chanceMap);
-        HashMap<Integer, Integer> map = new HashMap<>();
+        chanceMap.entrySet().stream()
+                .parallel()
+                .forEach(entry -> assertEquals(expectedChance[entry.getValue()-1], entry.getKey()));
 
-        chanceMap.forEach((mainNumber, chance) -> map.put(
-                mainNumber - 1,
-                chanceMap.firstKey().equals(mainNumber)
-                        ? chance - 1
-                        : chance - chanceMap.lowerEntry(mainNumber).getValue() - 1)
-        );
-
-        map.forEach((key, value) -> assertEquals(value, expectedChance[key]));
     }
 }
