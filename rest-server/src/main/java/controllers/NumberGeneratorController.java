@@ -13,13 +13,13 @@ public record NumberGeneratorController(
         MegaChanceRecordGenerator megaNumberGeneratorService) {
 
     @GetMapping("/generate")
-    public SetsOfNumbers[] generateNumbers(final @RequestParam int numberOfSets) {
+    public SetsOfNumbers[] generateNumbers(final @RequestParam int numberOfSets, final @RequestParam ChanceMethod chanceMethod) {
         SetsOfNumbers[] generatedNumberSets = new SetsOfNumbers[numberOfSets];
         for (int counter = numberOfSets; counter > 0; counter--) {
             generatedNumberSets[counter - 1] =
                     new SetsOfNumbers(
-                            megaNumberGeneratorService.generateMainNumbers(ChanceMethod.STRAIGHT),
-                            megaNumberGeneratorService.generateBallNumber(ChanceMethod.STRAIGHT)
+                            megaNumberGeneratorService.generateMainNumbers(chanceMethod),
+                            megaNumberGeneratorService.generateBallNumber(chanceMethod)
                     );
         }
 
