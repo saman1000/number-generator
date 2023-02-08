@@ -19,7 +19,7 @@ public record NumberGeneratorController(
             generatedNumberSets[counter - 1] =
                     new SetsOfNumbers(
                             megaNumberGeneratorService.generateMainNumbers(chanceMethod),
-                            megaNumberGeneratorService.generateBallNumber(chanceMethod)
+                            megaNumberGeneratorService.generateBallNumber(chanceMethod, 1)[0]
                     );
         }
 

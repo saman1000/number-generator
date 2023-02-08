@@ -31,7 +31,7 @@ class MegaChanceRecordGeneratorTest {
     }
 
     @Test
-    void shouldGenerateOneBallNumber() {
+    void shouldGenerateTenBallNumbers() {
         MegaFrequencyContainer megaFrequencyContainer = new MegaFrequencyContainer(megaConfig);
 
         int[] randomFrequencies = new Random().ints(25, 1, 500).toArray();
@@ -39,7 +39,7 @@ class MegaChanceRecordGeneratorTest {
                 .parallel()
                 .forEach(
                         x -> IntStream.iterate(
-                                0, counter -> counter < randomFrequencies[x - 1], counter -> counter + 1)
+                                        0, counter -> counter < randomFrequencies[x - 1], counter -> counter + 1)
                                 .forEach(y -> megaFrequencyContainer.ballNumberDrawn().accept(x))
                 )
         ;
@@ -47,8 +47,11 @@ class MegaChanceRecordGeneratorTest {
         MegaChanceRecordGenerator megaChanceRecordGenerator =
                 new MegaChanceRecordGenerator(megaFrequencyContainer, new Random());
 
-        int chanceBallNumber = megaChanceRecordGenerator.generateBallNumber(ChanceMethod.STRAIGHT);
-        assertTrue(chanceBallNumber > 0 && chanceBallNumber < 26);
+        Integer[] generatedBallNumberSet = megaChanceRecordGenerator.generateBallNumber(ChanceMethod.STRAIGHT, 10);
+        Arrays.stream(generatedBallNumberSet)
+                        .forEach(
+                                ballNumber -> assertTrue(ballNumber > 0 && ballNumber < 26)
+                        );
     }
 
     @Test
@@ -69,7 +72,7 @@ class MegaChanceRecordGeneratorTest {
 
         ArrayList<Integer> generatedBallNumbers =  new ArrayList<>(500);
         for (int counter = Arrays.stream(randomFrequencies).sum(); counter > 0; counter--) {
-            int chanceBallNumber = megaChanceRecordGenerator.generateBallNumber(ChanceMethod.STRAIGHT);
+            int chanceBallNumber = megaChanceRecordGenerator.generateBallNumber(ChanceMethod.STRAIGHT, 1)[0];
             assertTrue(chanceBallNumber > 0 && chanceBallNumber < 26);
             generatedBallNumbers.add(chanceBallNumber);
         }
