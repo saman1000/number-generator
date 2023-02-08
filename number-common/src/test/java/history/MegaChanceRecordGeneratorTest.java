@@ -70,7 +70,6 @@ class MegaChanceRecordGeneratorTest {
         MegaChanceRecordGenerator megaChanceRecordGenerator =
                 new MegaChanceRecordGenerator(megaFrequencyContainer, new Random());
 
-        ArrayList<Integer> generatedBallNumbers =  new ArrayList<>(500);
         Integer[] ballNumbers = megaChanceRecordGenerator.generateBallNumber(ChanceMethod.STRAIGHT,
                 Arrays.stream(randomFrequencies).sum());
         Map<Integer, Long> chanceFrequencyMap = Arrays.stream(ballNumbers)
@@ -84,7 +83,8 @@ class MegaChanceRecordGeneratorTest {
     }
 
     @Test
-    void shouldGenerateOneMainNumbersSet() {
+    void shouldGenerateExpectedMainNumbersSet() {
+        int expectedSets = 10;
         MegaFrequencyContainer megaFrequencyContainer = new MegaFrequencyContainer(megaConfig);
 
         int[] randomFrequencies = new Random().ints(70, 1, 5000).toArray();
@@ -99,8 +99,10 @@ class MegaChanceRecordGeneratorTest {
         MegaChanceRecordGenerator megaChanceRecordGenerator =
                 new MegaChanceRecordGenerator(megaFrequencyContainer, new Random());
 
-        List<Integer> chanceNumbers = megaChanceRecordGenerator.generateMainNumbers(ChanceMethod.SWAPPED);
-        assertEquals(5, chanceNumbers.size());
+        List<Integer>[] generatedNumbers = megaChanceRecordGenerator.generateMainNumbers(ChanceMethod.SWAPPED, expectedSets);
+        assertEquals(expectedSets, generatedNumbers.length);
+        Arrays.stream(generatedNumbers)
+                .forEach(oneMainNumberSet -> assertEquals(5, oneMainNumberSet.size()));
     }
 
     @Test
@@ -141,7 +143,7 @@ class MegaChanceRecordGeneratorTest {
         IntStream.range(0, 10000)
                 .parallel()
                 .forEach(x -> {
-                    List<Integer> chanceNumbers = megaChanceRecordGenerator.generateMainNumbers(ChanceMethod.SWAPPED);
+                    List<Integer> chanceNumbers = megaChanceRecordGenerator.generateMainNumbers(ChanceMethod.SWAPPED, 1)[0];
                     assertEquals(5, chanceNumbers.size());
                     chanceNumbers.forEach(mainNumber ->
                         generatedMainNumbersFrequency.merge(mainNumber, 1L, Long::sum)

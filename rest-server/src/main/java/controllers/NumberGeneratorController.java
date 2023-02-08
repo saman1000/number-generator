@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import restmodels.SetsOfNumbers;
 
+import java.util.List;
+
 @SuppressWarnings("unused")
 @RestController
 public record NumberGeneratorController(
@@ -15,12 +17,12 @@ public record NumberGeneratorController(
     @GetMapping("/generate")
     public SetsOfNumbers[] generateNumbers(final @RequestParam int numberOfSets, final @RequestParam ChanceMethod chanceMethod) {
         SetsOfNumbers[] generatedNumberSets = new SetsOfNumbers[numberOfSets];
-        for (int counter = numberOfSets; counter > 0; counter--) {
-            generatedNumberSets[counter - 1] =
-                    new SetsOfNumbers(
-                            megaNumberGeneratorService.generateMainNumbers(chanceMethod),
-                            megaNumberGeneratorService.generateBallNumber(chanceMethod, 1)[0]
-                    );
+        List<Integer>[] generatedMainNumberSets = megaNumberGeneratorService.generateMainNumbers(chanceMethod, numberOfSets);
+        Integer[] generatedBallNumbers = megaNumberGeneratorService.generateBallNumber(chanceMethod, numberOfSets);
+
+        for (int counter = 0; counter < numberOfSets; counter++) {
+            generatedNumberSets[counter] =
+                    new SetsOfNumbers(generatedMainNumberSets[counter], generatedBallNumbers[counter]);
         }
 
         return generatedNumberSets;

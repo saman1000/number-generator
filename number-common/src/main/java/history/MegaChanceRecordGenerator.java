@@ -29,10 +29,10 @@ public class MegaChanceRecordGenerator {
         return ballNumbers;
     }
 
-    public synchronized List<Integer> generateMainNumbers(ChanceMethod chanceMethod) {
-        NavigableMap<Integer, Integer> chanceMap = megaFrequencyContainer.getMainNumbersChanceMap(chanceMethod);
-        int total = chanceMap.lastKey();
-        List<Integer> generatedNumbers = new ArrayList<>();
+    private List<Integer> generateOneMainNumberSet(
+            NavigableMap<Integer, Integer> chanceMap,
+            int total) {
+        List<Integer> generatedNumbers = new ArrayList<>(5);
         for (int counter = 0; counter < 5; counter++) {
             Integer oneNumber;
             do {
@@ -46,24 +46,17 @@ public class MegaChanceRecordGenerator {
         return generatedNumbers;
     }
 
-    public synchronized List<Integer> generateMainNumbers(ChanceMethod chanceMethod, int numberOfSets) {
+    public synchronized List<Integer>[] generateMainNumbers(ChanceMethod chanceMethod, int numberOfSets) {
+        List<Integer>[] generatedSets = new List[numberOfSets];
+
         NavigableMap<Integer, Integer> chanceMap = megaFrequencyContainer.getMainNumbersChanceMap(chanceMethod);
         int total = chanceMap.lastKey();
-        for (int setCounter = 0; setCounter < numberOfSets; setCounter++) {
 
-        }
-        List<Integer> generatedNumbers = new ArrayList<>();
-        for (int numberCounter = 0; numberCounter < 5; numberCounter++) {
-            Integer oneNumber;
-            do {
-                int chance = chanceGenerator.nextInt(total);
-                oneNumber = chanceMap.ceilingEntry(chance).getValue();
-            } while (generatedNumbers.contains(oneNumber));
-            generatedNumbers.add(oneNumber);
+        for (int counter = 0; counter < numberOfSets; counter++) {
+            generatedSets[counter] = (generateOneMainNumberSet(chanceMap, total));
         }
 
-        Collections.sort(generatedNumbers);
-        return generatedNumbers;
+        return generatedSets;
     }
 
 }
