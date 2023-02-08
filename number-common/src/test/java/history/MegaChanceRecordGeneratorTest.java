@@ -71,19 +71,16 @@ class MegaChanceRecordGeneratorTest {
                 new MegaChanceRecordGenerator(megaFrequencyContainer, new Random());
 
         ArrayList<Integer> generatedBallNumbers =  new ArrayList<>(500);
-        for (int counter = Arrays.stream(randomFrequencies).sum(); counter > 0; counter--) {
-            int chanceBallNumber = megaChanceRecordGenerator.generateBallNumber(ChanceMethod.STRAIGHT, 1)[0];
-            assertTrue(chanceBallNumber > 0 && chanceBallNumber < 26);
-            generatedBallNumbers.add(chanceBallNumber);
-        }
-
-        Map<Integer, Long> chanceFrequencyMap = generatedBallNumbers.parallelStream()
+        Integer[] ballNumbers = megaChanceRecordGenerator.generateBallNumber(ChanceMethod.STRAIGHT,
+                Arrays.stream(randomFrequencies).sum());
+        Map<Integer, Long> chanceFrequencyMap = Arrays.stream(ballNumbers)
+                .parallel()
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-
-        chanceFrequencyMap.forEach((key, value) ->
-            assertTrue(Math.abs(randomFrequencies[key-1] - value) < 100,
-                    String.format("random frequency is %s while value is %s", randomFrequencies[key-1], value))
-        );
+        chanceFrequencyMap.forEach((key, value) -> {
+            assertTrue(key > 0 && key < 26);
+            assertTrue(Math.abs(randomFrequencies[key - 1] - value) < 100,
+                    String.format("random frequency is %s while value is %s", randomFrequencies[key - 1], value));
+        });
     }
 
     @Test
