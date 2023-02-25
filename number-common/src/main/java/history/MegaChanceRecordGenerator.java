@@ -53,7 +53,7 @@ public class MegaChanceRecordGenerator {
         int total = chanceMap.lastKey();
 
         for (int counter = 0; counter < numberOfSets; counter++) {
-            generatedSets[counter] = (generateOneMainNumberSet(chanceMap, total));
+            generatedSets[counter] = generateOneMainNumberSet(chanceMap, total);
         }
 
         return generatedSets;
