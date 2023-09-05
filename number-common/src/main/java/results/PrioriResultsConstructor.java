@@ -1,10 +1,10 @@
 package results;
 
 import history.ResultsReader;
+import jakarta.annotation.PostConstruct;
 import mega.MegaConfig;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
