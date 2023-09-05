@@ -44,10 +44,10 @@ class MegaChanceRecordGeneratorTest {
                 )
         ;
 
-        MegaChanceRecordGenerator megaChanceRecordGenerator =
+        IMegaChanceRecordGenerator megaChanceRecordGenerator =
                 new MegaChanceRecordGenerator(megaFrequencyContainer, new Random());
 
-        Integer[] generatedBallNumberSet = megaChanceRecordGenerator.generateBallNumber(ChanceMethod.STRAIGHT, 10);
+        Integer[] generatedBallNumberSet = megaChanceRecordGenerator.generateBallNumbers(ChanceMethod.STRAIGHT, 10);
         Arrays.stream(generatedBallNumberSet)
                         .forEach(
                                 ballNumber -> assertTrue(ballNumber > 0 && ballNumber < 26)
@@ -67,10 +67,10 @@ class MegaChanceRecordGeneratorTest {
                 )
         ;
 
-        MegaChanceRecordGenerator megaChanceRecordGenerator =
+        IMegaChanceRecordGenerator megaChanceRecordGenerator =
                 new MegaChanceRecordGenerator(megaFrequencyContainer, new Random());
 
-        Integer[] ballNumbers = megaChanceRecordGenerator.generateBallNumber(ChanceMethod.STRAIGHT,
+        Integer[] ballNumbers = megaChanceRecordGenerator.generateBallNumbers(ChanceMethod.STRAIGHT,
                 Arrays.stream(randomFrequencies).sum());
         Map<Integer, Long> chanceFrequencyMap = Arrays.stream(ballNumbers)
                 .parallel()
@@ -96,7 +96,7 @@ class MegaChanceRecordGeneratorTest {
             ;
         }
 
-        MegaChanceRecordGenerator megaChanceRecordGenerator =
+        IMegaChanceRecordGenerator megaChanceRecordGenerator =
                 new MegaChanceRecordGenerator(megaFrequencyContainer, new Random());
 
         List<Integer>[] generatedNumbers = megaChanceRecordGenerator.generateMainNumbers(ChanceMethod.SWAPPED, expectedSets);
@@ -136,7 +136,7 @@ class MegaChanceRecordGeneratorTest {
             swappedMap.put(last.getKey(), last.getValue());
         }
 
-        MegaChanceRecordGenerator megaChanceRecordGenerator =
+        IMegaChanceRecordGenerator megaChanceRecordGenerator =
                 new MegaChanceRecordGenerator(megaFrequencyContainer, new Random());
 
         Map<Integer, Long> generatedMainNumbersFrequency = Collections.synchronizedMap(new HashMap<>());

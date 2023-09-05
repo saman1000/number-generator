@@ -8,7 +8,7 @@ import java.util.*;
  * instances of this class generate main and ball numbers based on the frequency of former draws
  */
 @Service("megaNumberGeneratorService")
-public class MegaChanceRecordGenerator {
+public class MegaChanceRecordGenerator implements IMegaChanceRecordGenerator {
 
     private final MegaFrequencyContainer megaFrequencyContainer;
     private final Random chanceGenerator;
@@ -18,7 +18,8 @@ public class MegaChanceRecordGenerator {
         this.chanceGenerator = megaRandomNumberGenerator;
     }
 
-    public synchronized Integer[] generateBallNumber(ChanceMethod chanceMethod, int numberOfSets) {
+    @Override
+    public synchronized Integer[] generateBallNumbers(ChanceMethod chanceMethod, int numberOfSets) {
         NavigableMap<Integer, Integer> chanceMap = megaFrequencyContainer.getBallNumberChanceMap(chanceMethod);
         int total = chanceMap.lastKey();
         Integer[] ballNumbers = new Integer[numberOfSets];
@@ -46,8 +47,9 @@ public class MegaChanceRecordGenerator {
         return generatedNumbers;
     }
 
+    @Override
     public synchronized List<Integer>[] generateMainNumbers(ChanceMethod chanceMethod, int numberOfSets) {
-        List<Integer>[] generatedSets = new List[numberOfSets];
+        List[] generatedSets = new List<?>[numberOfSets];
 
         NavigableMap<Integer, Integer> chanceMap = megaFrequencyContainer.getMainNumbersChanceMap(chanceMethod);
         int total = chanceMap.lastKey();
