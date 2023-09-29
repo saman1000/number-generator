@@ -2,6 +2,7 @@ package history;
 
 import lombok.Getter;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
@@ -9,8 +10,10 @@ import java.util.List;
 
 public class PriorGameDrawings implements Serializable {
 
-    static final long serialVersionUID = 1L;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
+    @Getter
     private final Collection<Integer> numbers;
 
     /**
