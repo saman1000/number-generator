@@ -3,22 +3,22 @@ package history;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class MegaFrequency {
+public class GameFrequency {
 
     private final Integer[] frequencies;
 
     private NavigableMap<Integer, Integer> cachedChanceMap;
     private NavigableMap<Integer, Integer> cachedSwappedChanceMap;
 
-    public MegaFrequency(int highest) {
+    public GameFrequency(int highest) {
         frequencies = new Integer[highest];
         //We start frequency with one rather than zero for reasons beyond your belief
         Arrays.fill(frequencies, 1);
     }
 
-    public void numberOccurrenceObserved(Integer number) throws InvalidMegaNumberException {
+    public void numberOccurrenceObserved(Integer number) throws InvalidGameNumberException {
         if (number > frequencies.length) {
-            throw new InvalidMegaNumberException(number);
+            throw new InvalidGameNumberException(number);
         }
 
         frequencies[number-1]++;

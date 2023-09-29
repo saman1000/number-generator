@@ -11,31 +11,31 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MegaFrequencyTest {
+class GameFrequencyTest {
 
     @Test
     void testFrequencyOfNumber() {
-        MegaFrequency megaFrequency = new MegaFrequency(10);
+        GameFrequency gameFrequency = new GameFrequency(10);
         Integer[] testNumbers = new Integer[10];
         IntStream.range(1, 11)
                 .forEach(x -> testNumbers[x-1]=x*10);
 
         for (int counter = 1; counter <= 10; counter++) {
             for (int numberFrequency=testNumbers[counter-1]; numberFrequency > 0; numberFrequency--) {
-                megaFrequency.numberOccurrenceObserved(counter);
+                gameFrequency.numberOccurrenceObserved(counter);
             }
         }
 
         for (int counter=0; counter < 10; counter++) {
-            assertEquals(testNumbers[counter]+1, megaFrequency.getFrequencyOfNumber(counter+1));
+            assertEquals(testNumbers[counter]+1, gameFrequency.getFrequencyOfNumber(counter+1));
         }
     }
 
     @Test
     void testInvalidNumberShouldThrowInvalidMegaNumberException() {
-        MegaFrequency megaFrequency = new MegaFrequency(10);
+        GameFrequency gameFrequency = new GameFrequency(10);
 
-        assertThrows(InvalidMegaNumberException.class, () -> megaFrequency.numberOccurrenceObserved(11));
+        assertThrows(InvalidGameNumberException.class, () -> gameFrequency.numberOccurrenceObserved(11));
     }
 
     private static Stream<Arguments> chanceMapInputOutput() {
@@ -55,16 +55,16 @@ class MegaFrequencyTest {
     @ParameterizedTest
     @MethodSource("chanceMapInputOutput")
     void testChanceMap(int mainNumbersLength, Integer[] frequencyArray, Integer[] expectedChance) {
-        MegaFrequency megaFrequency = new MegaFrequency(mainNumbersLength);
+        GameFrequency gameFrequency = new GameFrequency(mainNumbersLength);
 
         IntStream.range(1, mainNumbersLength+1)
                 .parallel()
                 .forEach(x -> {
                     for (int counter = frequencyArray[x-1]; counter > 0; counter--) {
-                        megaFrequency.numberOccurrenceObserved(x);
+                        gameFrequency.numberOccurrenceObserved(x);
                     }
                 });
-        NavigableMap<Integer, Integer> chanceMap = megaFrequency.getChanceMap();
+        NavigableMap<Integer, Integer> chanceMap = gameFrequency.getChanceMap();
         assertNotNull(chanceMap);
         chanceMap.entrySet().stream()
                 .parallel()
@@ -89,16 +89,16 @@ class MegaFrequencyTest {
     @ParameterizedTest
     @MethodSource("chanceMapInputOutput2")
     void testSwappedChanceMap(int mainNumbersLength, final Integer[] frequencyArray, final Integer[] expectedChance) {
-        MegaFrequency megaFrequency = new MegaFrequency(mainNumbersLength);
+        GameFrequency gameFrequency = new GameFrequency(mainNumbersLength);
 
         IntStream.range(1, mainNumbersLength + 1)
                 .parallel()
                 .forEach(x -> {
                     for (int counter = frequencyArray[x - 1]; counter > 0; counter--) {
-                        megaFrequency.numberOccurrenceObserved(x);
+                        gameFrequency.numberOccurrenceObserved(x);
                     }
                 });
-        NavigableMap<Integer, Integer> chanceMap = megaFrequency.getSwappedChanceMap();
+        NavigableMap<Integer, Integer> chanceMap = gameFrequency.getSwappedChanceMap();
         assertNotNull(chanceMap);
         chanceMap.entrySet().stream()
                 .parallel()

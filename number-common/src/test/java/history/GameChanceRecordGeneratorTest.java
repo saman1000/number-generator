@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(MockitoExtension.class)
-class MegaChanceRecordGeneratorTest {
+class GameChanceRecordGeneratorTest {
 
     @Mock
     private MegaConfig megaConfig;
@@ -32,7 +32,7 @@ class MegaChanceRecordGeneratorTest {
 
     @Test
     void shouldGenerateTenBallNumbers() {
-        MegaFrequencyContainer megaFrequencyContainer = new MegaFrequencyContainer(megaConfig);
+        GameFrequencyContainer gameFrequencyContainer = new GameFrequencyContainer(megaConfig);
 
         int[] randomFrequencies = new Random().ints(25, 1, 500).toArray();
         IntStream.range(1, 26)
@@ -40,12 +40,12 @@ class MegaChanceRecordGeneratorTest {
                 .forEach(
                         x -> IntStream.iterate(
                                         0, counter -> counter < randomFrequencies[x - 1], counter -> counter + 1)
-                                .forEach(y -> megaFrequencyContainer.ballNumberDrawn().accept(x))
+                                .forEach(y -> gameFrequencyContainer.ballNumberDrawn().accept(x))
                 )
         ;
 
-        IMegaChanceRecordGenerator megaChanceRecordGenerator =
-                new MegaChanceRecordGenerator(megaFrequencyContainer, new Random());
+        IGameChanceRecordGenerator megaChanceRecordGenerator =
+                new GameChanceRecordGenerator(gameFrequencyContainer, new Random());
 
         Integer[] generatedBallNumberSet = megaChanceRecordGenerator.generateBallNumbers(ChanceMethod.STRAIGHT, 10);
         Arrays.stream(generatedBallNumberSet)
@@ -56,19 +56,19 @@ class MegaChanceRecordGeneratorTest {
 
     @Test
     void shouldGenerateExpectedVarianceForBallNumbers() {
-        MegaFrequencyContainer megaFrequencyContainer = new MegaFrequencyContainer(megaConfig);
+        GameFrequencyContainer gameFrequencyContainer = new GameFrequencyContainer(megaConfig);
 
         int[] randomFrequencies = new Random().ints(25, 1, 500).toArray();
         IntStream.range(1, 26)
                 .parallel()
                 .forEach(x ->
                     IntStream.iterate(0, counter -> counter < randomFrequencies[x - 1], counter -> counter + 1)
-                            .forEach(y -> megaFrequencyContainer.ballNumberDrawn().accept(x))
+                            .forEach(y -> gameFrequencyContainer.ballNumberDrawn().accept(x))
                 )
         ;
 
-        IMegaChanceRecordGenerator megaChanceRecordGenerator =
-                new MegaChanceRecordGenerator(megaFrequencyContainer, new Random());
+        IGameChanceRecordGenerator megaChanceRecordGenerator =
+                new GameChanceRecordGenerator(gameFrequencyContainer, new Random());
 
         Integer[] ballNumbers = megaChanceRecordGenerator.generateBallNumbers(ChanceMethod.STRAIGHT,
                 Arrays.stream(randomFrequencies).sum());
@@ -85,19 +85,19 @@ class MegaChanceRecordGeneratorTest {
     @Test
     void shouldGenerateExpectedMainNumbersSet() {
         int expectedSets = 10;
-        MegaFrequencyContainer megaFrequencyContainer = new MegaFrequencyContainer(megaConfig);
+        GameFrequencyContainer gameFrequencyContainer = new GameFrequencyContainer(megaConfig);
 
         int[] randomFrequencies = new Random().ints(70, 1, 5000).toArray();
 
         for (int counter=0; counter < 70; counter++) {
             int finalCounter = counter;
             IntStream.range(0, randomFrequencies[counter])
-                    .forEach( x -> megaFrequencyContainer.mainNumbersDrawn().accept(Stream.of(finalCounter +1)))
+                    .forEach( x -> gameFrequencyContainer.mainNumbersDrawn().accept(Stream.of(finalCounter +1)))
             ;
         }
 
-        IMegaChanceRecordGenerator megaChanceRecordGenerator =
-                new MegaChanceRecordGenerator(megaFrequencyContainer, new Random());
+        IGameChanceRecordGenerator megaChanceRecordGenerator =
+                new GameChanceRecordGenerator(gameFrequencyContainer, new Random());
 
         List<Integer>[] generatedNumbers = megaChanceRecordGenerator.generateMainNumbers(ChanceMethod.SWAPPED, expectedSets);
         assertEquals(expectedSets, generatedNumbers.length);
@@ -107,7 +107,7 @@ class MegaChanceRecordGeneratorTest {
 
     @Test
     void shouldGenerateDifferentNumbersSets() {
-        MegaFrequencyContainer megaFrequencyContainer = new MegaFrequencyContainer(megaConfig);
+        GameFrequencyContainer gameFrequencyContainer = new GameFrequencyContainer(megaConfig);
 
         long[] randomFrequencies = new Random().longs(70, 1, 5000).toArray();
 
@@ -115,7 +115,7 @@ class MegaChanceRecordGeneratorTest {
         for (int counter=0; counter < 70; counter++) {
             int finalCounter = counter + 1;
             LongStream.range(0, randomFrequencies[counter])
-                    .forEach( x -> megaFrequencyContainer.mainNumbersDrawn().accept(Stream.of(finalCounter)))
+                    .forEach( x -> gameFrequencyContainer.mainNumbersDrawn().accept(Stream.of(finalCounter)))
             ;
             map.put(finalCounter, randomFrequencies[counter]);
         }
@@ -136,8 +136,8 @@ class MegaChanceRecordGeneratorTest {
             swappedMap.put(last.getKey(), last.getValue());
         }
 
-        IMegaChanceRecordGenerator megaChanceRecordGenerator =
-                new MegaChanceRecordGenerator(megaFrequencyContainer, new Random());
+        IGameChanceRecordGenerator megaChanceRecordGenerator =
+                new GameChanceRecordGenerator(gameFrequencyContainer, new Random());
 
         Map<Integer, Long> generatedMainNumbersFrequency = Collections.synchronizedMap(new HashMap<>());
         IntStream.range(0, 10000)

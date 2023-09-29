@@ -1,7 +1,7 @@
 package controllers;
 
 import history.ChanceMethod;
-import history.IMegaChanceRecordGenerator;
+import history.IGameChanceRecordGenerator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,7 +12,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 @RestController
 public record NumberGeneratorController(
-        IMegaChanceRecordGenerator megaNumberGeneratorService) {
+        IGameChanceRecordGenerator megaNumberGeneratorService) {
 
     @GetMapping("/generate")
     public SetsOfNumbers[] generateNumbers(final @RequestParam int numberOfSets, final @RequestParam ChanceMethod chanceMethod) {

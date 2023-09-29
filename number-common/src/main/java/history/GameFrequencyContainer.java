@@ -9,18 +9,18 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 @Component
-public class MegaFrequencyContainer {
+public class GameFrequencyContainer {
 
     @Getter
     private long numberOfAcceptedRecords;
 
-    private final MegaFrequency frequencyOfMainNumbers;
+    private final GameFrequency frequencyOfMainNumbers;
 
-    private final MegaFrequency frequencyOfBallNumbers;
+    private final GameFrequency frequencyOfBallNumbers;
 
-    public MegaFrequencyContainer(MegaConfig megaConfig) {
-        frequencyOfMainNumbers = new MegaFrequency(megaConfig.getMaxMainNumberValue());
-        frequencyOfBallNumbers = new MegaFrequency(megaConfig.getMaxBallNumberValue());
+    public GameFrequencyContainer(MegaConfig megaConfig) {
+        frequencyOfMainNumbers = new GameFrequency(megaConfig.getMaxMainNumberValue());
+        frequencyOfBallNumbers = new GameFrequency(megaConfig.getMaxBallNumberValue());
         numberOfAcceptedRecords = 0;
     }
 

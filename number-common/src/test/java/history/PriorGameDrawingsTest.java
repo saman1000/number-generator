@@ -15,23 +15,23 @@ import java.util.stream.Stream;
  * ) two results on the same date must be equal and if they contain different numbers, an error must be thrown
  * )
  */
-public class PriorMegaMillionsResultTest {
+public class PriorGameDrawingsTest {
 
     @Test
     public void testTwoEqualResults() {
-        PriorMegaMillionsResult result1 =
-                new PriorMegaMillionsResult("2010, 12, 29", Arrays.asList(1, 2, 3, 4, 5), 6);
-        PriorMegaMillionsResult result2 =
-                new PriorMegaMillionsResult("2010, 12, 29", Arrays.asList(1, 2, 3, 4, 5), 6);
+        PriorGameDrawings result1 =
+                new PriorGameDrawings("2010, 12, 29", Arrays.asList(1, 2, 3, 4, 5), 6);
+        PriorGameDrawings result2 =
+                new PriorGameDrawings("2010, 12, 29", Arrays.asList(1, 2, 3, 4, 5), 6);
         Assertions.assertEquals(result1, result2);
     }
 
     @Test
     public void testTwoNonEqualResults() {
-        PriorMegaMillionsResult result1 =
-                new PriorMegaMillionsResult("2010, 12, 29", Arrays.asList(1, 2, 3, 4, 5), 6);
-        PriorMegaMillionsResult result2 =
-                new PriorMegaMillionsResult("2010, 12, 22", Arrays.asList(1, 2, 3, 4, 5), 6);
+        PriorGameDrawings result1 =
+                new PriorGameDrawings("2010, 12, 29", Arrays.asList(1, 2, 3, 4, 5), 6);
+        PriorGameDrawings result2 =
+                new PriorGameDrawings("2010, 12, 22", Arrays.asList(1, 2, 3, 4, 5), 6);
         Assertions.assertNotEquals(result1, result2);
     }
 
@@ -39,7 +39,7 @@ public class PriorMegaMillionsResultTest {
     @MethodSource("wrongNumberArrays")
     public void testWrongValues(String date, List<Integer> numberStream, Integer oneInteger) {
         Assertions.assertThrows(IllegalStateException.class, () ->
-            new PriorMegaMillionsResult(date, numberStream, oneInteger)
+            new PriorGameDrawings(date, numberStream, oneInteger)
         );
     }
 
@@ -54,10 +54,10 @@ public class PriorMegaMillionsResultTest {
     @Test
     public void testAddingTwoResults() {
         ArrayList<Integer> allNumbers = new ArrayList<>(14);
-        PriorMegaMillionsResult result1 =
-                new PriorMegaMillionsResult("2010, 12, 29", Arrays.asList(1, 2, 3, 4, 5), 6);
-        PriorMegaMillionsResult result2 =
-                new PriorMegaMillionsResult("2010, 12, 22", Arrays.asList(1, 2, 3, 4, 5), 6);
+        PriorGameDrawings result1 =
+                new PriorGameDrawings("2010, 12, 29", Arrays.asList(1, 2, 3, 4, 5), 6);
+        PriorGameDrawings result2 =
+                new PriorGameDrawings("2010, 12, 22", Arrays.asList(1, 2, 3, 4, 5), 6);
 
         result1.addResults(allNumbers);
         result2.addResults(allNumbers);
@@ -69,10 +69,10 @@ public class PriorMegaMillionsResultTest {
 
     @Test
     public void testDifferentValuesOnSameDate() {
-        PriorMegaMillionsResult result1 =
-                new PriorMegaMillionsResult("2010, 12, 29", Arrays.asList(1, 2, 3, 4, 5), 6);
-        PriorMegaMillionsResult result2 =
-                new PriorMegaMillionsResult("2010, 12, 29", Arrays.asList(1, 2, 3, 4, 5), 7);
+        PriorGameDrawings result1 =
+                new PriorGameDrawings("2010, 12, 29", Arrays.asList(1, 2, 3, 4, 5), 6);
+        PriorGameDrawings result2 =
+                new PriorGameDrawings("2010, 12, 29", Arrays.asList(1, 2, 3, 4, 5), 7);
 
         Assertions.assertThrows(IllegalStateException.class, () ->
             result1.equals(result2)

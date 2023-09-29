@@ -13,7 +13,7 @@ import java.util.regex.MatchResult;
  * create frequency for each ball number
  */
 @Component("megaResultsReader")
-public record ResultsReader(MegaFrequencyContainer megaFrequencyContainer) {
+public record ResultsReader(GameFrequencyContainer gameFrequencyContainer) {
 
     private static final Logger logger = LoggerFactory.getLogger(ResultsReader.class);
 
@@ -24,7 +24,7 @@ public record ResultsReader(MegaFrequencyContainer megaFrequencyContainer) {
                     .forEach(this::updateFrequency)
             ;
         }
-        logger.info(String.format("read %s records", megaFrequencyContainer.getNumberOfAcceptedRecords()));
+        logger.info(String.format("read %s records", gameFrequencyContainer.getNumberOfAcceptedRecords()));
     }
 
     private void updateFrequency(MatchResult matchResult) {
@@ -33,14 +33,14 @@ public record ResultsReader(MegaFrequencyContainer megaFrequencyContainer) {
             groups[counter] = matchResult.group(counter + 1).trim();
         }
         try {
-            megaFrequencyContainer.mainNumbersDrawn().accept(MegaExtractor.getMainNumbers(groups[1]));
-            megaFrequencyContainer.ballNumberDrawn().accept(
-                    MegaExtractor.getBallNumber(groups[2])
+            gameFrequencyContainer.mainNumbersDrawn().accept(FrequencyExtractor.getMainNumbers(groups[1]));
+            gameFrequencyContainer.ballNumberDrawn().accept(
+                    FrequencyExtractor.getBallNumber(groups[2])
                             .orElseThrow(
                                     () -> new IllegalStateException(String.format("No valid ball number: %s", groups[2])))
             );
-            megaFrequencyContainer.acceptedOneRecord();
-        } catch (InvalidMegaNumberException ex) {
+            gameFrequencyContainer.acceptedOneRecord();
+        } catch (InvalidGameNumberException ex) {
             logger.warn(String.format("failed to parse %s, %s because %s", groups[1], groups[2], ex.getMessage()));
         }
     }

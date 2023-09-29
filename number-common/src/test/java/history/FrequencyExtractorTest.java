@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class MegaExtractorTest {
+class FrequencyExtractorTest {
 
     private static Stream<Arguments> validExpectedResults() {
         return Stream.of(
@@ -25,13 +25,13 @@ class MegaExtractorTest {
     @ParameterizedTest
     @MethodSource("validExpectedResults")
     void shouldExtractOneResult(String[] parameters, String date, List<Integer> numbers, Integer ballNumber) {
-        PriorMegaMillionsResult priorMegaMillionsResult =
-                MegaExtractor.extractResult(parameters);
-        assertNotNull(priorMegaMillionsResult);
+        PriorGameDrawings priorGameDrawings =
+                FrequencyExtractor.extractResult(parameters);
+        assertNotNull(priorGameDrawings);
 
-        assertEquals(date, priorMegaMillionsResult.getDrawnDate());
-        assertEquals(numbers, priorMegaMillionsResult.getNumbers());
-        assertEquals(ballNumber, priorMegaMillionsResult.getMegaBallNumber());
+        assertEquals(date, priorGameDrawings.getDrawnDate());
+        assertEquals(numbers, priorGameDrawings.getNumbers());
+        assertEquals(ballNumber, priorGameDrawings.getBallNumber());
     }
 
     private static Stream<Arguments> invalidExpectedResults() {
@@ -46,7 +46,7 @@ class MegaExtractorTest {
     @MethodSource("invalidExpectedResults")
     void shouldFailToExtractOneResult(String[] parameters) {
         Assertions.assertThrows(IllegalStateException.class, () ->
-            MegaExtractor.extractResult(parameters)
+            FrequencyExtractor.extractResult(parameters)
         );
     }
 }

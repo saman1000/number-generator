@@ -7,14 +7,14 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class MegaExtractor {
+public class FrequencyExtractor {
     private static final Pattern numberPattern = Pattern.compile("(\\d+)");
 
-    public static PriorMegaMillionsResult extractResult(String[] oneResultStr) {
+    public static PriorGameDrawings extractResult(String[] oneResultStr) {
         List<Integer> numbers = getMainNumbers(oneResultStr[1]).collect(Collectors.toList());
         Optional<Integer> ballNumber = getBallNumber(oneResultStr[2]);
 
-        return new PriorMegaMillionsResult(
+        return new PriorGameDrawings(
                 oneResultStr[0],
                 numbers,
                 ballNumber.orElseThrow(
