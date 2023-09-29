@@ -1,6 +1,6 @@
 package history;
 
-import mega.MegaConfig;
+import games.MegaConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,6 +1,7 @@
 package history;
 
-import mega.MegaConfig;
+import games.MegaConfig;
+import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 import java.util.NavigableMap;
@@ -10,6 +11,7 @@ import java.util.stream.Stream;
 @Component
 public class MegaFrequencyContainer {
 
+    @Getter
     private long numberOfAcceptedRecords;
 
     private final MegaFrequency frequencyOfMainNumbers;
@@ -72,10 +74,6 @@ public class MegaFrequencyContainer {
 
     public void acceptedOneRecord() {
         numberOfAcceptedRecords++;
-    }
-
-    public long getNumberOfAcceptedRecords() {
-        return numberOfAcceptedRecords;
     }
 
 }

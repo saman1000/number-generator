@@ -2,7 +2,7 @@ package results;
 
 import history.ResultsReader;
 import jakarta.annotation.PostConstruct;
-import mega.MegaConfig;
+import games.MegaConfig;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;

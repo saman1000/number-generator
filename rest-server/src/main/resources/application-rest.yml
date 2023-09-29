@@ -11,5 +11,8 @@ logging:
 mega:
   filepath: files/MegaMillions.txt
 
+powerball:
+  filepath: files/PowerBall.txt
+
 server:
   port: 10001

@@ -1,4 +1,4 @@
-package mega;
+package games;
 
 import lombok.Getter;
 import lombok.Setter;

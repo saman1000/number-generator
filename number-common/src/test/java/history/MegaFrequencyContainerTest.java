@@ -1,6 +1,6 @@
 package history;
 
-import mega.MegaConfig;
+import games.MegaConfig;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
