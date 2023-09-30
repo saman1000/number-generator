@@ -1,6 +1,6 @@
 package history;
 
-import games.MegaConfig;
+import games.GameConfig;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
@@ -18,9 +18,9 @@ public class GameFrequencyContainer {
 
     private final GameFrequency frequencyOfBallNumbers;
 
-    public GameFrequencyContainer(MegaConfig megaConfig) {
-        frequencyOfMainNumbers = new GameFrequency(megaConfig.getMaxMainNumberValue());
-        frequencyOfBallNumbers = new GameFrequency(megaConfig.getMaxBallNumberValue());
+    public GameFrequencyContainer(GameConfig gameConfig) {
+        frequencyOfMainNumbers = new GameFrequency(gameConfig.getMaxMainNumberValue());
+        frequencyOfBallNumbers = new GameFrequency(gameConfig.getMaxBallNumberValue());
         numberOfAcceptedRecords = 0;
     }
 

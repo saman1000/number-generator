@@ -1,6 +1,6 @@
 package history;
 
-import games.MegaConfig;
+import games.GameConfig;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,17 +18,17 @@ class GameFrequencyContainerTest {
 
 
     @Mock
-    private MegaConfig megaConfig;
+    private GameConfig gameConfig;
 
     @BeforeEach
     public void initConfig() {
-        Mockito.when(megaConfig.getMaxBallNumberValue()).thenReturn(25);
-        Mockito.when(megaConfig.getMaxMainNumberValue()).thenReturn(70);
+        Mockito.when(gameConfig.getMaxBallNumberValue()).thenReturn(25);
+        Mockito.when(gameConfig.getMaxMainNumberValue()).thenReturn(70);
     }
 
     @Test
     void getBallNumberFrequency() {
-        GameFrequencyContainer gameFrequencyContainer = new GameFrequencyContainer(megaConfig);
+        GameFrequencyContainer gameFrequencyContainer = new GameFrequencyContainer(gameConfig);
 
         int[] randomFrequencies = new Random().ints(25, 1, 500).toArray();
         IntStream.range(1, 26)
@@ -48,7 +48,7 @@ class GameFrequencyContainerTest {
 
     @Test
     void getMainNumberFrequency() {
-        GameFrequencyContainer gameFrequencyContainer = new GameFrequencyContainer(megaConfig);
+        GameFrequencyContainer gameFrequencyContainer = new GameFrequencyContainer(gameConfig);
 
         int[] randomFrequencies = new Random().ints(70 / 5, 1, 5000).toArray();
 

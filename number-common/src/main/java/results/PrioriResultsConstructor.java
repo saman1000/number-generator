@@ -2,7 +2,7 @@ package results;
 
 import history.ResultsReader;
 import jakarta.annotation.PostConstruct;
-import games.MegaConfig;
+import games.GameConfig;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -19,10 +19,10 @@ public class PrioriResultsConstructor {
 
     private final String resultsPattern;
 
-    public PrioriResultsConstructor(ResultsReader megResultsReader, MegaConfig megaConfig) {
+    public PrioriResultsConstructor(ResultsReader megResultsReader, GameConfig gameConfig) {
         this.resultsReader = megResultsReader;
-        this.filePath = megaConfig.getFilePath();
-        this.resultsPattern = megaConfig.getResultsPattern();
+        this.filePath = gameConfig.getFilePath();
+        this.resultsPattern = gameConfig.getResultsPattern();
     }
 
     @PostConstruct

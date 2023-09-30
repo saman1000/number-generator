@@ -1,6 +1,6 @@
 package history;
 
-import games.MegaConfig;
+import games.GameConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(
         value="integration test",
-        classes = {ResultsReader.class, GameFrequencyContainer.class, FrequencyExtractor.class, MegaConfig.class}
+        classes = {ResultsReader.class, GameFrequencyContainer.class, FrequencyExtractor.class, GameConfig.class}
         )
 class ResultsReaderTest {
 

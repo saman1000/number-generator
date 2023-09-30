@@ -13,7 +13,7 @@ import java.util.Random;
 @ConfigurationProperties(prefix = "mega")
 @Getter
 @Setter
-public class MegaConfig {
+public class GameConfig {
 
     private String filePath;
 

@@ -1,6 +1,6 @@
 package history;
 
-import games.MegaConfig;
+import games.GameConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,17 +22,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class GameChanceRecordGeneratorTest {
 
     @Mock
-    private MegaConfig megaConfig;
+    private GameConfig gameConfig;
 
     @BeforeEach
     public void initConfig() {
-        Mockito.when(megaConfig.getMaxBallNumberValue()).thenReturn(25);
-        Mockito.when(megaConfig.getMaxMainNumberValue()).thenReturn(70);
+        Mockito.when(gameConfig.getMaxBallNumberValue()).thenReturn(25);
+        Mockito.when(gameConfig.getMaxMainNumberValue()).thenReturn(70);
     }
 
     @Test
     void shouldGenerateTenBallNumbers() {
-        GameFrequencyContainer gameFrequencyContainer = new GameFrequencyContainer(megaConfig);
+        GameFrequencyContainer gameFrequencyContainer = new GameFrequencyContainer(gameConfig);
 
         int[] randomFrequencies = new Random().ints(25, 1, 500).toArray();
         IntStream.range(1, 26)
@@ -56,7 +56,7 @@ class GameChanceRecordGeneratorTest {
 
     @Test
     void shouldGenerateExpectedVarianceForBallNumbers() {
-        GameFrequencyContainer gameFrequencyContainer = new GameFrequencyContainer(megaConfig);
+        GameFrequencyContainer gameFrequencyContainer = new GameFrequencyContainer(gameConfig);
 
         int[] randomFrequencies = new Random().ints(25, 1, 500).toArray();
         IntStream.range(1, 26)
@@ -85,7 +85,7 @@ class GameChanceRecordGeneratorTest {
     @Test
     void shouldGenerateExpectedMainNumbersSet() {
         int expectedSets = 10;
-        GameFrequencyContainer gameFrequencyContainer = new GameFrequencyContainer(megaConfig);
+        GameFrequencyContainer gameFrequencyContainer = new GameFrequencyContainer(gameConfig);
 
         int[] randomFrequencies = new Random().ints(70, 1, 5000).toArray();
 
@@ -107,7 +107,7 @@ class GameChanceRecordGeneratorTest {
 
     @Test
     void shouldGenerateDifferentNumbersSets() {
-        GameFrequencyContainer gameFrequencyContainer = new GameFrequencyContainer(megaConfig);
+        GameFrequencyContainer gameFrequencyContainer = new GameFrequencyContainer(gameConfig);
 
         long[] randomFrequencies = new Random().longs(70, 1, 5000).toArray();
 
