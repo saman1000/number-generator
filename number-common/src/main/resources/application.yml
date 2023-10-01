@@ -1,7 +1,7 @@
 spring:
   config:
     activate:
-      on-profile: mega
+      on-profile: lottery
 
 mega:
   maxMainNumberValue: 70
@@ -9,11 +9,12 @@ mega:
   results-pattern: (.*);(.*);(.*)
 
 lottery:
-  powerball:
-    maxMainNumberValue: 69
-    maxBallNumberValue: 26
-    results-pattern: (.*);(.*);(.*)
-  mega:
-    maxMainNumberValue: 70
-    maxBallNumberValue: 25
-    results-pattern: (.*);(.*);(.*)
+  games:
+    mega:
+      maxMainNumberValue: 70
+      maxBallNumberValue: 25
+      results-pattern: (.*);(.*);(.*)
+    powerball:
+      maxMainNumberValue: 69
+      maxBallNumberValue: 26
+      results-pattern: (.*);(.*);(.*)

@@ -12,10 +12,11 @@ mega:
   filepath: files/MegaMillions.txt
 
 lottery:
-  powerball:
-    filepath: files/PowerBall.txt
-  mega:
-    filepath: files/MegaMillions.txt
+  games:
+    mega:
+      filepath: files/PowerBall.txt
+    powerball:
+      filepath: files/MegaMillions.txt
 
 server:
   port: 10001
