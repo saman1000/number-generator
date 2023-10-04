@@ -3,6 +3,7 @@ package history;
 import games.GameConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 import java.util.regex.MatchResult;
@@ -12,20 +13,10 @@ import java.util.regex.MatchResult;
  * create frequency for each play number
  * create frequency for each ball number
  */
-//@Component("gameResultsReader")
-public class ResultsReader { //(GameFrequencyContainer gameFrequencyContainer) {
+@Component("gameResultsReader")
+public class ResultsReader {
 
     private static final Logger logger = LoggerFactory.getLogger(ResultsReader.class);
-
-//    public void readLinesUsingScanner(Readable readable, String patternString) {
-//        try (Scanner scanner = new Scanner(readable)) {
-//            scanner
-//                    .findAll(patternString)
-//                    .forEach(this::updateFrequency)
-//            ;
-//        }
-//        logger.info(String.format("read %s records", gameFrequencyContainer.getNumberOfAcceptedRecords()));
-//    }
 
     public GameFrequencyContainer readLinesUsingScanner(
             Readable readable, GameConfig gameConfig) {

@@ -8,15 +8,12 @@ logging:
     org:
       springframework: WARN
 
-mega:
-  filepath: files/MegaMillions.txt
-
 lottery:
   games:
     mega:
-      filepath: files/PowerBall.txt
-    powerball:
       filepath: files/MegaMillions.txt
+    powerball:
+      filepath: files/PowerBall.txt
 
 server:
   port: 10001

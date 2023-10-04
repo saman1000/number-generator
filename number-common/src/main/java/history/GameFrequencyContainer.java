@@ -6,7 +6,6 @@ import java.util.NavigableMap;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-//@Component
 public class GameFrequencyContainer {
 
     @Getter
