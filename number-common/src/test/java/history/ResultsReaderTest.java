@@ -11,6 +11,21 @@ class ResultsReaderTest {
 
     @Test
     void testFrequencies() {
+        GameFrequencyContainer gameFrequencyContainer = getGameFrequencyContainer();
+
+        assertEquals(3, gameFrequencyContainer.getBallNumberFrequency(15));
+        assertEquals(2, gameFrequencyContainer.getBallNumberFrequency(25));
+        assertEquals(3, gameFrequencyContainer.getMainNumberFrequency(4));
+        assertEquals(2, gameFrequencyContainer.getMainNumberFrequency(19));
+        assertEquals(3, gameFrequencyContainer.getMainNumberFrequency(25));
+        assertEquals(2, gameFrequencyContainer.getMainNumberFrequency(31));
+        assertEquals(4, gameFrequencyContainer.getMainNumberFrequency(37));
+        assertEquals(3, gameFrequencyContainer.getMainNumberFrequency(46));
+        assertEquals(2, gameFrequencyContainer.getMainNumberFrequency(55));
+        assertEquals(4, gameFrequencyContainer.getMainNumberFrequency(67));
+    }
+
+    private GameFrequencyContainer getGameFrequencyContainer() {
         GameConfig gameConfig = new GameConfig();
         gameConfig.setFilePath(".");
         gameConfig.setResultsPattern("(.*);(.*);(.*)");
@@ -25,17 +40,6 @@ class ResultsReaderTest {
                 All information is entered manually, and is subject to human error.
                 Therefore, we can not guarantee the accuracy of this information.
                 """);
-        GameFrequencyContainer gameFrequencyContainer = gameResultsReader.readLinesUsingScanner(lines, gameConfig);
-
-        assertEquals(3, gameFrequencyContainer.getBallNumberFrequency(15));
-        assertEquals(2, gameFrequencyContainer.getBallNumberFrequency(25));
-        assertEquals(3, gameFrequencyContainer.getMainNumberFrequency(4));
-        assertEquals(2, gameFrequencyContainer.getMainNumberFrequency(19));
-        assertEquals(3, gameFrequencyContainer.getMainNumberFrequency(25));
-        assertEquals(2, gameFrequencyContainer.getMainNumberFrequency(31));
-        assertEquals(4, gameFrequencyContainer.getMainNumberFrequency(37));
-        assertEquals(3, gameFrequencyContainer.getMainNumberFrequency(46));
-        assertEquals(2, gameFrequencyContainer.getMainNumberFrequency(55));
-        assertEquals(4, gameFrequencyContainer.getMainNumberFrequency(67));
+        return gameResultsReader.readLinesUsingScanner(lines, gameConfig);
     }
 }

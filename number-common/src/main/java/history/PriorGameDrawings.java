@@ -8,21 +8,19 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+@Getter
 public class PriorGameDrawings implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @Getter
     private final Collection<Integer> numbers;
 
     /**
      * date the numbers were drawn
      */
-    @Getter
     private final String drawnDate;
 
-    @Getter
     private final Integer ballNumber;
 
     private static final Integer expectedNumbers = 5;
@@ -39,10 +37,6 @@ public class PriorGameDrawings implements Serializable {
                     "%s is less than %s", numbers.size(), PriorGameDrawings.expectedNumbers
             ));
         }
-    }
-
-    public Collection<Integer> getNumbers() {
-        return numbers;
     }
 
     public void addResults(Collection<Integer> results) {
