@@ -1,14 +1,12 @@
 package history;
 
-import games.GameConfig;
 import lombok.Getter;
-import org.springframework.stereotype.Component;
 
 import java.util.NavigableMap;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-@Component
+//@Component
 public class GameFrequencyContainer {
 
     @Getter
@@ -18,9 +16,9 @@ public class GameFrequencyContainer {
 
     private final GameFrequency frequencyOfBallNumbers;
 
-    public GameFrequencyContainer(GameConfig gameConfig) {
-        frequencyOfMainNumbers = new GameFrequency(gameConfig.getMaxMainNumberValue());
-        frequencyOfBallNumbers = new GameFrequency(gameConfig.getMaxBallNumberValue());
+    public GameFrequencyContainer(int maxMainNumberValue, int maxBallNumberValue) {
+        frequencyOfMainNumbers = new GameFrequency(maxMainNumberValue);
+        frequencyOfBallNumbers = new GameFrequency(maxBallNumberValue);
         numberOfAcceptedRecords = 0;
     }
 

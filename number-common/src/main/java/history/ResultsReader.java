@@ -1,8 +1,8 @@
 package history;
 
+import games.GameConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 import java.util.regex.MatchResult;
@@ -12,22 +12,37 @@ import java.util.regex.MatchResult;
  * create frequency for each play number
  * create frequency for each ball number
  */
-@Component("megaResultsReader")
-public record ResultsReader(GameFrequencyContainer gameFrequencyContainer) {
+//@Component("gameResultsReader")
+public class ResultsReader { //(GameFrequencyContainer gameFrequencyContainer) {
 
     private static final Logger logger = LoggerFactory.getLogger(ResultsReader.class);
 
-    public void readLinesUsingScanner(Readable readable, String patternString) {
+//    public void readLinesUsingScanner(Readable readable, String patternString) {
+//        try (Scanner scanner = new Scanner(readable)) {
+//            scanner
+//                    .findAll(patternString)
+//                    .forEach(this::updateFrequency)
+//            ;
+//        }
+//        logger.info(String.format("read %s records", gameFrequencyContainer.getNumberOfAcceptedRecords()));
+//    }
+
+    public GameFrequencyContainer readLinesUsingScanner(
+            Readable readable, GameConfig gameConfig) {
+        GameFrequencyContainer  gameFrequencyContainer =
+                new GameFrequencyContainer(gameConfig.getMaxMainNumberValue(), gameConfig.getMaxBallNumberValue());
         try (Scanner scanner = new Scanner(readable)) {
             scanner
-                    .findAll(patternString)
-                    .forEach(this::updateFrequency)
+                    .findAll(gameConfig.getResultsPattern())
+                    .forEach(x -> updateFrequency(x, gameFrequencyContainer))
             ;
         }
         logger.info(String.format("read %s records", gameFrequencyContainer.getNumberOfAcceptedRecords()));
+
+        return gameFrequencyContainer;
     }
 
-    private void updateFrequency(MatchResult matchResult) {
+    private void updateFrequency(MatchResult matchResult, GameFrequencyContainer gameFrequencyContainer) {
         String[] groups = new String[matchResult.groupCount()];
         for (int counter = groups.length - 1; counter >= 0; counter--) {
             groups[counter] = matchResult.group(counter + 1).trim();

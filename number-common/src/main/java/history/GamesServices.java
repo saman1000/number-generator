@@ -8,11 +8,8 @@ import results.PrioriResultsConstructor;
 import java.io.IOException;
 import java.util.*;
 
-/**
- * instances of this class generate main and ball numbers based on the frequency of former draws
- */
-@Service("gamesNumberGeneratorService")
-public class GameChanceRecordGenerator implements IGameChanceRecordGenerator {
+@Service
+public class GamesServices {
 
     private final Map<String, GameFrequencyContainer> frequencyContainerMap;
 
@@ -20,17 +17,15 @@ public class GameChanceRecordGenerator implements IGameChanceRecordGenerator {
 
     private final Random chanceGenerator;
 
-    public GameChanceRecordGenerator(AllConfigs allGames, ResultsReader gameResultsReader) {
+    public GamesServices(AllConfigs allGames, ResultsReader gameResultsReader) {
         frequencyContainerMap = new HashMap<>();
         resultsReader = gameResultsReader;
         allGames.getGames().entrySet()
                 .stream()
                 .parallel()
-                .forEach(
-                        oneEntry -> frequencyContainerMap.put(
-                                oneEntry.getKey(), loadOneFrequencyContainer(oneEntry.getValue())
-                        )
-                );
+                .forEach(oneEntry -> {
+                    frequencyContainerMap.put(oneEntry.getKey(), loadOneFrequencyContainer(oneEntry.getValue()));
+                });
 
         chanceGenerator = new Random();
     }
@@ -87,4 +82,5 @@ public class GameChanceRecordGenerator implements IGameChanceRecordGenerator {
 
         return generatedSets;
     }
+
 }

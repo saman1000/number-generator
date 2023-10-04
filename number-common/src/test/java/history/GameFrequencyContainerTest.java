@@ -28,7 +28,10 @@ class GameFrequencyContainerTest {
 
     @Test
     void getBallNumberFrequency() {
-        GameFrequencyContainer gameFrequencyContainer = new GameFrequencyContainer(gameConfig);
+        GameFrequencyContainer gameFrequencyContainer = new GameFrequencyContainer(
+                gameConfig.getMaxMainNumberValue(),
+                gameConfig.getMaxBallNumberValue()
+        );
 
         int[] randomFrequencies = new Random().ints(25, 1, 500).toArray();
         IntStream.range(1, 26)
@@ -48,7 +51,10 @@ class GameFrequencyContainerTest {
 
     @Test
     void getMainNumberFrequency() {
-        GameFrequencyContainer gameFrequencyContainer = new GameFrequencyContainer(gameConfig);
+        GameFrequencyContainer gameFrequencyContainer = new GameFrequencyContainer(
+                gameConfig.getMaxMainNumberValue(),
+                gameConfig.getMaxBallNumberValue()
+        );
 
         int[] randomFrequencies = new Random().ints(70 / 5, 1, 5000).toArray();
 
