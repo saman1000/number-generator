@@ -25,7 +25,10 @@ public class GameFrequencyContainer {
     }
 
     public Consumer<List<Integer>> mainNumbersDrawn() {
-        return stream -> stream.forEach(frequencyOfMainNumbers::numberOccurrenceObserved);
+        return list -> {
+            list.forEach(frequencyOfMainNumbers::numberOccurrenceObserved);
+            pairingFrequency.parseMainNumbers(list);
+        };
     }
 
     public Consumer<Integer> ballNumberDrawn() {
