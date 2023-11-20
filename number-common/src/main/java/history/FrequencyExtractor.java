@@ -4,14 +4,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class FrequencyExtractor {
     private static final Pattern numberPattern = Pattern.compile("(\\d+)");
 
     public static PriorGameDrawings extractResult(String[] oneResultStr) {
-        List<Integer> numbers = getMainNumbers(oneResultStr[1]).collect(Collectors.toList());
+        List<Integer> numbers = getMainNumbers(oneResultStr[1]);
         Optional<Integer> ballNumber = getBallNumber(oneResultStr[2]);
 
         return new PriorGameDrawings(
@@ -31,13 +29,14 @@ public class FrequencyExtractor {
                     .findFirst();
     }
 
-    public static Stream<Integer> getMainNumbers(String mainNumbersString) {
+    public static List<Integer> getMainNumbers(String mainNumbersString) {
         return numberPattern.matcher(mainNumbersString)
                 .results()
                 .map(MatchResult::group)
                 .map(Integer::parseUnsignedInt)
                 .sorted()
                 .distinct()
+                .toList()
                 ;
     }
 

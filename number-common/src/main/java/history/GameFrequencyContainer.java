@@ -2,9 +2,9 @@ package history;
 
 import lombok.Getter;
 
+import java.util.List;
 import java.util.NavigableMap;
 import java.util.function.Consumer;
-import java.util.stream.Stream;
 
 public class GameFrequencyContainer {
 
@@ -15,13 +15,16 @@ public class GameFrequencyContainer {
 
     private final GameFrequency frequencyOfBallNumbers;
 
+    private final PairingFrequency pairingFrequency;
+
     public GameFrequencyContainer(int maxMainNumberValue, int maxBallNumberValue) {
         frequencyOfMainNumbers = new GameFrequency(maxMainNumberValue);
         frequencyOfBallNumbers = new GameFrequency(maxBallNumberValue);
+        pairingFrequency = new PairingFrequency(maxMainNumberValue);
         numberOfAcceptedRecords = 0;
     }
 
-    public Consumer<Stream<Integer>> mainNumbersDrawn() {
+    public Consumer<List<Integer>> mainNumbersDrawn() {
         return stream -> stream.forEach(frequencyOfMainNumbers::numberOccurrenceObserved);
     }
 

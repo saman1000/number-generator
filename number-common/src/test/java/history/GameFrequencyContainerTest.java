@@ -67,6 +67,7 @@ class GameFrequencyContainerTest {
                                     .accept(
                                             Stream.iterate(
                                                     x * 5, counter -> counter > x * 5 - 5, counter -> counter - 1)
+                                                    .toList()
                                     ))
                 )
         ;

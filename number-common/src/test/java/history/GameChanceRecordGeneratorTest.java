@@ -14,7 +14,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -118,7 +117,7 @@ class GameChanceRecordGeneratorTest {
         for (int counter=0; counter < 70; counter++) {
             int finalCounter = counter;
             IntStream.range(0, randomFrequencies[counter])
-                    .forEach( x -> gameFrequencyContainer.mainNumbersDrawn().accept(Stream.of(finalCounter +1)))
+                    .forEach( x -> gameFrequencyContainer.mainNumbersDrawn().accept(Collections.singletonList(finalCounter +1)))
             ;
         }
 
@@ -151,7 +150,7 @@ class GameChanceRecordGeneratorTest {
         for (int counter=0; counter < 70; counter++) {
             int finalCounter = counter + 1;
             LongStream.range(0, randomFrequencies[counter])
-                    .forEach( x -> gameFrequencyContainer.mainNumbersDrawn().accept(Stream.of(finalCounter)))
+                    .forEach( x -> gameFrequencyContainer.mainNumbersDrawn().accept(Collections.singletonList(finalCounter)))
             ;
             map.put(finalCounter, randomFrequencies[counter]);
         }
