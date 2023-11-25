@@ -75,7 +75,7 @@ public class GameChanceRecordGenerator implements IGameChanceRecordGenerator {
     }
 
     public synchronized List<List<Integer>> generateMainNumbers(String gameName, ChanceMethod chanceMethod, int numberOfSets) {
-        List<List<Integer>> generatedSets = new ArrayList();
+        List<List<Integer>> generatedSets = new ArrayList<>();
 
         NavigableMap<Integer, Integer> chanceMap = frequencyContainerMap.get(gameName).getMainNumbersChanceMap(chanceMethod);
         int total = chanceMap.lastKey();

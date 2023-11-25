@@ -133,8 +133,7 @@ class GameChanceRecordGeneratorTest {
         List<List<Integer>> generatedNumbers = megaChanceRecordGenerator.generateMainNumbers(
                 "mega", ChanceMethod.SWAPPED, expectedSets);
         assertEquals(expectedSets, generatedNumbers.size());
-        generatedNumbers.stream()
-                .forEach(oneMainNumberSet -> assertEquals(5, oneMainNumberSet.size()));
+        generatedNumbers.forEach(oneMainNumberSet -> assertEquals(5, oneMainNumberSet.size()));
     }
 
     @Test
