@@ -62,13 +62,12 @@ public class GameChanceRecordGenerator implements IGameChanceRecordGenerator {
             NavigableMap<Integer, Integer> chanceMap,
             int total) {
         List<Integer> generatedNumbers = new ArrayList<>(5);
-        for (int counter = 0; counter < 5; counter++) {
-            Integer oneNumber;
-            do {
-                int chance = chanceGenerator.nextInt(total);
-                oneNumber = chanceMap.ceilingEntry(chance).getValue();
-            } while (generatedNumbers.contains(oneNumber));
-            generatedNumbers.add(oneNumber);
+        Integer oneNumber;
+        while (generatedNumbers.size() < 5) {
+            oneNumber = chanceMap.ceilingEntry(chanceGenerator.nextInt(total)).getValue();
+            if( !generatedNumbers.contains(oneNumber) ) {
+                generatedNumbers.add(oneNumber);
+            }
         }
 
         Collections.sort(generatedNumbers);
