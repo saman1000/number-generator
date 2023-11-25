@@ -74,14 +74,14 @@ public class GameChanceRecordGenerator implements IGameChanceRecordGenerator {
         return generatedNumbers;
     }
 
-    public synchronized List<Integer>[] generateMainNumbers(String gameName, ChanceMethod chanceMethod, int numberOfSets) {
-        List<Integer>[] generatedSets = new List[numberOfSets];
+    public synchronized List<List<Integer>> generateMainNumbers(String gameName, ChanceMethod chanceMethod, int numberOfSets) {
+        List<List<Integer>> generatedSets = new ArrayList();
 
         NavigableMap<Integer, Integer> chanceMap = frequencyContainerMap.get(gameName).getMainNumbersChanceMap(chanceMethod);
         int total = chanceMap.lastKey();
 
         for (int counter = 0; counter < numberOfSets; counter++) {
-            generatedSets[counter] = generateOneMainNumberSet(chanceMap, total);
+            generatedSets.add(generateOneMainNumberSet(chanceMap, total));
         }
 
         return generatedSets;

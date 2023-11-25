@@ -130,10 +130,10 @@ class GameChanceRecordGeneratorTest {
         IGameChanceRecordGenerator megaChanceRecordGenerator =
                 new GameChanceRecordGenerator(allGames, mockedResultsReader);
 
-        List<Integer>[] generatedNumbers = megaChanceRecordGenerator.generateMainNumbers(
+        List<List<Integer>> generatedNumbers = megaChanceRecordGenerator.generateMainNumbers(
                 "mega", ChanceMethod.SWAPPED, expectedSets);
-        assertEquals(expectedSets, generatedNumbers.length);
-        Arrays.stream(generatedNumbers)
+        assertEquals(expectedSets, generatedNumbers.size());
+        generatedNumbers.stream()
                 .forEach(oneMainNumberSet -> assertEquals(5, oneMainNumberSet.size()));
     }
 
@@ -185,7 +185,7 @@ class GameChanceRecordGeneratorTest {
                 .parallel()
                 .forEach(x -> {
                     List<Integer> chanceNumbers = megaChanceRecordGenerator.generateMainNumbers(
-                            "mega", ChanceMethod.SWAPPED, 1)[0];
+                            "mega", ChanceMethod.SWAPPED, 1).get(0);
                     assertEquals(5, chanceNumbers.size());
                     chanceNumbers.forEach(mainNumber ->
                         generatedMainNumbersFrequency.merge(mainNumber, 1L, Long::sum)
