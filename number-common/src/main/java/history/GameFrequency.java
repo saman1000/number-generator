@@ -28,27 +28,33 @@ public class GameFrequency {
         return frequencies[number - 1];
     }
 
-    public synchronized NavigableMap<Integer, Integer> getChanceMap() {
-        return Optional.ofNullable(cachedChanceMap).orElseGet(this::getCachedChanceMap);
+    public synchronized NavigableMap<Integer, Integer> getNumberFrequencies() {
+        return Optional.ofNullable(cachedChanceMap).orElseGet(() -> {
+            cachedChanceMap = generateFrequencyMap(frequencies);
+            return cachedChanceMap;
+        });
     }
 
-    private NavigableMap<Integer, Integer> getCachedChanceMap() {
-        cachedChanceMap = new TreeMap<>();
+    static NavigableMap<Integer, Integer> generateFrequencyMap(Integer[] frequencies) {
+        NavigableMap<Integer, Integer> frequencyMap = new TreeMap<>();
 
         for (int counter = 0, sum = 0; counter < frequencies.length; ) {
             sum += frequencies[counter];
-            cachedChanceMap.put(sum, ++counter);
+            frequencyMap.put(sum, ++counter);
         }
 
-        return cachedChanceMap;
+        return frequencyMap;
     }
 
-    public NavigableMap<Integer, Integer> getSwappedChanceMap() {
-        return Optional.ofNullable(cachedSwappedChanceMap).orElseGet(this::getCachedSwappedChanceMap);
+    public NavigableMap<Integer, Integer> getSwappedNumberFrequencies() {
+        return Optional.ofNullable(cachedSwappedChanceMap).orElseGet(() -> {
+            cachedSwappedChanceMap = generateSwappedFrequencyMap(frequencies);
+            return cachedSwappedChanceMap;
+        });
     }
 
-    private NavigableMap<Integer, Integer> getCachedSwappedChanceMap() {
-        this.cachedSwappedChanceMap = new TreeMap<>();
+    static NavigableMap<Integer, Integer> generateSwappedFrequencyMap(Integer[] frequencies) {
+        NavigableMap<Integer, Integer> swappedFrequencyMap = new TreeMap<>();
 
         Map<Integer, Integer> frequencyMap = new HashMap<>();
         for (int counter = 0; counter < frequencies.length; counter++) {
@@ -79,9 +85,9 @@ public class GameFrequency {
         int sum = 0;
         for (Map.Entry<Integer, Integer> oneEntry: swappedMap.entrySet()) {
             sum += oneEntry.getValue();
-            this.cachedSwappedChanceMap.put(sum, oneEntry.getKey());
+            swappedFrequencyMap.put(sum, oneEntry.getKey());
         }
 
-        return this.cachedSwappedChanceMap;
+        return swappedFrequencyMap;
     }
 }

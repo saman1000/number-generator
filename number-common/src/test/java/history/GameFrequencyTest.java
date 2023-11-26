@@ -64,7 +64,7 @@ class GameFrequencyTest {
                         gameFrequency.numberOccurrenceObserved(x);
                     }
                 });
-        NavigableMap<Integer, Integer> chanceMap = gameFrequency.getChanceMap();
+        NavigableMap<Integer, Integer> chanceMap = gameFrequency.getNumberFrequencies();
         assertNotNull(chanceMap);
         chanceMap.entrySet().stream()
                 .parallel()
@@ -98,7 +98,7 @@ class GameFrequencyTest {
                         gameFrequency.numberOccurrenceObserved(x);
                     }
                 });
-        NavigableMap<Integer, Integer> chanceMap = gameFrequency.getSwappedChanceMap();
+        NavigableMap<Integer, Integer> chanceMap = gameFrequency.getSwappedNumberFrequencies();
         assertNotNull(chanceMap);
         chanceMap.entrySet().stream()
                 .parallel()

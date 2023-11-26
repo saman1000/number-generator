@@ -46,11 +46,11 @@ public class GameFrequencyContainer {
     public NavigableMap<Integer, Integer> getBallNumberChanceMap(ChanceMethod chanceMethod) {
         switch (chanceMethod) {
             case STRAIGHT -> {
-                return frequencyOfBallNumbers.getChanceMap();
+                return frequencyOfBallNumbers.getNumberFrequencies();
             }
 
             case SWAPPED -> {
-                return frequencyOfBallNumbers.getSwappedChanceMap();
+                return frequencyOfBallNumbers.getSwappedNumberFrequencies();
             }
 
             case MIXTURE -> throw new UnsupportedOperationException();
@@ -62,17 +62,23 @@ public class GameFrequencyContainer {
     public NavigableMap<Integer, Integer> getMainNumbersChanceMap(ChanceMethod chanceMethod) {
         switch (chanceMethod) {
             case STRAIGHT -> {
-                return frequencyOfMainNumbers.getChanceMap();
+                return frequencyOfMainNumbers.getNumberFrequencies();
             }
 
             case SWAPPED -> {
-                return frequencyOfMainNumbers.getSwappedChanceMap();
+                return frequencyOfMainNumbers.getSwappedNumberFrequencies();
             }
 
             case MIXTURE -> throw new UnsupportedOperationException();
 
             default -> throw new RuntimeException(chanceMethod.toString());
         }
+    }
+
+    public NavigableMap<Integer, Integer> getMainNumbersChanceMap(Integer number) {
+        pairingFrequency.getPairingFrequencies(number);
+
+        return null;
     }
 
     public void acceptedOneRecord() {
