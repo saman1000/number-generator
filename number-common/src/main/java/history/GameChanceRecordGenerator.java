@@ -16,20 +16,34 @@ public class GameChanceRecordGenerator implements IGameChanceRecordGenerator {
 
     private final Map<String, GameFrequencyContainer> frequencyContainerMap;
 
+    private final Map<String, ChanceNumberGenerator> chanceNumberGeneratorMap;
+
     private final ResultsReader resultsReader;
 
     private final Random chanceGenerator;
 
     public GameChanceRecordGenerator(AllConfigs allGames, ResultsReader gameResultsReader) {
         frequencyContainerMap = new HashMap<>();
+        chanceNumberGeneratorMap = new HashMap<>();
         resultsReader = gameResultsReader;
         allGames.getGames().entrySet()
                 .stream()
                 .parallel()
                 .forEach(
-                        oneEntry -> frequencyContainerMap.put(
-                                oneEntry.getKey(), loadOneFrequencyContainer(oneEntry.getValue())
-                        )
+                        oneEntry -> {
+                            GameFrequencyContainer gameFrequencyContainer =
+                                    loadOneFrequencyContainer(oneEntry.getValue());
+                            frequencyContainerMap.put(
+                                    oneEntry.getKey(), gameFrequencyContainer
+                            );
+                            chanceNumberGeneratorMap.put(
+                                    oneEntry.getKey(),
+                                    new ChanceNumberGenerator(
+                                       gameFrequencyContainer.getFrequencyOfBallNumbers(),
+                                       gameFrequencyContainer.getFrequencyOfMainNumbers(),
+                                       gameFrequencyContainer.getPairingFrequency()
+                                    ));
+                        }
                 );
 
         chanceGenerator = new Random();
@@ -48,40 +62,21 @@ public class GameChanceRecordGenerator implements IGameChanceRecordGenerator {
 
     public synchronized Integer[] generateBallNumbers(String gameName, ChanceMethod chanceMethod, int numberOfSets) {
 
-        NavigableMap<Integer, Integer> chanceMap = frequencyContainerMap.get(gameName).getBallNumberChanceMap(chanceMethod);
-        int total = chanceMap.lastKey();
+        ChanceNumberGenerator chanceNumberGenerator = chanceNumberGeneratorMap.get(gameName);
         Integer[] ballNumbers = new Integer[numberOfSets];
         for (int counter = 0; counter < numberOfSets; counter++) {
-            ballNumbers[counter] = chanceMap.ceilingEntry(chanceGenerator.nextInt(total)).getValue();
+            ballNumbers[counter] = chanceNumberGenerator.generateBallNumber(chanceMethod);
         }
 
         return ballNumbers;
     }
 
-    private List<Integer> generateOneMainNumberSet(
-            NavigableMap<Integer, Integer> chanceMap,
-            int total) {
-        List<Integer> generatedNumbers = new ArrayList<>(5);
-        Integer oneNumber;
-        while (generatedNumbers.size() < 5) {
-            oneNumber = chanceMap.ceilingEntry(chanceGenerator.nextInt(total)).getValue();
-            if( !generatedNumbers.contains(oneNumber) ) {
-                generatedNumbers.add(oneNumber);
-            }
-        }
-
-        Collections.sort(generatedNumbers);
-        return generatedNumbers;
-    }
-
     public synchronized List<List<Integer>> generateMainNumbers(String gameName, ChanceMethod chanceMethod, int numberOfSets) {
         List<List<Integer>> generatedSets = new ArrayList<>();
 
-        NavigableMap<Integer, Integer> chanceMap = frequencyContainerMap.get(gameName).getMainNumbersChanceMap(chanceMethod);
-        int total = chanceMap.lastKey();
-
+        ChanceNumberGenerator chanceNumberGenerator = chanceNumberGeneratorMap.get(gameName);
         for (int counter = 0; counter < numberOfSets; counter++) {
-            generatedSets.add(generateOneMainNumberSet(chanceMap, total));
+            generatedSets.add(chanceNumberGenerator.generateMainNumberSet(chanceMethod, 5));
         }
 
         return generatedSets;

@@ -11,10 +11,13 @@ public class GameFrequencyContainer {
     @Getter
     private long numberOfAcceptedRecords;
 
+    @Getter
     private final GameFrequency frequencyOfMainNumbers;
 
+    @Getter
     private final GameFrequency frequencyOfBallNumbers;
 
+    @Getter
     private final PairingFrequency pairingFrequency;
 
     public GameFrequencyContainer(int maxMainNumberValue, int maxBallNumberValue) {

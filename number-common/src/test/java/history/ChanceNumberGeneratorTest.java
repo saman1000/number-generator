@@ -13,8 +13,6 @@ public class ChanceNumberGeneratorTest {
         gameFrequencyContainer.mainNumbersDrawn().accept(Arrays.asList(1, 3, 4, 5, 6));
         gameFrequencyContainer.mainNumbersDrawn().accept(Arrays.asList(1, 6, 7, 8, 9));
 
-        ChanceNumberGenerator chanceNumberGenerator = new ChanceNumberGenerator(null, null);
-        chanceNumberGenerator.generateNumber();
-
+        ChanceNumberGenerator chanceNumberGenerator = new ChanceNumberGenerator(null, null, null);
     }
 }
