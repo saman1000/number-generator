@@ -3,21 +3,17 @@ package history;
 import lombok.Getter;
 
 import java.util.List;
-import java.util.NavigableMap;
 import java.util.function.Consumer;
 
+@Getter
 public class GameFrequencyContainer {
 
-    @Getter
     private long numberOfAcceptedRecords;
 
-    @Getter
     private final GameFrequency frequencyOfMainNumbers;
 
-    @Getter
     private final GameFrequency frequencyOfBallNumbers;
 
-    @Getter
     private final PairingFrequency pairingFrequency;
 
     public GameFrequencyContainer(int maxMainNumberValue, int maxBallNumberValue) {
@@ -44,44 +40,6 @@ public class GameFrequencyContainer {
 
     public Integer getMainNumberFrequency(Integer mainNumber) {
         return frequencyOfMainNumbers.getFrequencyOfNumber(mainNumber);
-    }
-
-    public NavigableMap<Integer, Integer> getBallNumberChanceMap(ChanceMethod chanceMethod) {
-        switch (chanceMethod) {
-            case STRAIGHT -> {
-                return frequencyOfBallNumbers.getNumberFrequencies();
-            }
-
-            case SWAPPED -> {
-                return frequencyOfBallNumbers.getSwappedNumberFrequencies();
-            }
-
-            case MIXTURE -> throw new UnsupportedOperationException();
-
-            default -> throw new RuntimeException(chanceMethod.toString());
-        }
-    }
-
-    public NavigableMap<Integer, Integer> getMainNumbersChanceMap(ChanceMethod chanceMethod) {
-        switch (chanceMethod) {
-            case STRAIGHT -> {
-                return frequencyOfMainNumbers.getNumberFrequencies();
-            }
-
-            case SWAPPED -> {
-                return frequencyOfMainNumbers.getSwappedNumberFrequencies();
-            }
-
-            case MIXTURE -> throw new UnsupportedOperationException();
-
-            default -> throw new RuntimeException(chanceMethod.toString());
-        }
-    }
-
-    public NavigableMap<Integer, Integer> getMainNumbersChanceMap(Integer number) {
-        pairingFrequency.getPairingFrequencies(number);
-
-        return null;
     }
 
     public void acceptedOneRecord() {

@@ -14,16 +14,11 @@ import java.util.*;
 @Service("gamesNumberGeneratorService")
 public class GameChanceRecordGenerator implements IGameChanceRecordGenerator {
 
-    private final Map<String, GameFrequencyContainer> frequencyContainerMap;
-
     private final Map<String, ChanceNumberGenerator> chanceNumberGeneratorMap;
 
     private final ResultsReader resultsReader;
 
-    private final Random chanceGenerator;
-
     public GameChanceRecordGenerator(AllConfigs allGames, ResultsReader gameResultsReader) {
-        frequencyContainerMap = new HashMap<>();
         chanceNumberGeneratorMap = new HashMap<>();
         resultsReader = gameResultsReader;
         allGames.getGames().entrySet()
@@ -33,9 +28,6 @@ public class GameChanceRecordGenerator implements IGameChanceRecordGenerator {
                         oneEntry -> {
                             GameFrequencyContainer gameFrequencyContainer =
                                     loadOneFrequencyContainer(oneEntry.getValue());
-                            frequencyContainerMap.put(
-                                    oneEntry.getKey(), gameFrequencyContainer
-                            );
                             chanceNumberGeneratorMap.put(
                                     oneEntry.getKey(),
                                     new ChanceNumberGenerator(
@@ -45,8 +37,6 @@ public class GameChanceRecordGenerator implements IGameChanceRecordGenerator {
                                     ));
                         }
                 );
-
-        chanceGenerator = new Random();
     }
 
     private GameFrequencyContainer loadOneFrequencyContainer(GameConfig gameConfig) throws FailedToReadPastResultsException {

@@ -7,11 +7,11 @@ import java.util.Random;
 
 public class ChanceNumberGenerator {
 
-    private final GameFrequency frequencyOfBallNumbers;
-    private GameFrequency frequencyOfMainNumbers;
-    private PairingFrequency pairingFrequency;
+    final private GameFrequency frequencyOfBallNumbers;
+    final private GameFrequency frequencyOfMainNumbers;
+    final private PairingFrequency pairingFrequency;
 
-    private Random numberSelector;
+    final private Random numberSelector;
 
     public ChanceNumberGenerator(
             GameFrequency frequencyOfBallNumbers,
@@ -42,9 +42,15 @@ public class ChanceNumberGenerator {
     public List<Integer> generateMainNumberSet(ChanceMethod chanceMethod, int setSize) {
         List<Integer> numberSet = new ArrayList<>();
 
-        NavigableMap<Integer, Integer> numberFrequencies =
-                ChanceMethod.STRAIGHT.equals(chanceMethod) ? frequencyOfMainNumbers.getNumberFrequencies() :
-                        frequencyOfMainNumbers.getSwappedNumberFrequencies();
+        NavigableMap<Integer, Integer> numberFrequencies;
+        if (ChanceMethod.STRAIGHT.equals(chanceMethod)) {
+            numberFrequencies = frequencyOfMainNumbers.getNumberFrequencies();
+        } else if (ChanceMethod.SWAPPED.equals(chanceMethod)) {
+            numberFrequencies = frequencyOfMainNumbers.getSwappedNumberFrequencies();
+        } else {
+            throw new RuntimeException("not supporting " + chanceMethod);
+        }
+
         int total = numberFrequencies.lastKey();
         Integer oneNumber;
         while (numberSet.size() < setSize) {
