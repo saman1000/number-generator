@@ -1,9 +1,6 @@
 package history;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NavigableMap;
-import java.util.Random;
+import java.util.*;
 
 public class ChanceNumberGenerator {
 
@@ -60,6 +57,7 @@ public class ChanceNumberGenerator {
             addOneRandomNumberUsingPairFrequency(chanceMethod, oneNumber, numberSet);
         }
 
+        Collections.sort(numberSet);
         return numberSet;
     }
 
