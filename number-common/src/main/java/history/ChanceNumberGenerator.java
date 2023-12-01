@@ -52,15 +52,21 @@ public class ChanceNumberGenerator {
         }
 
         int total = numberFrequencies.lastKey();
-        Integer oneNumber;
+        //select first random number based on frequency of all numbers
+        Integer oneNumber = numberFrequencies.ceilingEntry(numberSelector.nextInt(total)).getValue();
+        numberSet.add(oneNumber);
+        //select remaining random numbers using frequency of paired numbers
         while (numberSet.size() < setSize) {
-            oneNumber = numberFrequencies.ceilingEntry(numberSelector.nextInt(total)).getValue();
-            if (!numberSet.contains(oneNumber)) {
-                numberSet.add(oneNumber);
-            }
+            numberFrequencies =  GameFrequency.generateFrequencyMap(pairingFrequency.getPairingFrequencies(oneNumber));
+            total = numberFrequencies.lastKey();
+            do {
+                oneNumber = numberFrequencies.ceilingEntry(numberSelector.nextInt(total)).getValue();
+            } while (numberSet.contains(oneNumber));
+            numberSet.add(oneNumber);
         }
 
         return numberSet;
     }
+
 
 }

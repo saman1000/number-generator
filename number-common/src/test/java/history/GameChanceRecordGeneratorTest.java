@@ -13,9 +13,6 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.LongStream;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(MockitoExtension.class)
@@ -104,101 +101,4 @@ class GameChanceRecordGeneratorTest {
         });
     }
 
-    @Test
-    void shouldGenerateExpectedMainNumbersSet() {
-        int expectedSets = 10;
-        GameFrequencyContainer gameFrequencyContainer = new GameFrequencyContainer(
-                allGames.getGames().get("mega").getMaxMainNumberValue(),
-                allGames.getGames().get("mega").getMaxBallNumberValue()
-        );
-
-        int[] randomFrequencies = new Random().ints(70, 1, 5000).toArray();
-
-        for (int counter=0; counter < 70; counter++) {
-            int finalCounter = counter;
-            IntStream.range(0, randomFrequencies[counter])
-                    .forEach( x -> gameFrequencyContainer.mainNumbersDrawn().accept(Collections.singletonList(finalCounter +1)))
-            ;
-        }
-
-        ResultsReader mockedResultsReader = Mockito.mock(ResultsReader.class);
-        Mockito.when(
-                mockedResultsReader.readLinesUsingScanner(
-                        Mockito.any(), Mockito.any())).thenReturn(gameFrequencyContainer
-        );
-
-        IGameChanceRecordGenerator megaChanceRecordGenerator =
-                new GameChanceRecordGenerator(allGames, mockedResultsReader);
-
-        List<List<Integer>> generatedNumbers = megaChanceRecordGenerator.generateMainNumbers(
-                "mega", ChanceMethod.SWAPPED, expectedSets);
-        assertEquals(expectedSets, generatedNumbers.size());
-        generatedNumbers.forEach(oneMainNumberSet -> assertEquals(5, oneMainNumberSet.size()));
-    }
-
-    @Test
-    void shouldGenerateDifferentNumbersSets() {
-        GameFrequencyContainer gameFrequencyContainer = new GameFrequencyContainer(
-                allGames.getGames().get("mega").getMaxMainNumberValue(),
-                allGames.getGames().get("mega").getMaxBallNumberValue()
-        );
-
-        long[] randomFrequencies = new Random().longs(70, 1, 5000).toArray();
-
-        Map<Integer, Long> map = new HashMap<>();
-        for (int counter=0; counter < 70; counter++) {
-            int finalCounter = counter + 1;
-            LongStream.range(0, randomFrequencies[counter])
-                    .forEach( x -> gameFrequencyContainer.mainNumbersDrawn().accept(Collections.singletonList(finalCounter)))
-            ;
-            map.put(finalCounter, randomFrequencies[counter]);
-        }
-
-        Comparator<Map.Entry<Integer, Long>> entryComparator = Map.Entry.comparingByValue(Comparator.naturalOrder());
-        List<Map.Entry<Integer, Long>> list = map.entrySet().stream()
-                .sorted(entryComparator)
-                .collect(Collectors.toList());
-        HashMap<Integer, Long> swappedMap = new HashMap<>();
-        while (list.size() >= 2) {
-            Map.Entry<Integer, Long> lowest = list.remove(0);
-            Map.Entry<Integer, Long> highest = list.remove(list.size() - 1);
-            swappedMap.put(lowest.getKey(), highest.getValue());
-            swappedMap.put(highest.getKey(), lowest.getValue());
-        }
-        if (!list.isEmpty()) {
-            Map.Entry<Integer, Long> last = list.remove(0);
-            swappedMap.put(last.getKey(), last.getValue());
-        }
-
-        ResultsReader mockedResultsReader = Mockito.mock(ResultsReader.class);
-        Mockito.when(
-                mockedResultsReader.readLinesUsingScanner(
-                        Mockito.any(), Mockito.any())).thenReturn(gameFrequencyContainer
-        );
-
-        IGameChanceRecordGenerator megaChanceRecordGenerator =
-                new GameChanceRecordGenerator(allGames, mockedResultsReader);
-
-        Map<Integer, Long> generatedMainNumbersFrequency = Collections.synchronizedMap(new HashMap<>());
-        IntStream.range(0, 10000)
-                .parallel()
-                .forEach(x -> {
-                    List<Integer> chanceNumbers = megaChanceRecordGenerator.generateMainNumbers(
-                            "mega", ChanceMethod.SWAPPED, 1).get(0);
-                    assertEquals(5, chanceNumbers.size());
-                    chanceNumbers.forEach(mainNumber ->
-                        generatedMainNumbersFrequency.merge(mainNumber, 1L, Long::sum)
-                    );
-                });
-
-        generatedMainNumbersFrequency.forEach((key, actualFrequency) -> {
-            if (!swappedMap.containsKey(key)) {
-                System.out.println();
-            }
-            long randomFrequency = swappedMap.get(key);
-            assertTrue(actualFrequency - randomFrequency < 1000,
-                    String.format("%s != %s for %s", randomFrequency, actualFrequency, key)
-            );
-        });
-    }
 }

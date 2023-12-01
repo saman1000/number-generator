@@ -57,12 +57,16 @@ public class ChanceNumberGeneratorTest {
     public void testCorrectMainNumberFrequencyIsUsed() {
         GameFrequency mockedFrequencyOfBallNumbers = Mockito.mock(GameFrequency.class);
         PairingFrequency mockedPairingFrequency = Mockito.mock(PairingFrequency.class);
+        Mockito.when(
+                mockedPairingFrequency
+                        .getPairingFrequencies(Mockito.anyInt())).thenReturn(new Integer[] {10, 20, 30, 40, 50}
+        );
 
         GameFrequency mockedFrequencyOfMainNumbers = Mockito.mock(GameFrequency.class);
         NavigableMap<Integer, Integer> mockedMainNumberFrequencies = Mockito.mock(NavigableMap.class);
         Mockito.when(mockedMainNumberFrequencies.lastKey()).thenReturn(100);
         Map.Entry<Integer, Integer> mockedEntry = Mockito.mock(Map.Entry.class);
-        Mockito.when(mockedEntry.getValue()).thenReturn(1, 2, 3, 4, 5);
+        Mockito.when(mockedEntry.getValue()).thenReturn(2, 3, 4, 5, 6);
         Mockito.when(mockedMainNumberFrequencies.ceilingEntry(Mockito.any())).thenReturn(mockedEntry);
         Mockito
                 .when(mockedFrequencyOfMainNumbers.getNumberFrequencies())
@@ -92,5 +96,31 @@ public class ChanceNumberGeneratorTest {
                 RuntimeException.class,
                 () -> chanceNumberGenerator.generateMainNumberSet(ChanceMethod.MIXTURE, 1)
         );
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testPairingFrequenciesAreUsed() {
+        GameFrequency mockedFrequencyOfBallNumbers = Mockito.mock(GameFrequency.class);
+        GameFrequency mockedFrequencyOfMainNumbers = Mockito.mock(GameFrequency.class);
+        NavigableMap<Integer, Integer> mockedMainNumberFrequencies = Mockito.mock(NavigableMap.class);
+        Mockito.when(mockedMainNumberFrequencies.lastKey()).thenReturn(100);
+        Map.Entry<Integer, Integer> mockedEntry = Mockito.mock(Map.Entry.class);
+        Mockito.when(mockedEntry.getValue()).thenReturn(2, 3, 4, 5);
+        Mockito.when(mockedMainNumberFrequencies.ceilingEntry(Mockito.any())).thenReturn(mockedEntry);
+        Mockito
+                .when(mockedFrequencyOfMainNumbers.getNumberFrequencies())
+                .thenReturn(mockedMainNumberFrequencies);
+
+        PairingFrequency mockedPairingFrequency = Mockito.mock(PairingFrequency.class);
+        Mockito.when(mockedPairingFrequency.getPairingFrequencies(Mockito.anyInt())).thenReturn(new Integer[] {1});
+
+        ChanceNumberGenerator chanceNumberGenerator = new ChanceNumberGenerator(
+                mockedFrequencyOfBallNumbers,
+                mockedFrequencyOfMainNumbers,
+                mockedPairingFrequency
+        );
+        chanceNumberGenerator.generateMainNumberSet(ChanceMethod.STRAIGHT, 2);
+        Mockito.verify(mockedPairingFrequency, Mockito.times(1)).getPairingFrequencies(Mockito.anyInt());
     }
 }
