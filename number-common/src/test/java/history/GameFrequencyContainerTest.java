@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Map;
 import java.util.Random;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -42,9 +43,14 @@ class GameFrequencyContainerTest {
                 )
         ;
 
-        for (int counter = 0; counter < randomFrequencies.length; counter++) {
+        int[] savedFrequencies =
+                gameFrequencyContainer.getFrequencyOfBallNumbers().getNumberFrequencies().entrySet().stream()
+                .sorted(Map.Entry.comparingByValue())
+                .mapToInt(Map.Entry::getKey).toArray();
+        Assertions.assertEquals(randomFrequencies[0]+1, savedFrequencies[0]);
+        for (int counter = 1; counter < randomFrequencies.length; counter++) {
             Assertions.assertEquals(
-                    randomFrequencies[counter]+1, gameFrequencyContainer.getBallNumberFrequency(counter+1)
+                    randomFrequencies[counter]+1, savedFrequencies[counter]-savedFrequencies[counter-1]
             );
         }
     }
@@ -72,11 +78,17 @@ class GameFrequencyContainerTest {
                 )
         ;
 
+        int[] savedFrequencies =
+                gameFrequencyContainer.getFrequencyOfMainNumbers().getNumberFrequencies().entrySet().stream()
+                        .sorted(Map.Entry.comparingByValue())
+                        .mapToInt(Map.Entry::getKey).toArray();
+        Assertions.assertEquals(randomFrequencies[0]+1, savedFrequencies[0]);
         for (int counter = 0; counter < randomFrequencies.length; counter++) {
-            for (int mainNumberCounter = counter*5+1; mainNumberCounter <= counter*5+5; mainNumberCounter++) {
+            for (int mainNumberCounter = counter == 0 ? 1 : counter*5; mainNumberCounter < counter*5+5; mainNumberCounter++) {
                 Assertions.assertEquals(
                         randomFrequencies[counter]+1,
-                        gameFrequencyContainer.getMainNumberFrequency(mainNumberCounter));
+                        savedFrequencies[mainNumberCounter] - savedFrequencies[mainNumberCounter-1],
+                        "counter=" + counter + " mainNumberCounter=" + mainNumberCounter);
             }
         }
     }

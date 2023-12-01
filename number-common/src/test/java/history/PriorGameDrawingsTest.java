@@ -11,9 +11,9 @@ import java.util.stream.Stream;
 
 /**
  * test cases:
- * ) two results on various dates must not be equal even if they contain exactly the same numbers
- * ) two results on the same date must be equal and if they contain different numbers, an error must be thrown
- * )
+ * 1) two results on various dates must not be equal even if they contain exactly the same numbers
+ * 2) two results on the same date must be equal and if they contain different numbers, an error must be thrown
+ * 3)
  */
 public class PriorGameDrawingsTest {
 

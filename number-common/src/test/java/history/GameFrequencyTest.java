@@ -1,10 +1,12 @@
 package history;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Map;
 import java.util.NavigableMap;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -26,8 +28,12 @@ class GameFrequencyTest {
             }
         }
 
-        for (int counter=0; counter < 10; counter++) {
-            assertEquals(testNumbers[counter]+1, gameFrequency.getFrequencyOfNumber(counter+1));
+        int[] savedFrequencies = gameFrequency.getNumberFrequencies().entrySet().stream()
+                .sorted(Map.Entry.comparingByValue())
+                .mapToInt(Map.Entry::getKey).toArray();
+        Assertions.assertEquals(testNumbers[0]+1, savedFrequencies[0]);
+        for (int counter=1; counter < 10; counter++) {
+            assertEquals(testNumbers[counter]+1, savedFrequencies[counter]-savedFrequencies[counter-1]);
         }
     }
 

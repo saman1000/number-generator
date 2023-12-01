@@ -24,10 +24,6 @@ public class GameFrequency {
         frequencies[number-1]++;
     }
 
-    public Integer getFrequencyOfNumber(Integer number) {
-        return frequencies[number - 1];
-    }
-
     public synchronized NavigableMap<Integer, Integer> getNumberFrequencies() {
         return Optional.ofNullable(cachedChanceMap).orElseGet(() -> {
             cachedChanceMap = generateFrequencyMap(frequencies);

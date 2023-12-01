@@ -34,14 +34,6 @@ public class GameFrequencyContainer {
         return frequencyOfBallNumbers::numberOccurrenceObserved;
     }
 
-    public Integer getBallNumberFrequency(Integer ballNumber) {
-        return frequencyOfBallNumbers.getFrequencyOfNumber(ballNumber);
-    }
-
-    public Integer getMainNumberFrequency(Integer mainNumber) {
-        return frequencyOfMainNumbers.getFrequencyOfNumber(mainNumber);
-    }
-
     public void acceptedOneRecord() {
         numberOfAcceptedRecords++;
     }
