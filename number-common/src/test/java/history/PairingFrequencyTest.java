@@ -14,11 +14,11 @@ public class PairingFrequencyTest {
         pairingFrequency.parseMainNumbers(Arrays.asList(1, 2, 3));
         pairingFrequency.parseMainNumbers(Arrays.asList(1, 2, 4));
         pairingFrequency.parseMainNumbers(Arrays.asList(1, 2, 5));
-        assertArrayEquals(new int[] {0, 3, 1, 1, 1}, pairingFrequency.getPairingFrequencies(1));
-        assertArrayEquals(new int[] {3, 0, 1, 1, 1}, pairingFrequency.getPairingFrequencies(2));
-        assertArrayEquals(new int[] {1, 1, 0, 0, 0}, pairingFrequency.getPairingFrequencies(3));
-        assertArrayEquals(new int[] {1, 1, 0, 0, 0}, pairingFrequency.getPairingFrequencies(4));
-        assertArrayEquals(new int[] {1, 1, 0, 0, 0}, pairingFrequency.getPairingFrequencies(5));
+        assertArrayEquals(new Integer[] {0, 3, 1, 1, 1}, pairingFrequency.getPairingFrequencies(1));
+        assertArrayEquals(new Integer[] {3, 0, 1, 1, 1}, pairingFrequency.getPairingFrequencies(2));
+        assertArrayEquals(new Integer[] {1, 1, 0, 0, 0}, pairingFrequency.getPairingFrequencies(3));
+        assertArrayEquals(new Integer[] {1, 1, 0, 0, 0}, pairingFrequency.getPairingFrequencies(4));
+        assertArrayEquals(new Integer[] {1, 1, 0, 0, 0}, pairingFrequency.getPairingFrequencies(5));
     }
 
     @Test

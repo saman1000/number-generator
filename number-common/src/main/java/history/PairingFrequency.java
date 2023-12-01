@@ -1,6 +1,7 @@
 package history;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class PairingFrequency {
 
@@ -24,8 +25,8 @@ public class PairingFrequency {
         });
     }
 
-    public int[] getPairingFrequencies(int mainNumber) {
-        return pairingArrays[mainNumber - 1];
+    public Integer[] getPairingFrequencies(int mainNumber) {
+        return IntStream.of(pairingArrays[mainNumber - 1]).boxed().toArray(Integer[]::new);
     }
 
 }
