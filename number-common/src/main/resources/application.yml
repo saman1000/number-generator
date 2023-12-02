@@ -9,7 +9,9 @@ lottery:
       maxMainNumberValue: 70
       maxBallNumberValue: 25
       results-pattern: (.*);(.*);(.*)
+      mainNumberSetSize: 5
     powerball:
       maxMainNumberValue: 69
       maxBallNumberValue: 26
       results-pattern: (.*);(.*);(.*)
+      mainNumberSetSize: 5

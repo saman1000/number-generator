@@ -54,14 +54,16 @@ public class ChanceNumberGenerator {
         numberSet.add(oneNumber);
         //select remaining random numbers using frequency of paired numbers
         while (numberSet.size() < setSize) {
-            addOneRandomNumberUsingPairFrequency(chanceMethod, oneNumber, numberSet);
+            oneNumber = generateOneRandomNumberUsingPairFrequency(chanceMethod, oneNumber, numberSet);
+            numberSet.add(oneNumber);
         }
 
         Collections.sort(numberSet);
         return numberSet;
     }
 
-    private void addOneRandomNumberUsingPairFrequency(ChanceMethod chanceMethod, Integer oneNumber, List<Integer> numberSet) {
+    private Integer generateOneRandomNumberUsingPairFrequency(
+            ChanceMethod chanceMethod, Integer oneNumber, List<Integer> numberSet) {
         NavigableMap<Integer, Integer> numberFrequencies;
         if (ChanceMethod.STRAIGHT.equals(chanceMethod)) {
             numberFrequencies = GameFrequency.generateFrequencyMap(pairingFrequency.getPairingFrequencies(oneNumber));
@@ -75,7 +77,8 @@ public class ChanceNumberGenerator {
         do {
             oneNumber = numberFrequencies.ceilingEntry(numberSelector.nextInt(total)).getValue();
         } while (numberSet.contains(oneNumber));
-        numberSet.add(oneNumber);
+
+        return oneNumber;
     }
 
 

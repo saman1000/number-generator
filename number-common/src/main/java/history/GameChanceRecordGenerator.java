@@ -18,6 +18,8 @@ public class GameChanceRecordGenerator implements IGameChanceRecordGenerator {
 
     private final ResultsReader resultsReader;
 
+    private final AllConfigs allGames;
+
     public GameChanceRecordGenerator(AllConfigs allGames, ResultsReader gameResultsReader) {
         chanceNumberGeneratorMap = new HashMap<>();
         resultsReader = gameResultsReader;
@@ -37,6 +39,7 @@ public class GameChanceRecordGenerator implements IGameChanceRecordGenerator {
                                     ));
                         }
                 );
+        this.allGames = allGames;
     }
 
     private GameFrequencyContainer loadOneFrequencyContainer(GameConfig gameConfig) throws FailedToReadPastResultsException {
@@ -66,7 +69,10 @@ public class GameChanceRecordGenerator implements IGameChanceRecordGenerator {
 
         ChanceNumberGenerator chanceNumberGenerator = chanceNumberGeneratorMap.get(gameName);
         for (int counter = 0; counter < numberOfSets; counter++) {
-            generatedSets.add(chanceNumberGenerator.generateMainNumberSet(chanceMethod, 5));
+            generatedSets.add(
+                    chanceNumberGenerator.generateMainNumberSet(
+                            chanceMethod, allGames.getGames().get(gameName).getMainNumberSetSize())
+            );
         }
 
         return generatedSets;
