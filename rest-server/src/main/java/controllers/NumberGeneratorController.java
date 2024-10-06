@@ -16,7 +16,9 @@ public record NumberGeneratorController(
         IGameChanceRecordGenerator gamesNumberGeneratorService) {
 
     @GetMapping("/generate/{game}")
-    public SetsOfNumbers[] generateNumbers(final @PathVariable String game, final @RequestParam int numberOfSets, final @RequestParam ChanceMethod chanceMethod) {
+    public SetsOfNumbers[] generateNumbers(final @PathVariable("game") String game,
+                                           final @RequestParam("numberOfSets") int numberOfSets,
+                                           final @RequestParam("chanceMethod") ChanceMethod chanceMethod) {
         SetsOfNumbers[] generatedNumberSets = new SetsOfNumbers[numberOfSets];
         List<List<Integer>> generatedMainNumberSets = gamesNumberGeneratorService.generateMainNumbers(game, chanceMethod, numberOfSets);
         Integer[] generatedBallNumbers = gamesNumberGeneratorService.generateBallNumbers(game, chanceMethod, numberOfSets);
