@@ -29,6 +29,7 @@ public class ChanceNumberGenerator {
             default -> throw new RuntimeException("not supporting " + chanceMethod);
         };
 
+        //select the based on highest frequency
         int total = numberFrequencies.lastKey();
         return numberFrequencies.ceilingEntry(numberSelector.nextInt(total)).getValue();
     }
@@ -36,14 +37,11 @@ public class ChanceNumberGenerator {
     public List<Integer> generateMainNumberSet(ChanceMethod chanceMethod, int setSize) {
         List<Integer> numberSet = new ArrayList<>();
 
-        NavigableMap<Integer, Integer> numberFrequencies;
-        if (ChanceMethod.STRAIGHT.equals(chanceMethod)) {
-            numberFrequencies = frequencyOfMainNumbers.getNumberFrequencies();
-        } else if (ChanceMethod.SWAPPED.equals(chanceMethod)) {
-            numberFrequencies = frequencyOfMainNumbers.getSwappedNumberFrequencies();
-        } else {
-            throw new RuntimeException("not supporting " + chanceMethod);
-        }
+        NavigableMap<Integer, Integer> numberFrequencies = switch (chanceMethod) {
+            case STRAIGHT -> frequencyOfMainNumbers.getNumberFrequencies();
+            case SWAPPED -> frequencyOfMainNumbers.getSwappedNumberFrequencies();
+            default -> throw new RuntimeException("not supporting " + chanceMethod);
+        };
 
         int total = numberFrequencies.lastKey();
         //select first random number based on frequency of all numbers
@@ -61,14 +59,11 @@ public class ChanceNumberGenerator {
 
     private Integer generateOneRandomNumberUsingPairFrequency(
             ChanceMethod chanceMethod, Integer oneNumber, List<Integer> numberSet) {
-        NavigableMap<Integer, Integer> numberFrequencies;
-        if (ChanceMethod.STRAIGHT.equals(chanceMethod)) {
-            numberFrequencies = GameFrequency.generateFrequencyMap(pairingFrequency.getPairingFrequencies(oneNumber));
-        } else if (ChanceMethod.SWAPPED.equals(chanceMethod)) {
-            numberFrequencies = GameFrequency.generateSwappedFrequencyMap(pairingFrequency.getPairingFrequencies(oneNumber));
-        } else {
-            throw new RuntimeException("not supporting " + chanceMethod);
-        }
+        NavigableMap<Integer, Integer> numberFrequencies = switch (chanceMethod) {
+            case STRAIGHT -> GameFrequency.generateFrequencyMap(pairingFrequency.getPairingFrequencies(oneNumber));
+            case SWAPPED -> GameFrequency.generateSwappedFrequencyMap(pairingFrequency.getPairingFrequencies(oneNumber));
+            default -> throw new RuntimeException("not supporting " + chanceMethod);
+        };
 
         int total = numberFrequencies.lastKey();
         do {
