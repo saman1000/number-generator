@@ -23,14 +23,11 @@ public class ChanceNumberGenerator {
     }
 
     public Integer generateBallNumber(ChanceMethod chanceMethod) {
-        NavigableMap<Integer, Integer> numberFrequencies;
-        if (ChanceMethod.STRAIGHT.equals(chanceMethod)) {
-            numberFrequencies = frequencyOfBallNumbers.getNumberFrequencies();
-        } else if (ChanceMethod.SWAPPED.equals(chanceMethod)) {
-            numberFrequencies = frequencyOfBallNumbers.getSwappedNumberFrequencies();
-        } else {
-            throw new RuntimeException("not supporting " + chanceMethod);
-        }
+        NavigableMap<Integer, Integer> numberFrequencies = switch (chanceMethod) {
+            case STRAIGHT -> frequencyOfBallNumbers.getNumberFrequencies();
+            case SWAPPED -> frequencyOfBallNumbers.getSwappedNumberFrequencies();
+            default -> throw new RuntimeException("not supporting " + chanceMethod);
+        };
 
         int total = numberFrequencies.lastKey();
         return numberFrequencies.ceilingEntry(numberSelector.nextInt(total)).getValue();

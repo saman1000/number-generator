@@ -20,9 +20,9 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <maven.compiler.release>21</maven.compiler.release>
-        <spring-cloud.version>2022.0.4</spring-cloud.version>
+        <spring-cloud.version>2025.0.0</spring-cloud.version>
         <wrapper.version>1.0.27.RELEASE</wrapper.version>
-        <aws-lambda-events.version>3.11.3</aws-lambda-events.version>
+        <aws-lambda-events.version>3.16.1</aws-lambda-events.version>
         <spring-cloud-function.version>4.0.0-SNAPSHOT</spring-cloud-function.version>
     </properties>
 
@@ -60,7 +60,7 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-function-context</artifactId>
-            <version>4.1.2</version>
+            <version>4.3.0</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -77,6 +77,12 @@
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-lambda-java-events</artifactId>
             <version>${aws-lambda-events.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>joda-time</groupId>
+                    <artifactId>joda-time</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
