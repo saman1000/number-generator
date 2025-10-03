@@ -39,10 +39,6 @@ public class PriorGameDrawings implements Serializable {
         }
     }
 
-    public void addResults(Collection<Integer> results) {
-        results.addAll(numbers);
-    }
-
     public boolean equals(Object obj) {
         if (obj instanceof PriorGameDrawings anotherResult) {
             return equals(anotherResult);

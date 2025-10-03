@@ -51,23 +51,7 @@ public class PriorGameDrawingsTest {
         );
     }
 
-    @Test
-    public void testAddingTwoResults() {
-        ArrayList<Integer> allNumbers = new ArrayList<>(14);
-        PriorGameDrawings result1 =
-                new PriorGameDrawings("2010, 12, 29", Arrays.asList(1, 2, 3, 4, 5), 6);
-        PriorGameDrawings result2 =
-                new PriorGameDrawings("2010, 12, 22", Arrays.asList(1, 2, 3, 4, 5), 6);
-
-        result1.addResults(allNumbers);
-        result2.addResults(allNumbers);
-
-        Integer[] expectedNumberArray = {1, 2, 3, 4, 5, 1, 2, 3, 4, 5};
-        Collection<Integer> expectedNumbers = Arrays.asList(expectedNumberArray);
-        Assertions.assertEquals(expectedNumbers, allNumbers);
-    }
-
-    @Test
+        @Test
     public void testDifferentValuesOnSameDate() {
         PriorGameDrawings result1 =
                 new PriorGameDrawings("2010, 12, 29", Arrays.asList(1, 2, 3, 4, 5), 6);
