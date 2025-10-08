@@ -29,9 +29,9 @@ class FrequencyExtractorTest {
                 FrequencyExtractor.extractResult(parameters);
         assertNotNull(priorGameDrawings);
 
-        assertEquals(date, priorGameDrawings.getDrawnDate());
-        assertEquals(numbers, priorGameDrawings.getNumbers());
-        assertEquals(ballNumber, priorGameDrawings.getBallNumber());
+        assertEquals(date, priorGameDrawings.drawnDate());
+        assertEquals(numbers, priorGameDrawings.numbers());
+        assertEquals(ballNumber, priorGameDrawings.ballNumber());
     }
 
     private static Stream<Arguments> invalidExpectedResults() {
