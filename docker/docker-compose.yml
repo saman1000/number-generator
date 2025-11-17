@@ -1,0 +1,7 @@
+services:
+  chance-api:
+    build:
+      context: .. # Path to the directory containing the Dockerfile
+      dockerfile: docker/Dockerfile
+    ports:
+      - "10001:10001"

@@ -1,0 +1,14 @@
+#ignore IDE files and directories
+.idea
+.github
+.run
+.gitignore
+
+#ignore unwanted projects
+number-lambda
+
+# ignore local build
+**/target/
+
+# ignore docker files
+docker

@@ -39,7 +39,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>3.5.6</version>
+            <version>3.5.7</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -65,10 +65,18 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.7.0</version>
+                <version>3.5.6</version>
                 <configuration>
                     <addResources>true</addResources>
+                    <workingDirectory>rest-server</workingDirectory>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

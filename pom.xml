@@ -33,7 +33,6 @@
     <modules>
         <module>rest-server</module>
         <module>number-common</module>
-        <module>number-lambda</module>
     </modules>
 
     <scm>
