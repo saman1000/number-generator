@@ -10,7 +10,6 @@ FROM amazoncorretto:21-alpine3.21-jdk AS REST
 
 WORKDIR /app
 
-COPY --from=BUILD /app/rest-server/files ./files
 COPY --from=BUILD /app/rest-server/target/rest-server-1.1-SNAPSHOT.jar ./
 
 EXPOSE 10001

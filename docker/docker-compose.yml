@@ -5,3 +5,5 @@ services:
       dockerfile: docker/Dockerfile
     ports:
       - "10001:10001"
+    volumes:
+      - /home/saman/IdeaProjects/number-generator/rest-server/files:/app/files
