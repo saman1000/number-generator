@@ -15,6 +15,4 @@ COPY --from=BUILD /app/rest-server/target/rest-server-1.1-SNAPSHOT.jar ./
 
 EXPOSE 10001
 
-# Command to run Uvicorn, serving your FastAPI app
-#ENTRYPOINT ["sleep", "500"]
 ENTRYPOINT ["java", "-Dspring.profiles.active=lottery,rest", "-jar", "./rest-server-1.1-SNAPSHOT.jar"]
