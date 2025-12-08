@@ -1,7 +1,6 @@
 package history;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class GameFrequency {
 
@@ -52,36 +51,20 @@ public class GameFrequency {
     static NavigableMap<Integer, Integer> generateSwappedFrequencyMap(Integer[] frequencies) {
         NavigableMap<Integer, Integer> swappedFrequencyMap = new TreeMap<>();
 
-        Map<Integer, Integer> frequencyMap = new HashMap<>();
+        SortedMap<Integer, List<Integer>> sortedFrequency = new TreeMap<>();
         for (int counter = 0; counter < frequencies.length; counter++) {
-            frequencyMap.put(counter + 1, frequencies[counter]);
-        }
-        Comparator<Map.Entry<Integer, Integer>> entryComparator = Map.Entry.comparingByValue(Comparator.naturalOrder());
-        List<Map.Entry<Integer, Integer>> list = frequencyMap.entrySet().stream()
-                .sorted(entryComparator)
-                .collect(Collectors.toList());
-        HashMap<Integer, Integer> swappedMap = new HashMap<>();
-        while (list.size() >= 2) {
-            Map.Entry<Integer, Integer> lowest = list.remove(0);
-            Map.Entry<Integer, Integer> highest = list.remove(list.size() - 1);
-            swappedMap.put(lowest.getKey(), highest.getValue());
-            swappedMap.put(highest.getKey(), lowest.getValue());
-            while (!list.isEmpty() && list.get(0).getValue().equals(lowest.getValue())) {
-                swappedMap.put(list.remove(0).getKey(), highest.getValue());
-            }
-            while (!list.isEmpty() && list.get(list.size() - 1).getValue().equals(highest.getValue())) {
-                swappedMap.put(list.remove(list.size() - 1).getKey(), lowest.getValue());
-            }
-        }
-        if (!list.isEmpty()) {
-            Map.Entry<Integer, Integer> last = list.remove(0);
-            swappedMap.put(last.getKey(), last.getValue());
+            sortedFrequency.computeIfAbsent(frequencies[counter], k -> new ArrayList<>()).add(counter + 1);
         }
 
         int sum = 0;
-        for (Map.Entry<Integer, Integer> oneEntry: swappedMap.entrySet()) {
-            sum += oneEntry.getValue();
-            swappedFrequencyMap.put(sum, oneEntry.getKey());
+        Integer[] numberFrequencies = sortedFrequency.keySet().toArray(Integer[]::new);
+        @SuppressWarnings("unchecked")
+        List<Integer>[] numberList = sortedFrequency.values().toArray(new List[0]);
+        for (int counter = numberFrequencies.length - 1, reverseCounter = 0; counter >= 0; counter--, reverseCounter++) {
+            for(Integer aNumber : numberList[reverseCounter]) {
+                sum += numberFrequencies[counter];
+                swappedFrequencyMap.put(sum, aNumber);
+            }
         }
 
         return swappedFrequencyMap;

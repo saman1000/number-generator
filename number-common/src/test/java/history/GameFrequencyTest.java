@@ -77,24 +77,34 @@ class GameFrequencyTest {
                 .forEach(entry -> assertEquals(expectedChance[entry.getValue()-1], entry.getKey()));
     }
 
-    private static Stream<Arguments> chanceMapInputOutput2() {
+    private static Stream<Arguments> chanceMapInputOutputReverse() {
         return Stream.of(
-                Arguments.of(3, new Integer[] {1, 1, 1}, new Integer[] {2, 4, 6}),
-                Arguments.of(3, new Integer[] {1, 0, 1}, new Integer[] {1, 3, 4}),
-                Arguments.of(3, new Integer[] {1, 2, 1}, new Integer[] {3, 5, 8}),
-                Arguments.of(3, new Integer[] {9, 14, 39}, new Integer[] {40, 55, 65}),
-
-                Arguments.of(3, new Integer[] {14, 9, 39}, new Integer[] {15, 55, 65}),
-                Arguments.of(5, new Integer[] {9, 14, 40, 58, 69}, new Integer[] {70, 129, 170, 185, 195}),
-                Arguments.of(10,
-                        new Integer[] {1, 2, 3, 1, 2, 3, 2, 1, 30, 10},
-                        new Integer[] {31, 42, 46, 77, 88, 92, 103, 134, 136, 139})
+                Arguments.of(3, new Integer[]{1, 1, 1}, Map.of(1, 2, 2, 4, 3, 6)),
+                Arguments.of(3, new Integer[] {1, 0, 1}, Map.of(2, 2, 1, 3, 3, 4)),
+                Arguments.of(3, new Integer[] {1, 2, 1}, Map.of(1, 3, 2, 8, 3, 6)),
+                Arguments.of(3, new Integer[] {9, 14, 39}, Map.of(1, 40, 2, 55, 3, 65)),
+                Arguments.of(3, new Integer[] {14, 9, 39}, Map.of(1, 55, 2, 40, 3, 65)),
+                Arguments.of(5, new Integer[] {9, 14, 40, 58, 69},
+                        Map.of(1, 70, 2, 129, 3, 170, 4, 185, 5, 195)),
+                Arguments.of(10, new Integer[] {1, 2, 3, 1, 2, 3, 2, 1, 30, 10},
+                        Map.of(
+                                1, 31,
+                                2, 104,
+                                3, 130,
+                                4, 62,
+                                5, 115,
+                                6, 134,
+                                7, 126,
+                                8, 93,
+                                9, 139,
+                                10, 137
+                        ))
         );
     }
 
     @ParameterizedTest
-    @MethodSource("chanceMapInputOutput2")
-    void testSwappedChanceMap(int mainNumbersLength, final Integer[] frequencyArray, final Integer[] expectedChance) {
+    @MethodSource("chanceMapInputOutputReverse")
+    void testSwappedChanceMap(int mainNumbersLength, final Integer[] frequencyArray, final Map<Integer, Integer> expectedChance) {
         GameFrequency gameFrequency = new GameFrequency(mainNumbersLength);
 
         IntStream.range(1, mainNumbersLength + 1)
@@ -108,7 +118,7 @@ class GameFrequencyTest {
         assertNotNull(chanceMap);
         chanceMap.entrySet().stream()
                 .parallel()
-                .forEach(entry -> assertEquals(expectedChance[entry.getValue()-1], entry.getKey()));
+                .forEach(entry -> assertEquals(expectedChance.get(entry.getValue()), entry.getKey()));
 
     }
 }
