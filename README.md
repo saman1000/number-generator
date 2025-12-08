@@ -12,3 +12,10 @@ to run rest server on local:
 JVM options
 -Dspring.profiles.active=lottery,rest
 working folder should be rest-server project folder
+
+# Using docker
+
+docker compose -f docker/docker-compose.yml build
+docker compose -f docker/docker-compose.yml up
+or
+docker compose -f docker/docker-compose.yml up --build
