@@ -17,3 +17,10 @@ lottery:
 
 server:
   port: 10001
+
+springdoc:
+  api-docs:
+    path: /v1/api-docs
+    version: openapi_3_1
+  model-and-view-allowed: false
+  writer-with-default-pretty-printer: false
