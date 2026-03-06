@@ -3,7 +3,6 @@ package games;
 import lombok.Getter;
 import lombok.Setter;
 
-@SuppressWarnings("unused")
 @Getter
 @Setter
 public class GameConfig {

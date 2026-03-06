@@ -10,7 +10,6 @@ import restmodels.SetsOfNumbers;
 
 import java.util.List;
 
-@SuppressWarnings("unused")
 @RestController
 public record NumberGeneratorController(
         IGameChanceRecordGenerator gamesNumberGeneratorService) {

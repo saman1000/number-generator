@@ -51,19 +51,26 @@ public class GameFrequency {
     static NavigableMap<Integer, Integer> generateSwappedFrequencyMap(Integer[] frequencies) {
         NavigableMap<Integer, Integer> swappedFrequencyMap = new TreeMap<>();
 
-        SortedMap<Integer, List<Integer>> sortedFrequency = new TreeMap<>();
+        // 1. Group indices by frequency (sorted by frequency ascending)
+        SortedMap<Integer, List<Integer>> sortedFrequencyMap = new TreeMap<>();
         for (int counter = 0; counter < frequencies.length; counter++) {
-            sortedFrequency.computeIfAbsent(frequencies[counter], k -> new ArrayList<>()).add(counter + 1);
+            sortedFrequencyMap.computeIfAbsent(frequencies[counter], k -> new ArrayList<>()).add(counter + 1);
         }
 
+        // 2. Get a list of frequencies in DESCENDING order
+        List<Integer> descendingFrequencies = sortedFrequencyMap.keySet().stream()
+                .sorted(Collections.reverseOrder())
+                .toList();
+
+        // 3. Pair the highest frequencies with the numbers that had the lowest frequencies
         int sum = 0;
-        Integer[] numberFrequencies = sortedFrequency.keySet().toArray(Integer[]::new);
-        @SuppressWarnings("unchecked")
-        List<Integer>[] numberList = sortedFrequency.values().toArray(new List[0]);
-        for (int counter = numberFrequencies.length - 1, reverseCounter = 0; counter >= 0; counter--, reverseCounter++) {
-            for(Integer aNumber : numberList[reverseCounter]) {
-                sum += numberFrequencies[counter];
-                swappedFrequencyMap.put(sum, aNumber);
+        int freqIndex = 0;
+
+        for (List<Integer> numbers : sortedFrequencyMap.values()) {
+            int currentHighFreq = descendingFrequencies.get(freqIndex++);
+            for (Integer number : numbers) {
+                sum += currentHighFreq;
+                swappedFrequencyMap.put(sum, number);
             }
         }
 

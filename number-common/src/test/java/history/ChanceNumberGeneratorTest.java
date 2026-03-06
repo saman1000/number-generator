@@ -11,15 +11,14 @@ import java.util.NavigableMap;
 public class ChanceNumberGeneratorTest {
 
     @Test
-    @SuppressWarnings("unchecked")
     public void testCorrectBallNumberFrequencyIsUsed() {
         GameFrequency mockedFrequencyOfBallNumbers = Mockito.mock(GameFrequency.class);
 
-        NavigableMap<Integer, Integer> mockedBallNumberFrequencies = Mockito.mock(NavigableMap.class);
+        NavigableMap<Integer, Integer> mockedBallNumberFrequencies = Mockito.mock();
         Mockito.when(mockedBallNumberFrequencies.lastKey()).thenReturn(100);
         Mockito.when(mockedBallNumberFrequencies.ceilingEntry(Mockito.any()))
                 .thenReturn(
-                        Mockito.mock(Map.Entry.class)
+                        Mockito.mock()
                 );
         Mockito
                 .when(mockedFrequencyOfBallNumbers.getNumberFrequencies())
@@ -53,7 +52,6 @@ public class ChanceNumberGeneratorTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void testCorrectMainNumberFrequencyIsUsed() {
         GameFrequency mockedFrequencyOfBallNumbers = Mockito.mock(GameFrequency.class);
         PairingFrequency mockedPairingFrequency = Mockito.mock(PairingFrequency.class);
@@ -63,9 +61,9 @@ public class ChanceNumberGeneratorTest {
         );
 
         GameFrequency mockedFrequencyOfMainNumbers = Mockito.mock(GameFrequency.class);
-        NavigableMap<Integer, Integer> mockedMainNumberFrequencies = Mockito.mock(NavigableMap.class);
+        NavigableMap<Integer, Integer> mockedMainNumberFrequencies = Mockito.mock();
         Mockito.when(mockedMainNumberFrequencies.lastKey()).thenReturn(100);
-        Map.Entry<Integer, Integer> mockedEntry = Mockito.mock(Map.Entry.class);
+        Map.Entry<Integer, Integer> mockedEntry = Mockito.mock();
         Mockito.when(mockedEntry.getValue()).thenReturn(2, 3, 4, 5, 6);
         Mockito.when(mockedMainNumberFrequencies.ceilingEntry(Mockito.any())).thenReturn(mockedEntry);
         Mockito
@@ -98,14 +96,13 @@ public class ChanceNumberGeneratorTest {
         );
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testPairingFrequenciesAreUsed() {
         GameFrequency mockedFrequencyOfBallNumbers = Mockito.mock(GameFrequency.class);
         GameFrequency mockedFrequencyOfMainNumbers = Mockito.mock(GameFrequency.class);
-        NavigableMap<Integer, Integer> mockedMainNumberFrequencies = Mockito.mock(NavigableMap.class);
+        NavigableMap<Integer, Integer> mockedMainNumberFrequencies = Mockito.mock();
         Mockito.when(mockedMainNumberFrequencies.lastKey()).thenReturn(100);
-        Map.Entry<Integer, Integer> mockedEntry = Mockito.mock(Map.Entry.class);
+        Map.Entry<Integer, Integer> mockedEntry = Mockito.mock();
         Mockito.when(mockedEntry.getValue()).thenReturn(2, 3, 4, 5);
         Mockito.when(mockedMainNumberFrequencies.ceilingEntry(Mockito.any())).thenReturn(mockedEntry);
         Mockito
