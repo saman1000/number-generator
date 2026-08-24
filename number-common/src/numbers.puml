@@ -1,0 +1,50 @@
+@startuml
+skinparam style strictuml
+skinparam sequenceMessageAlign center
+
+participant "Caller" as User
+participant "generator : ChanceNumberGenerator" as GEN
+participant "frequencyOfBallNumbers : GameFrequency" as GF
+participant "numberFrequencies : NavigableMap" as NM
+participant "numberSelector : Random" as R
+
+User -> GEN : generateBallNumber(chanceMethod)
+activate GEN
+
+    group switch(chanceMethod)
+        alt STRAIGHT
+            GEN -> GF : getNumberFrequencies()
+            activate GF
+            GF --> GEN : Map<Integer, Integer>
+            deactivate GF
+        else SWAPPED
+            GEN -> GF : getSwappedNumberFrequencies()
+            activate GF
+            GF --> GEN : Map<Integer, Integer>
+            deactivate GF
+        else default
+            GEN -> GEN : throw GameException
+        end
+    end
+
+    GEN -> NM : lastKey()
+    activate NM
+    NM --> GEN : total
+    deactivate NM
+
+    GEN -> R : nextInt(total)
+    activate R
+    R --> GEN : randomValue
+    deactivate R
+
+    GEN -> NM : ceilingEntry(randomValue)
+    activate NM
+    NM --> GEN : entry
+    deactivate NM
+
+    GEN -> GEN : entry.getValue()
+
+GEN --> User : ballNumber
+deactivate GEN
+
+@enduml
