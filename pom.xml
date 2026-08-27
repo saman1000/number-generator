@@ -27,6 +27,7 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <maven.compiler.release>21</maven.compiler.release>
+        <lombok.version>1.18.42</lombok.version>
         <build.plugins.plugin.version>3.14.1</build.plugins.plugin.version>
         <spring-cloud.version>2022.0.4</spring-cloud.version>
     </properties>
