@@ -1,4 +1,4 @@
-FROM maven:3.9.16-amazoncorretto-25-alpine AS BUILD
+FROM maven:3.10.0-amazoncorretto-27-alpine AS BUILD
 
 WORKDIR /app
 
@@ -6,7 +6,7 @@ COPY . .
 
 RUN mvn package
 
-FROM amazoncorretto:25-alpine3.24-jdk AS REST
+FROM amazoncorretto:27-alpine3.24-jdk AS REST
 
 WORKDIR /app
 
