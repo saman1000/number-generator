@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.evolution-software</groupId>
@@ -20,6 +21,12 @@
             </roles>
         </developer>
     </developers>
+
+    <modules>
+        <module>rest-server</module>
+        <module>number-common</module>
+    </modules>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -27,19 +34,28 @@
         <maven.compiler.source>27</maven.compiler.source>
         <maven.compiler.target>27</maven.compiler.target>
         <maven.compiler.release>27</maven.compiler.release>
-        <lombok.version>1.18.48</lombok.version>
-        <build.plugins.plugin.version>3.14.1</build.plugins.plugin.version>
-        <spring-cloud.version>2022.0.4</spring-cloud.version>
-    </properties>
-    <modules>
-        <module>rest-server</module>
-        <module>number-common</module>
-    </modules>
 
-    <scm>
-        <connection>scm:git:https://github.com/saman1000/number-generator.git</connection>
-<!--        <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/maven-parent.git</developerConnection>-->
-<!--        <url>https://github.com/apache/maven-parent/tree/${project.scm.tag}</url>-->
-<!--        <tag>HEAD</tag>-->
-    </scm>
+        <!-- Dependency & Plugin Versions -->
+        <spring-boot.version>4.2.0</spring-boot.version>
+        <springdoc.version>3.2.0</springdoc.version>
+        <lombok.version>1.18.48</lombok.version>
+        <logback.version>1.6.8</logback.version>
+        <junit-jupiter.version>6.1.3</junit-jupiter.version>
+        <mockito.version>5.24.0</mockito.version>
+        <snakeyaml.version>2.6</snakeyaml.version>
+        <commons-lang3.version>3.22.0</commons-lang3.version>
+        <maven-compiler-plugin.version>3.16.0</maven-compiler-plugin.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
